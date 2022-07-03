@@ -1,0 +1,248 @@
+/* Navbar */
+.navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .show>.nav-link{
+  font-weight: 500;
+  color: #0C145A;
+}
+
+.navbar-light .navbar-nav .nav-link:hover{
+  color: #0C145A;
+}
+
+.navbar-light .navbar-nav .nav-link{
+  color: #7E8CAC;
+}
+
+.navbar-light .btn-sign-in{
+  color: #0C145A;
+  background-color: #E7EAF5;
+  padding: 0.75rem 1.875rem;
+}
+/*  */
+
+
+/* Header */
+.header .header-title{
+  font-size: 2.625rem;
+  line-height: 1.5;
+}
+
+.header .btn-get{
+  background-color: #4D17E2;
+  padding: 0.75rem 3rem;
+}
+
+.header .btn-learn:hover{
+  color: #0C145A;
+}
+
+.header .card{
+  border-radius: 1rem;
+  box-shadow: -8px 8px 58px 0px rgba(0, 0, 0, 0.1);
+}
+
+.header .left-card{
+  width: 207px;
+  height: 112px;
+  top: 6.68rem;
+  left: -3.625rem;
+  padding: 0.875rem;
+}
+
+.header .right-card{
+  width: 135px;
+  height: 177px;
+  bottom: 6.5rem;
+  right: -3.2rem;
+  padding: 1.25rem 1.5rem;
+}
+
+.header .right-card-support{
+  padding: 0.063rem 0.625rem;
+  background-color: #00BAFF;
+  width: max-content;
+  border-radius: 0.375rem;
+  bottom: -0.5rem;
+  left: auto;
+  right: auto;
+}
+/*  */
+
+
+/* Feature */
+.feature .feature-card{
+  background-color: #F9FAFF;
+  padding: 1.875rem;
+  border-radius: 1.625rem;
+  margin-right: 16px;
+}
+/*  */
+
+
+/* Featured Game */
+.featured-game .overflow-setting{
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+
+.featured-game .featured-game-card{
+  transition: all 0.4s;
+  border-radius: 1.625rem;
+  width: 205px;
+  height: 270px;
+}
+
+.featured-game .featured-game-card:hover{
+  transition: all 0.4s;
+  border: 4px solid #2B2467;
+}
+
+.featured-game .featured-game-card:hover img{
+  transition: all 0.4s;
+  filter: blur(40px);
+  width: 181px;
+  height: 246px;
+}
+
+.featured-game .featured-game-card .blur-sharp{
+  overflow: hidden;
+  border-radius: 1.625rem;
+}
+.featured-game .featured-game-card:hover .blur-sharp{
+  width: 192px;
+  border: 7px solid white;
+}
+
+.featured-game .cover{
+  transition: all 0.4s;
+  opacity: 0;
+  left: 0;
+  right: 0;
+  height: -webkit-fill-available;
+}
+
+.featured-game .featured-game-card:hover .cover{
+  opacity: 1;
+}
+
+.featured-game .game-icon{
+  margin-top: 3.125rem;
+}
+
+@media (min-width:768px){
+  .featured-game .overflow-setting{
+      overflow: hidden;
+  }
+}
+
+/*  */
+
+
+/* Reached */
+.reached .vertical-line{
+  width: 1px;
+  background-color: #E7EAF5;
+  height: 94px;
+}
+
+.reached .horizontal-line{
+  width: 240px;
+  background-color: #E7EAF5;
+  height: 1px;
+}
+/*  */
+
+/* Story */
+.story .btn-read{
+  padding: 0.75rem 3rem;
+  background-color: #E7EAF5;
+}
+
+.story .img-fluid{
+  max-width: 100%;
+  height: auto;
+}
+/*  */
+
+
+/* Footer */
+footer{
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  background-color: #F9FAFF;
+}
+
+footer ul{
+  margin-bottom: 0;
+}
+
+footer ul li a{
+  transition: 0.2s;
+}
+
+footer ul li a:hover{
+  color: #4D17E2;
+  text-decoration: underline !important;
+  background-color: transparent;
+}
+
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+
+}
+
+@media (max-width:768px) {
+
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  /* Header */
+
+  /*  */
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  /* Navbar */
+  .navbar-expand-lg .navbar-nav .nav-link {
+      padding-right: 1.25rem;
+      padding-left: 1.25rem;
+  }
+  /*  */
+
+  /* Header */
+.header .underline-blue {
+  text-decoration: none;
+  position: relative;
+}
+
+.header .underline-blue:after {
+  position: absolute;
+  content: '';
+  height: 8px;
+  bottom: 11px;
+     margin: 0 auto;
+  left: 0;
+right: 0;
+  width: 100%;
+  background: #00BAFF;
+  z-index: -10;
+}
+/*  */
+
+  /* Featured Game */
+  .featured-game .featured-game-card:hover .blur-sharp{
+      position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  }
+}
+
+/* X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
+}
+

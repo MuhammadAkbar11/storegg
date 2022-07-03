@@ -1,0 +1,158 @@
+
+.transactions-detail {
+    background-color: #FBFCFD;
+}
+
+.transactions-detail main.main-wrapper{
+    margin-left: 340px;
+    height: 100%;
+    margin-right: auto;
+    position: relative;
+    padding: 50px 50px 50px 0px;
+}
+
+.transactions-detail main .main-content{
+    max-width: 860px;
+}
+
+.transactions-detail .btn-status.btn-active{
+    color: #FFFFFF;
+    background-color: #0C145A;
+}
+
+.transactions-detail .btn-status{
+    color: #0C145A;
+    background-color: #E7EAF5;
+}
+
+.transactions-detail .details .main-content-card{
+    background-color: #FFFFFF;
+    padding: 1.875rem;
+    border-radius: 1rem;
+    max-width: 860px;
+}
+
+.transactions-detail .details .game-title-header{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.transactions-detail .details .game-title{
+    white-space: nowrap; 
+    width: 135px; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
+.transactions-detail .table>:not(caption)>*>*{
+    padding: 10px 0px;
+}
+
+.transactions-detail .details table thead tr th{
+    font-weight: 400;
+}
+
+.transactions-detail .details .icon-status{
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    margin: 9px 6px 0px 20px;
+}
+
+.transactions-detail .details .icon-status.pending{
+    background-color: #FEBD57;
+}
+
+.transactions-detail .details .icon-status.success{
+    background-color: #1ABC9C;
+}
+
+.transactions-detail .details .icon-status.failed{
+    background-color: #FE5761;
+}
+
+.checkout{
+    max-width: 800px;
+}
+
+.transactions-detail .checkout .label{
+    width: 130px;
+    padding: 0.5rem;
+}
+
+.transactions-detail .checkout .label.pending{
+    color: #FEBD57;
+    background-color: #FFEED3
+}
+
+.transactions-detail .checkout .label.success{
+    color: #1ABC9C;
+    background-color: #B8E9DF
+}
+
+.transactions-detail .checkout .label.failed{
+    color: #FE5761;
+    background-color: #FFC6C9
+}
+
+.transactions-detail .checkout .img-fluid{
+    max-width: 100%;
+    height: auto;
+    border-radius: 1.625rem;
+}
+
+.transactions-detail .checkout .cropped {
+  width: 110px;
+  height: 140px;
+  overflow: hidden;
+  border-radius: 1.625rem;
+}
+
+.transactions-detail .checkout .cropped img {
+  margin: -10px 0px 0px 0px;
+}
+
+.transactions-detail .checkout hr{
+    margin: 0;    
+    background-color:#E7EAF5;
+    border: 0;
+    opacity: 1;
+}
+
+.transactions-detail .checkout span.purchase-details,
+.transactions-detail .checkout span.payment-details {
+    display: block;
+    font-weight: 500;
+}
+
+  .transactions-detail .checkout .btn-whatsapp{
+      padding: 0.75rem 2.875rem;
+      background-color: #4D17E2;
+  }
+
+  .transactions-detail .checkout .img-checkout{
+    width:110px;
+    height:140px;
+  }
+
+@media (min-width: 768px) { 
+    .transactions-detail .checkout span.purchase-details,
+    .transactions-detail .checkout span.payment-details {
+        float: right;
+      }
+    
+    .transactions-detail .checkout .cropped {
+      width: 200px;
+      height: 130px;
+      overflow: hidden;
+      border-radius: 1.625rem;
+    }
+    
+  }
+
+
+@media (max-width:992px){
+    .transactions-detail main.main-wrapper{
+        width: 100%;
+    }
+}

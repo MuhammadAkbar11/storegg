@@ -43,4 +43,21 @@
     }
     }
 
+/* Sign Up Success  */
+
+.sign-up-success .img-fluid{
+    max-width: 66%;
+    height: auto;
+}
+
+.sign-up-success .btn-top-up{
+    padding: 0.75rem 1rem;
+    background-color: #4D17E2;
+}
+
+@media (min-width:768px){
+.sign-up-success .button-group{
+    width: 170px;
+}
+}
 /*  */

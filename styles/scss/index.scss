@@ -20,6 +20,7 @@
 @import "/node_modules/bootstrap/scss/forms";
 @import "/node_modules/bootstrap/scss/badge";
 @import "/node_modules/bootstrap/scss/carousel";
+@import "/node_modules/bootstrap/scss/tables";
 @import "/node_modules/bootstrap/scss/list-group";
 
 
@@ -27,9 +28,11 @@
 @import "/node_modules/bootstrap/scss/utilities/api";
 
 // @import "/node_modules/bootstrap/scss/bootstrap";
+@import "./core/utils";
+
+@import "./components/sidebar";
 
 @import "./pages/homepage";
-@import "./core/utils";
 @import "./pages/detail";
 @import "./pages/checkout";
 @import "./pages/complete-checkout";
@@ -37,5 +40,6 @@
 @import "./pages/sign-up";
 @import "./pages/sign-up-photo";
 @import "./pages/404";
+@import "./pages/member-overview";
 
 @import '/node_modules/aos/src/sass/aos.scss';

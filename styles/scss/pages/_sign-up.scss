@@ -1,0 +1,46 @@
+/* Sign Up */
+
+.sign-up input[type="password"],
+.sign-up input[type="email"],
+.sign-up input[type="text"]{
+    border: 1px solid #0C145A;
+    padding: 0.75rem 1.625rem;
+    color: #0C145A;
+}
+
+.sign-up input[type="password"]:focus-within,
+.sign-up input[type="email"]:focus-within,
+.sign-up input[type="text"]:focus-within{
+    color: #0C145A;
+}
+
+.sign-up input[type="password"]::placeholder,
+.sign-up input[type="email"]::placeholder,
+.sign-up input[type="text"]::placeholder{
+    color: #CCD0DD;
+}
+
+.sign-up .btn-sign-up{
+    padding: 0.75rem;
+    background-color: #4D17E2;
+}
+
+.sign-up .btn-sign-in{
+    padding: 0.75rem;
+    background-color: #E7EAF5;
+}
+
+
+.sign-up .button-group{
+    width: 100%;
+}
+
+@media (min-width: 992px){
+    .sign-up .container,
+    .sign-up input[type="password"],
+    .sign-up input[type="email"]{
+        max-width: 437px;
+    }
+    }
+
+/*  */

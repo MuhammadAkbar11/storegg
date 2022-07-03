@@ -28,8 +28,8 @@
 
 // @import "/node_modules/bootstrap/scss/bootstrap";
 
-
-@import "./core/utils";
 @import "./pages/homepage";
+@import "./core/utils";
+@import "./pages/detail";
 
 @import '/node_modules/aos/src/sass/aos.scss';

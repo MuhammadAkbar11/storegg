@@ -1,0 +1,84 @@
+
+.transactions {
+  background-color: #FBFCFD;
+}
+
+.transactions main.main-wrapper{
+  margin-left: 340px;
+  height: 100%;
+  margin-right: auto;
+  position: relative;
+  padding: 50px 50px 50px 0px;
+}
+
+.transactions main .main-content{
+  max-width: 1047px;
+}
+
+.transactions .btn{
+  display: inline-block;
+  width: 112px;
+  padding: 0.563rem;
+}
+
+.transactions .btn-status.btn-active{
+  color: #FFFFFF;
+  background-color: #0C145A;
+}
+
+.transactions .btn-status{
+  color: #0C145A;
+  background-color: #E7EAF5;
+}
+
+.transactions .latest-transaction .main-content-table{
+  background-color: #FFFFFF;
+  padding: 1.25rem 1.875rem;
+  border-radius: 1rem;
+  max-width: 1047px;
+}
+
+.transactions .latest-transaction .game-title-header{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.transactions .latest-transaction .game-title{
+  white-space: nowrap;
+  width: 135px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.transactions .table>:not(caption)>*>*{
+  padding: 10px 0px;
+}
+
+.transactions .latest-transaction table thead tr th{
+  font-weight: 400;
+}
+
+.transactions .latest-transaction .icon-status{
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  margin: 9px 6px 0px 0px;
+}
+
+.transactions .latest-transaction .icon-status.pending{
+  background-color: #FEBD57;
+}
+
+.transactions .latest-transaction .icon-status.success{
+  background-color: #1ABC9C;
+}
+
+.transactions .latest-transaction .icon-status.failed{
+  background-color: #FE5761;
+}
+
+@media (max-width:992px){
+  .transactions main.main-wrapper{
+      width: 100%;
+  }
+}

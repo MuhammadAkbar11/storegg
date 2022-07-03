@@ -1,0 +1,17 @@
+/* 404 Not Found */
+.not-found .img-fluid{
+  max-width: 66%;
+  height: auto;
+}
+
+.not-found .btn-homepage{
+  padding: 0.75rem;
+  background-color: #4D17E2;
+}
+
+@media (min-width:768px){
+.not-found .button-group{
+  width: 190px;
+}
+}
+/*  */

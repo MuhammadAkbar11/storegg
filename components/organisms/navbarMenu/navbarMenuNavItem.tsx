@@ -21,7 +21,7 @@ function NavbarTopNavItem(props: Props) {
 
   return (
     <>
-      <Nav.Item key={id} className="my-auto">
+      <Nav.Item as="li" key={id} className="my-auto">
         <Link href={url} passHref>
           <Nav.Link as={"a"} className={navItemClassname}>
             {text}

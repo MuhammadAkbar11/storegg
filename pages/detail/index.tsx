@@ -1,4 +1,6 @@
 import React from "react";
+import Footer from "../../components/organisms/footer";
+import NavbarMenu from "../../components/organisms/navbarMenu";
 import TopUpForm from "../../components/organisms/topupForm";
 import TopUpGameInfo from "../../components/organisms/topupGameInfo";
 
@@ -7,6 +9,7 @@ type Props = {};
 function Detail({}: Props) {
   return (
     <>
+      <NavbarMenu />
       {/* Detail Content */}
       <section className="detail pt-lg-60 pb-50">
         <div className="container-xxl container-fluid">
@@ -30,6 +33,7 @@ function Detail({}: Props) {
           </div>
         </div>
       </section>
+      <Footer />
     </>
   );
 }

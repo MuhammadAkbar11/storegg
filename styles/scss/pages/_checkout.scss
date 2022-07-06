@@ -21,14 +21,17 @@
 }
 
 .checkout hr{
-    margin: 0;    
+    margin: 0;
     background-color:#E7EAF5;
     border: 0;
     opacity: 1;
 }
 
+
+
 .checkout span.purchase-details,
-.checkout span.payment-details {
+.checkout span.payment-details,
+.checkout span.checkout-details-value {
     display: block;
     font-weight: 500;
 }
@@ -43,7 +46,7 @@
     -ms-user-select: none;
     user-select: none;
   }
-  
+
   .checkout .checkbox-label input {
     position: absolute;
     opacity: 0;
@@ -51,7 +54,7 @@
     height: 0;
     width: 0;
   }
-  
+
   .checkout .checkmark {
       transition: all 0.06s linear;
     position: absolute;
@@ -62,18 +65,18 @@
     border-radius: 0.375rem;
     border: 2px solid #0C145A;
   }
-  
+
   .checkout .checkbox-label input:checked ~ .checkmark {
     background-color: #FFFFFF;
     border: 2px solid #00BAFF;
   }
-  
+
   .checkout .checkmark:after {
     content: "";
     position: absolute;
     display: none;
   }
-  
+
   .checkout .checkbox-label input:checked ~ .checkmark:after {
     display: block;
   }
@@ -100,19 +103,20 @@
 
 
   /* Medium devices (landscape phones, 768px and up) */
-@media (min-width: 768px) { 
+@media (min-width: 768px) {
     .checkout span.purchase-details,
-    .checkout span.payment-details {
+    .checkout span.payment-details,
+    .checkout span.checkout-details-value {
         float: right;
       }
-    
+
     .checkout .cropped {
       width: 200px;
       height: 130px;
       overflow: hidden;
       border-radius: 1.625rem;
     }
-    
+
   }
 
 

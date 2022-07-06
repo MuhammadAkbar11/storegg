@@ -323,7 +323,7 @@ function TopUpForm({}: Props) {
       </div>
       <div className="d-sm-block d-flex flex-column w-100">
         <a
-          href="./checkout.html"
+          href="/checkout"
           type="submit"
           className="btn btn-submit rounded-pill fw-medium text-white border-0 text-lg"
         >

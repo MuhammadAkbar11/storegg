@@ -17,9 +17,10 @@ function FooterWidget({ title, links }: Props) {
     <>
       <p className="text-lg fw-semibold color-palette-1 mb-12">{title}</p>
       <ul className="list-unstyled">
-        {links.map((link: WidgetLink) => {
+        {links.map((link: WidgetLink, idx) => {
+          const key = idx;
           return (
-            <li className="mb-6">
+            <li className="mb-6" key={key}>
               {link.isExternal ? (
                 <a
                   href={link.href}

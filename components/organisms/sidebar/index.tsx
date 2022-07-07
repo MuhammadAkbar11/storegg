@@ -42,7 +42,7 @@ function Sidebar({ activePath }: Props) {
           <SidebarMenuItem
             title="Settings"
             icon="settings"
-            href="/member/reward"
+            href="/member/settings"
             activePath={activePath}
           />
           <SidebarMenuItem

@@ -21,6 +21,8 @@
     ],
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
-        "react/react-in-jsx-scope": "off"
+        "react/react-in-jsx-scope": "off",
+        "jsx-a11y/achor-is-valid": "off",
+        "react/jsx-props-no-spreading": "off"
     }
 }

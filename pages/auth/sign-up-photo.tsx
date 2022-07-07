@@ -14,13 +14,20 @@ function SignUpPhoto({}: Props) {
                 <div className="mb-20">
                   <div className="image-upload text-center">
                     <label htmlFor="avatar">
-                      <UploadIcon />
+                      <div
+                        style={{
+                          height: 120,
+                          width: 120,
+                        }}
+                      >
+                        <UploadIcon />
+                      </div>
                     </label>
                     <input
                       id="avatar"
                       type="file"
                       name="avatar"
-                      accept="image/png, image/jpeg"
+                      accept="image/png, image/jpeg, image/jpg"
                     />
                   </div>
                 </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import { Card } from "react-bootstrap";
 import FeatureStepFirstIcon from "../../atoms/icons/featureStepFirstIcon";
 import FeatureStepSecondIcon from "../../atoms/icons/featureStepSecondIcon";
 import FeatureStepThirdIcon from "../../atoms/icons/featureStepThirdIcon";
@@ -20,7 +21,7 @@ function FeatureStepTransactionItem(props: Props) {
   const { variant, title, topText, bottomText } = props;
   const Icon = stepIcons[variant];
   return (
-    <div className="card feature-card border-0">
+    <Card className=" feature-card border-0">
       <Icon />
       <p className="fw-semibold text-2xl mb-2 color-palette-1">{title}</p>
       <p className="text-lg color-palette-1 mb-0">
@@ -28,7 +29,7 @@ function FeatureStepTransactionItem(props: Props) {
         <br />
         {bottomText}
       </p>
-    </div>
+    </Card>
   );
 }
 

@@ -25,6 +25,7 @@ function TransactionsDetail({}: Props) {
                       image="/img/Thumbnail-3.png"
                       platform="Mobile"
                       type="TransactionDetails"
+                      status="success"
                     />
                   </div>
                   <hr />

@@ -48,28 +48,30 @@ function TransactionDetailsGame({
   }
 
   return (
-    <div className={wrapperClassName}>
-      <div className="pe-4">
-        <div className="cropped">{gameImage}</div>
-      </div>
-      <div>
-        <p className="fw-bold text-xl color-palette-1 mb-10">
-          {title1nd}
-          {title2nd && <br />}
-          {title2nd && title2nd}
-        </p>
-        <p className="color-palette-2 m-0">Category: {platform}</p>
+    <>
+      <div className={wrapperClassName}>
+        <div className="pe-4">
+          <div className="cropped">{gameImage}</div>
+        </div>
+        <div>
+          <p className="fw-bold text-xl color-palette-1 mb-10">
+            {title1nd}
+            {title2nd && <br />}
+            {title2nd && title2nd}
+          </p>
+          <p className="color-palette-2 m-0">Category: {platform}</p>
+        </div>
       </div>
       {status && (
         <div>
           <p
             className={`fw-medium text-center label ${status} m-0 rounded-pill text-capitalize`}
           >
-            Pending
+            {status}
           </p>
         </div>
       )}
-    </div>
+    </>
   );
 }
 

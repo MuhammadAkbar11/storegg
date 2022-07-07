@@ -1,9 +1,9 @@
 import Link from "next/link";
 import React from "react";
 import Logo from "../../components/atoms/logo";
-import CheckoutDetailsItem from "../../components/molecules/checkoutDetailsItem";
-import CheckoutDetails from "../../components/organisms/checkoutDetails";
-import CheckoutGame from "../../components/organisms/checkoutDetails/checkoutGame";
+import TransactionDetailsGame from "../../components/molecules/transaction/transactionDetailsGame";
+import TransactionDetailsItem from "../../components/molecules/transaction/transactionDetailsItem";
+import TransactionDetailsWrapper from "../../components/molecules/transaction/transactionDetailsWrapper";
 
 type Props = {};
 
@@ -24,47 +24,48 @@ function Checkout({}: Props) {
               Waktunya meningkatkan cara bermain
             </p>
           </div>
-          <CheckoutGame
+          <TransactionDetailsGame
+            type="Checkout"
             title="Mobile Legends: The New Battle 2021"
             image="/img/Thumbnail-3.png"
             platform="Mobile"
           />
           <hr />
-          <CheckoutDetails
+          <TransactionDetailsWrapper
             title="Purchase Details"
             className="purchase pt-md-50 pt-30"
           >
-            <CheckoutDetailsItem label="Your Game ID" value="Baaev666" />
-            <CheckoutDetailsItem label="Order ID" value="#GG666" />
-            <CheckoutDetailsItem label="Item" value="666 Diamonds" />
-            <CheckoutDetailsItem label="Price" value="Rp. 106.666.00" />
-            <CheckoutDetailsItem label="Tax (10%)" value="Rp. 3.000" />
-            <CheckoutDetailsItem
+            <TransactionDetailsItem label="Your Game ID" value="Baaev666" />
+            <TransactionDetailsItem label="Order ID" value="#GG666" />
+            <TransactionDetailsItem label="Item" value="666 Diamonds" />
+            <TransactionDetailsItem label="Price" value="Rp. 106.666.00" />
+            <TransactionDetailsItem label="Tax (10%)" value="Rp. 3.000" />
+            <TransactionDetailsItem
               label="Total"
               highlight
               value="Rp. 109.666.00"
             />
-          </CheckoutDetails>
-          <CheckoutDetails
+          </TransactionDetailsWrapper>
+          <TransactionDetailsWrapper
             title="Payment Informations"
             className="payment pt-md-50 pb-md-50 pt-10 pb-10"
           >
-            <CheckoutDetailsItem
+            <TransactionDetailsItem
               label="Your Account Name"
               value="Baaev Legieuvn"
             />
-            <CheckoutDetailsItem label="Type" value="Worldwide Transfer" />
-            <CheckoutDetailsItem label="Bank Name" value="Mandiri" />
-            <CheckoutDetailsItem
+            <TransactionDetailsItem label="Type" value="Worldwide Transfer" />
+            <TransactionDetailsItem label="Bank Name" value="Mandiri" />
+            <TransactionDetailsItem
               label="Bank Account Name"
               value="PT Store GG Indonesia"
             />
 
-            <CheckoutDetailsItem
+            <TransactionDetailsItem
               label=" Bank Number payment-details"
               value="1800 - 9090 - 2021"
             />
-          </CheckoutDetails>
+          </TransactionDetailsWrapper>
           <label className="checkbox-label text-lg color-palette-1">
             I have transferred the money
             <input type="checkbox" />

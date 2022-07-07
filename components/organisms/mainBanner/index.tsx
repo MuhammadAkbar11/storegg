@@ -50,7 +50,7 @@ function MainBanner({}: Props) {
                 />
                 <MainBannerReviewCard
                   avatar="/img/avatar-1.png"
-                  name="Shayna Anne"
+                  name="Lee Jieun"
                   profession="Professional Gamer"
                 />
                 <MainBannerGameCard />

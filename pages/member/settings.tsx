@@ -10,7 +10,7 @@ function Profile({}: Props) {
   return (
     <>
       <section className="edit-profile overflow-auto">
-        <Sidebar />
+        <Sidebar activePath="/member/settings" />
         <main className="main-wrapper">
           <div className="ps-lg-0">
             <h2 className="text-4xl fw-bold color-palette-1 mb-30">Settings</h2>
@@ -47,7 +47,7 @@ function Profile({}: Props) {
                     />
                   </div>
                 </div>
-                <Form.Group className="pt-30" controlId="name">
+                <Form.Group className="pt-30">
                   <Form.Label
                     htmlFor="name"
                     className="text-lg fw-medium color-palette-1 mb-10"
@@ -63,7 +63,7 @@ function Profile({}: Props) {
                     placeholder="Enter your name"
                   />
                 </Form.Group>
-                <Form.Group className="pt-30" controlId="email">
+                <Form.Group className="pt-30">
                   <Form.Label
                     htmlFor="email"
                     className=" text-lg fw-medium color-palette-1 mb-10"
@@ -79,7 +79,7 @@ function Profile({}: Props) {
                     placeholder="Enter your email address"
                   />
                 </Form.Group>
-                <Form.Group className="pt-30" controlId="phone">
+                <Form.Group className="pt-30">
                   <Form.Label
                     htmlFor="phone"
                     className=" text-lg fw-medium color-palette-1 mb-10"

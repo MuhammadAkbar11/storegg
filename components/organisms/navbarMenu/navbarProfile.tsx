@@ -11,7 +11,7 @@ function NavbarProfile(props: Props) {
   const profileMenu = [
     { text: "My Profile", href: "/member" },
     { text: "Wallet", href: "/member/wallet" },
-    { text: "Account Setting", href: "/member/edit-profile" },
+    { text: "Account Setting", href: "/member/settings" },
     { text: "Log Out", href: "/auth/sing-in" },
   ];
   return (

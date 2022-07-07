@@ -28,7 +28,7 @@ function NavbarMenu({ activePath }: Props) {
           <Navbar.Collapse id="navbarNav">
             <Nav as="ul" className="ms-auto text-lg gap-lg-0 gap-2">
               <NavbarMenuList activePath={activePath} />
-              <NavbarProfile isLogin={false} />
+              <NavbarProfile isLogin={true} />
             </Nav>
           </Navbar.Collapse>
         </Container>

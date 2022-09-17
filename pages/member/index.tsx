@@ -1,3 +1,4 @@
+import Head from "next/head";
 import React from "react";
 import OverviewContent from "../../components/organisms/overview";
 import Sidebar from "../../components/organisms/sidebar";
@@ -8,6 +9,9 @@ function Member({}: Props) {
   return (
     <>
       {/* Overview */}
+      <Head>
+        <title>Member Dashboard | StoreGG</title>;
+      </Head>
       <section className="overview overflow-auto">
         <Sidebar activePath="/member" />
         <OverviewContent />

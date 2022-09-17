@@ -1,3 +1,4 @@
+import Head from "next/head";
 import React from "react";
 import { Button, ButtonGroup, Form } from "react-bootstrap";
 import TrashIcon from "../../components/atoms/icons/trashIcon";
@@ -9,6 +10,9 @@ type Props = {};
 function Profile({}: Props) {
   return (
     <>
+      <Head>
+        <title>Settings | StoreGG</title>;
+      </Head>
       <section className="edit-profile overflow-auto">
         <Sidebar activePath="/member/settings" />
         <main className="main-wrapper">

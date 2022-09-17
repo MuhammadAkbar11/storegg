@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 import Sidebar from "../../components/organisms/sidebar";
@@ -28,6 +29,9 @@ function Transactions({}: Props) {
 
   return (
     <>
+      <Head>
+        <title>Member Transactions | StoreGG</title>;
+      </Head>
       <section className="transactions overflow-auto">
         <Sidebar activePath="/member/transactions" />
         <main className="main-wrapper">

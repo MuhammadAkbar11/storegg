@@ -77,7 +77,7 @@ function TransactionsDetail({}: Props) {
                     />
                   </TransactionDetailsWrapper>
 
-                  <div className="d-md-block d-flex flex-column w-100">
+                  <div className="d-md-block d-flex flex-column w-100 mt-2">
                     <a
                       className="btn btn-whatsapp rounded-pill fw-medium text-white border-0 text-lg"
                       href="#"

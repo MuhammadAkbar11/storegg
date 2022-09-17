@@ -14,8 +14,10 @@ function Checkout({}: Props) {
       <section className="checkout mx-auto pt-md-100 pb-md-145 pt-30 pb-30">
         <div className="container-fluid">
           <div className="logo text-md-center text-start pb-50">
-            <Link href="/">
-              <Logo />
+            <Link href="/" passHref>
+              <a href="/">
+                <Logo />
+              </a>
             </Link>
           </div>
           <div className="title-text pt-md-50 pt-0">

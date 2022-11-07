@@ -1,9 +1,9 @@
 import Link from "next/link";
 import React from "react";
-import Logo from "../../components/atoms/logo";
-import TransactionDetailsGame from "../../components/molecules/transaction/transactionDetailsGame";
-import TransactionDetailsItem from "../../components/molecules/transaction/transactionDetailsItem";
-import TransactionDetailsWrapper from "../../components/molecules/transaction/transactionDetailsWrapper";
+import Logo from "@atoms/logo";
+import TransactionDetailsGame from "@molecules/transaction/transactionDetailsGame";
+import TransactionDetailsItem from "@molecules/transaction/transactionDetailsItem";
+import TransactionDetailsWrapper from "@molecules/transaction/transactionDetailsWrapper";
 
 type Props = {};
 

@@ -1,9 +1,9 @@
 import Head from "next/head";
 import React from "react";
 import { Button, ButtonGroup, Form } from "react-bootstrap";
-import TrashIcon from "../../components/atoms/icons/trashIcon";
-import UploadIcon from "../../components/atoms/icons/uploadIcon";
-import Sidebar from "../../components/organisms/sidebar";
+import TrashIcon from "@atoms/icons/trashIcon";
+import UploadIcon from "@atoms/icons/uploadIcon";
+import Sidebar from "@organisms/sidebar";
 
 type Props = {};
 

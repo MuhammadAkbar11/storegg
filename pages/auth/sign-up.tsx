@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
-import Logo from "../../components/atoms/logo";
-import SignUpForm from "../../components/organisms/auth/signUpForm";
+import Logo from "@atoms/logo";
+import SignUpForm from "@organisms/auth/signUpForm";
 
 type Props = {};
 

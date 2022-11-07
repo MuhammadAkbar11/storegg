@@ -1,8 +1,8 @@
 import Link from "next/link";
 import React from "react";
-import Logo from "../../components/atoms/logo";
-import SignInCover from "../../components/organisms/auth/signInCover";
-import SignInForm from "../../components/organisms/auth/signInForm";
+import Logo from "@atoms/logo";
+import SignInCover from "@organisms/auth/signInCover";
+import SignInForm from "@organisms/auth/signInForm";
 
 type Props = {};
 

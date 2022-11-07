@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import WalletIcon from "../../components/atoms/icons/walletIcon";
+import WalletIcon from "@atoms/icons/walletIcon";
 
 type Props = {};
 

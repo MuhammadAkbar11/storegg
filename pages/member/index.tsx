@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React from "react";
-import OverviewContent from "../../components/organisms/overview";
-import Sidebar from "../../components/organisms/sidebar";
+import OverviewContent from "@organisms/overview";
+import Sidebar from "@organisms/sidebar";
 
 type Props = {};
 

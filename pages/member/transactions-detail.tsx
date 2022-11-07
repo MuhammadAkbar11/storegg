@@ -1,8 +1,8 @@
 import React from "react";
-import TransactionDetailsGame from "../../components/molecules/transaction/transactionDetailsGame";
-import TransactionDetailsItem from "../../components/molecules/transaction/transactionDetailsItem";
-import TransactionDetailsWrapper from "../../components/molecules/transaction/transactionDetailsWrapper";
-import Sidebar from "../../components/organisms/sidebar";
+import TransactionDetailsGame from "@molecules/transaction/transactionDetailsGame";
+import TransactionDetailsItem from "@molecules/transaction/transactionDetailsItem";
+import TransactionDetailsWrapper from "@molecules/transaction/transactionDetailsWrapper";
+import Sidebar from "@organisms/sidebar";
 
 type Props = {};
 

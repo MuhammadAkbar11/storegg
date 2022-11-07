@@ -1,9 +1,29 @@
 import React from "react";
+import {
+  getFeaturedGameService,
+  IGame,
+} from "../../../services/player.service";
 import GameItem from "../../molecules/gameItem";
 
 type Props = {};
 
 function FeaturedGames({}: Props) {
+  const [loadingFeaturedGames, setLoadingFeatured] = React.useState(true);
+  const [featuredGames, setFeaturedGames] = React.useState<IGame[]>([]);
+
+  React.useEffect(() => {
+    const getVoucher = async () => {
+      const games = await getFeaturedGameService({
+        limit: 5,
+        page: 1,
+      });
+      console.log(games);
+      setFeaturedGames(games);
+    };
+
+    getVoucher();
+  }, []);
+
   return (
     <section className="featured-game pt-50 pb-50">
       <div className="container-fluid">
@@ -15,7 +35,19 @@ function FeaturedGames({}: Props) {
           className="d-flex flex-row flex-lg-wrap overflow-setting justify-content-lg-start gap-lg-3 gap-4 pb-3 "
           data-aos="fade-up"
         >
-          <GameItem
+          {featuredGames &&
+            featuredGames.map(gm => {
+              return (
+                <GameItem
+                  key={gm.voucherId}
+                  name={gm.gameName}
+                  link={`/detail/${gm.voucherId}`}
+                  image={gm.thumbnail}
+                  platform={gm.category}
+                />
+              );
+            })}
+          {/* <GameItem
             name="Pubg Mobile"
             link="/detail/pubg-mobile"
             image="/img/Thumbnail-6.png"
@@ -44,7 +76,7 @@ function FeaturedGames({}: Props) {
             link="/detail/pubg-mobile"
             image="/img/Thumbnail-7.png"
             platform="Mobile"
-          />
+          /> */}
         </div>
       </div>
     </section>

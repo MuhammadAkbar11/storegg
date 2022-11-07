@@ -1,11 +1,11 @@
 import Head from "next/head";
 import Link from "next/link";
 import React from "react";
-import Sidebar from "../../components/organisms/sidebar";
-import TransactionsTabs from "../../components/organisms/transactions/transactionsTabs";
-import TransactionTableRow from "../../components/organisms/transactions/TransactionTableRow";
-import dummyTransactionData from "../../globals/transaction.data";
-import { IFTransaction, TransactionStatus } from "../../globals/types";
+import Sidebar from "@components/organisms/sidebar";
+import TransactionsTabs from "@components/organisms/transactions/transactionsTabs";
+import TransactionTableRow from "@components/organisms/transactions/TransactionTableRow";
+import dummyTransactionData from "@globals/transaction.data";
+import { IFTransaction, TransactionStatus } from "@globals/types";
 
 type ActiveTypes = "*" | TransactionStatus;
 

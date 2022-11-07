@@ -5,7 +5,7 @@ import GameConsoleIcon from "../../atoms/icons/gameConsoleIcon";
 
 type Props = {
   name: string;
-  platform: "Mobile" | "Desktop";
+  platform: string;
   image: string;
   link: string;
 };

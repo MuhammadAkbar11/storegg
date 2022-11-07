@@ -1,5 +1,5 @@
 import React from "react";
-import UploadIcon from "../../components/atoms/icons/uploadIcon";
+import UploadIcon from "@atoms/icons/uploadIcon";
 
 type Props = {};
 

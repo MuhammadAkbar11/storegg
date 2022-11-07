@@ -1,12 +1,12 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Story from "../components/organisms/story";
-import FeaturedGames from "../components/organisms/featuredGames";
-import FeatureStepTransaction from "../components/organisms/featureStepTransaction";
-import MainBanner from "../components/organisms/mainBanner";
-import NavbarMenu from "../components/organisms/navbarMenu";
-import Reached from "../components/organisms/reached";
-import Footer from "../components/organisms/footer";
+import Story from "@organisms/story";
+import FeaturedGames from "@organisms/featuredGames";
+import FeatureStepTransaction from "@organisms/featureStepTransaction";
+import MainBanner from "@organisms/mainBanner";
+import NavbarMenu from "@organisms/navbarMenu";
+import Reached from "@organisms/reached";
+import Footer from "@organisms/footer";
 
 const Home: NextPage = () => {
   return (

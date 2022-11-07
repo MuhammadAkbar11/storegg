@@ -1,8 +1,8 @@
 import React from "react";
-import Footer from "../../components/organisms/footer";
-import NavbarMenu from "../../components/organisms/navbarMenu";
-import TopUpForm from "../../components/organisms/topupForm";
-import TopUpGameInfo from "../../components/organisms/topupGameInfo";
+import Footer from "@organisms/footer";
+import NavbarMenu from "@organisms/navbarMenu";
+import TopUpForm from "@organisms/topupForm";
+import TopUpGameInfo from "@organisms/topupGameInfo";
 
 type Props = {};
 

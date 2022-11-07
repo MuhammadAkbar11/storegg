@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "target": "es5",
     "lib": [
       "dom",
@@ -17,7 +18,42 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    "paths": {
+      "@components/*": [
+        "components/*"
+      ],
+      "@atoms/*": [
+        "components/atoms/*"
+      ],
+      "@organisms/*": [
+        "components/organisms/*"
+      ],
+      "@molecules/*": [
+        "components/molecules/*"
+      ],
+      "@hooks/*": [
+        "hooks/*"
+      ],
+      "@styles/*": [
+        "styles/*"
+      ],
+      "@public/*": [
+        "public/*"
+      ],
+      "@images/*": [
+        "public/images/*"
+      ],
+      "@globals/*": [
+        "globals/*"
+      ],
+      "@utils/*": [
+        "utils/*"
+      ],
+      "@services/*": [
+        "services/*"
+      ]
+    }
   },
   "include": [
     "next-env.d.ts",

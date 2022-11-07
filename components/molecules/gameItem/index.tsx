@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import GameConsoleIcon from "../../atoms/icons/gameConsoleIcon";
+import GameConsoleIcon from "@atoms/icons/gameConsoleIcon";
 
 type Props = {
   name: string;

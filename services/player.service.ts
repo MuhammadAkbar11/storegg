@@ -1,20 +1,7 @@
+import { IFeaturedGameQueries } from "@globals/types";
 import axios from "axios";
 import { API_URI, ROOT_API } from "../globals/constants";
 import { queriesToString } from "../utils/index.utils";
-
-export interface IGame {
-  voucherId: string;
-  gameName: string;
-  thumbnail: string;
-  category: string;
-}
-
-interface IFeaturedGameQueries {
-  limit: number;
-  page: number;
-  search?: string;
-  sortBy?: string;
-}
 
 export async function getFeaturedGameService(arg: IFeaturedGameQueries) {
   const queries = queriesToString<IFeaturedGameQueries>(arg);

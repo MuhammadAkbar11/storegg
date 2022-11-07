@@ -9,3 +9,27 @@ export interface IFTransaction {
   price: string;
   status: TransactionStatus;
 }
+
+export interface ICategory {
+  categoryId: string;
+  name: string;
+  description: string;
+}
+
+// Games or Vouchers
+export interface IGameItem {
+  voucherId: string;
+  gameName: string;
+  thumbnail: string;
+  gameCoinName: string;
+  status: string;
+  category: ICategory;
+  [key: string]: any;
+}
+
+export interface IFeaturedGameQueries {
+  limit: number;
+  page: number;
+  search?: string;
+  sortBy?: string;
+}

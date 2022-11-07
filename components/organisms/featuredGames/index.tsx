@@ -1,12 +1,14 @@
 import React from "react";
-import { getFeaturedGameService, IGame } from "@services/player.service";
+import { getFeaturedGameService } from "@services/player.service";
 import GameItem from "@molecules/gameItem";
+import { IGameItem } from "@globals/types";
 
 type Props = {};
 
 function FeaturedGames({}: Props) {
-  const [loadingFeaturedGames, setLoadingFeatured] = React.useState(true);
-  const [featuredGames, setFeaturedGames] = React.useState<IGame[]>([]);
+  const [loadingFeaturedGames, setLoadingFeatured] =
+    React.useState<boolean>(true);
+  const [featuredGames, setFeaturedGames] = React.useState<IGameItem[]>([]);
 
   const onGetFeaturedGameList = React.useCallback(async () => {
     const games = await getFeaturedGameService({
@@ -41,7 +43,7 @@ function FeaturedGames({}: Props) {
                   name={gm.gameName}
                   link={`/detail/${gm.voucherId}`}
                   image={gm.thumbnail}
-                  platform={gm.category}
+                  platform={gm.category.name}
                 />
               );
             })}

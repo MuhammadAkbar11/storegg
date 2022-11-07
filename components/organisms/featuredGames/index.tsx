@@ -1,9 +1,6 @@
 import React from "react";
-import {
-  getFeaturedGameService,
-  IGame,
-} from "../../../services/player.service";
-import GameItem from "../../molecules/gameItem";
+import { getFeaturedGameService, IGame } from "@services/player.service";
+import GameItem from "@molecules/gameItem";
 
 type Props = {};
 
@@ -11,17 +8,18 @@ function FeaturedGames({}: Props) {
   const [loadingFeaturedGames, setLoadingFeatured] = React.useState(true);
   const [featuredGames, setFeaturedGames] = React.useState<IGame[]>([]);
 
-  React.useEffect(() => {
-    const getVoucher = async () => {
-      const games = await getFeaturedGameService({
-        limit: 5,
-        page: 1,
-      });
-      console.log(games);
-      setFeaturedGames(games);
-    };
+  const onGetFeaturedGameList = React.useCallback(async () => {
+    const games = await getFeaturedGameService({
+      limit: 5,
+      page: 1,
+      sortBy: "featured",
+    });
 
-    getVoucher();
+    setFeaturedGames(games);
+  }, [getFeaturedGameService]);
+
+  React.useEffect(() => {
+    onGetFeaturedGameList();
   }, []);
 
   return (

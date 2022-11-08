@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Footer from "@organisms/footer";
 import NavbarMenu from "@organisms/navbarMenu";
 import TopUpForm from "@organisms/topupForm";
 import TopUpGameInfo from "@organisms/topupGameInfo";
+import { useRouter } from "next/router";
 
 type Props = {};
 
 function Detail({}: Props) {
+  const { isReady, query } = useRouter();
+
+  useEffect(() => {
+    if (isReady) {
+      console.log("Router is ready");
+      console.log(query);
+    } else {
+      console.log("Router is'nt ready");
+    }
+  }, [isReady]);
+
   return (
     <>
       <NavbarMenu />

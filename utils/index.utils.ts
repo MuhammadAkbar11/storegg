@@ -3,3 +3,11 @@ export function queriesToString<T extends Record<string, any>>(queries: T) {
     .map(key => `${key}=${queries[key]}`)
     .join("&");
 }
+
+export function uRupiah(value: number) {
+  const result = value.toLocaleString("id", {
+    style: "currency",
+    currency: "IDR",
+  });
+  return result;
+}

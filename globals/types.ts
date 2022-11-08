@@ -27,6 +27,19 @@ export interface IGameItem {
   [key: string]: any;
 }
 
+export interface IGameNominal {
+  nominalId: string;
+  quantity: number;
+  coinName: string;
+  price: string;
+  description: string;
+}
+
+export interface IGameDetailItem extends Omit<IGameItem, "category"> {
+  nominals: IGameNominal[] | null;
+  category: string;
+}
+
 export interface IFeaturedGameQueries {
   limit: number;
   page: number;

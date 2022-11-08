@@ -1,11 +1,11 @@
 import React from "react";
-import CardIcon from "../../atoms/icons/cardIcon";
-import LogOutIcon from "../../atoms/icons/logOutIcon";
-import MessagesIcon from "../../atoms/icons/messagesIcon";
-import OverviewIcon from "../../atoms/icons/overviewIcon";
-import RewardsIcon from "../../atoms/icons/rewardsIcon";
-import SetttingsIcon from "../../atoms/icons/setttingsIcon";
-import TransactionsIcon from "../../atoms/icons/transactionsIcon";
+import CardIcon from "@atoms/icons/cardIcon";
+import LogOutIcon from "@atoms/icons/logOutIcon";
+import MessagesIcon from "@atoms/icons/messagesIcon";
+import OverviewIcon from "@atoms/icons/overviewIcon";
+import RewardsIcon from "@atoms/icons/rewardsIcon";
+import SetttingsIcon from "@atoms/icons/setttingsIcon";
+import TransactionsIcon from "@atoms/icons/transactionsIcon";
 
 type IconOptions = {
   overview: JSX.Element;

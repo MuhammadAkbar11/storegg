@@ -1,21 +1,33 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Footer from "@organisms/footer";
 import NavbarMenu from "@organisms/navbarMenu";
 import TopUpForm from "@organisms/topupForm";
 import TopUpGameInfo from "@organisms/topupGameInfo";
 import { useRouter } from "next/router";
+import { getDetailVouherService } from "@services/player.service";
+import { IGameDetailItem } from "@globals/types";
+import Link from "next/link";
 
 type Props = {};
 
 function Detail({}: Props) {
+  const [loading, setLoading] = React.useState<boolean>(true);
+  const [voucher, setVoucher] = React.useState<IGameDetailItem | null>(null);
   const { isReady, query } = useRouter();
 
-  useEffect(() => {
-    if (isReady) {
-      console.log("Router is ready");
-      console.log(query);
+  const onGetDetailData = React.useCallback(async (id: any) => {
+    const getVoucher = (await getDetailVouherService(id)) as any;
+    if (getVoucher.status !== "ERROR") {
+      setVoucher(getVoucher);
     } else {
-      console.log("Router is'nt ready");
+      console.log("ERROR");
+    }
+    setLoading(false);
+  }, []);
+
+  React.useEffect(() => {
+    if (isReady) {
+      onGetDetailData(query.Id);
     }
   }, [isReady]);
 
@@ -25,24 +37,57 @@ function Detail({}: Props) {
       {/* Detail Content */}
       <section className="detail pt-lg-60 pb-50">
         <div className="container-xxl container-fluid">
-          <div className="detail-header pb-50">
-            <h2 className="text-4xl fw-bold color-palette-1 text-start mb-10">
-              Top Up
-            </h2>
-            <p className="text-lg color-palette-1 mb-0">
-              Perkuat akun dan jadilah pemenang
-            </p>
-          </div>
-          <div className="row">
-            <div className="col-xl-3 col-lg-4 col-md-5 pb-30 pb-md-0 pe-md-25 text-md-start">
-              <TopUpGameInfo view="mobile" />
+          {loading ? (
+            <div className=" d-flex justify-content-center py-4 ">
+              <div className="spinner-border color-palette-4" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
             </div>
-            <div className="col-xl-9 col-lg-8 col-md-7 ps-md-25">
-              <TopUpGameInfo view="desktop" />
-              <hr />
-              <TopUpForm />
-            </div>
-          </div>
+          ) : null}
+          {voucher ? (
+            <>
+              <div className="detail-header pb-50">
+                <h2 className="text-4xl fw-bold color-palette-1 text-start mb-10">
+                  Top Up
+                </h2>
+                <p className="text-lg color-palette-1 mb-0">
+                  Perkuat akun dan jadilah pemenang
+                </p>
+              </div>
+
+              <div className="row">
+                <div className="col-xl-3 col-lg-4 col-md-5 pb-30 pb-md-0 pe-md-25 text-md-start">
+                  <TopUpGameInfo gameInfo={voucher} view="mobile" />
+                </div>
+                <div className="col-xl-9 col-lg-8 col-md-7 ps-md-25">
+                  <TopUpGameInfo view="desktop" gameInfo={voucher} />
+                  <hr />
+                  <TopUpForm />
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              {!loading ? (
+                <div className="detail-header pb-50">
+                  <h2 className="text-4xl fw-bold color-palette-1 text-start mb-10">
+                    Voucher Tidak Dapat di Temukan
+                  </h2>
+                  <p className="text-lg color-palette-1 mb-0">
+                    Silahkan refresh halaman atau{" "}
+                    <Link href={"/"}>
+                      <a
+                        className="btn-learn text-lg color-palette-1 my-auto text-center"
+                        role="button"
+                      >
+                        kembali ke halaman utama
+                      </a>
+                    </Link>
+                  </p>
+                </div>
+              ) : null}
+            </>
+          )}
         </div>
       </section>
       <Footer />

@@ -1,5 +1,6 @@
 export type Platform = "Desktop" | "Mobile" | "Others";
 export type TransactionStatus = "success" | "pending" | "failed";
+export type PaymentMethodType = "paypal" | "transfer" | "visa";
 
 export interface IFTransaction {
   game: string;

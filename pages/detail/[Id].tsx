@@ -5,34 +5,31 @@ import TopUpForm from "@organisms/topupForm";
 import TopUpGameInfo from "@organisms/topupGameInfo";
 import { useRouter } from "next/router";
 import { getDetailVouherService } from "@services/player.service";
-import { IGameDetailItem } from "@globals/types";
 import Link from "next/link";
+import Head from "next/head";
+import {
+  useVoucherDetailContext,
+  VoucherDetailProvider,
+} from "context/VoucherDetailContext";
 
 type Props = {};
 
 function Detail({}: Props) {
-  const [loading, setLoading] = React.useState<boolean>(true);
-  const [voucher, setVoucher] = React.useState<IGameDetailItem | null>(null);
-  const { isReady, query } = useRouter();
+  const { voucher, loading, onFetchDataHandler } = useVoucherDetailContext();
 
-  const onGetDetailData = React.useCallback(async (id: any) => {
-    const getVoucher = (await getDetailVouherService(id)) as any;
-    if (getVoucher.status !== "ERROR") {
-      setVoucher(getVoucher);
-    } else {
-      console.log("ERROR");
-    }
-    setLoading(false);
-  }, []);
+  const { isReady, query } = useRouter();
 
   React.useEffect(() => {
     if (isReady) {
-      onGetDetailData(query.Id);
+      onFetchDataHandler(query.Id);
     }
   }, [isReady]);
 
   return (
     <>
+      <Head>
+        <title>{voucher ? voucher?.gameName : "Loading..."} | StoreGG</title>
+      </Head>
       <NavbarMenu />
       {/* Detail Content */}
       <section className="detail pt-lg-60 pb-50">
@@ -94,5 +91,7 @@ function Detail({}: Props) {
     </>
   );
 }
+
+Detail.provider = VoucherDetailProvider;
 
 export default Detail;

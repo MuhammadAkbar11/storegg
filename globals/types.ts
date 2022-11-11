@@ -46,3 +46,10 @@ export interface IFeaturedGameQueries {
   search?: string;
   sortBy?: string;
 }
+
+export interface IErrorAPI {
+  name: string;
+  message: string;
+  statusCode: string;
+  [key: string]: any;
+}

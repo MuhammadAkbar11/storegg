@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { useEffect, ReactNode, ComponentType } from "react";
+import { SSRProvider } from "react-bootstrap";
 
 type NextPageWithProvider = NextPage & {
   provider?: ComponentType;
@@ -50,9 +51,11 @@ function MyApp({ Component, pageProps }: AppPropsWithProvider) {
         />
         <link rel="manifest" href="/favicon/site.webmanifest"></link>
       </Head>
-      <ContextProvider>
-        <Component {...pageProps} />
-      </ContextProvider>
+      <SSRProvider>
+        <ContextProvider>
+          <Component {...pageProps} />
+        </ContextProvider>
+      </SSRProvider>
     </>
   );
 }

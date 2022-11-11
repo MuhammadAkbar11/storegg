@@ -24,7 +24,6 @@ export interface IGameItem {
   gameCoinName: string;
   status: string;
   category: ICategory;
-  [key: string]: any;
 }
 
 export interface IGameNominal {

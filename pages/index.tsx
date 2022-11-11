@@ -7,8 +7,15 @@ import MainBanner from "@organisms/mainBanner";
 import NavbarMenu from "@organisms/navbarMenu";
 import Reached from "@organisms/reached";
 import Footer from "@organisms/footer";
+import { useEffect } from "react";
 
 const Home: NextPage = () => {
+  useEffect(() => {
+    const isBrowser = typeof window !== "undefined";
+    const AOS = isBrowser ? require("aos") : undefined;
+    AOS.init();
+  }, []);
+
   return (
     <>
       <Head>

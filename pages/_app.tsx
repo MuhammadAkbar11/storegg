@@ -1,14 +1,27 @@
 import "@styles/scss/index.scss";
+import { NextPage } from "next";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import { useEffect } from "react";
+import { useEffect, ReactNode, ComponentType } from "react";
 
-function MyApp({ Component, pageProps }: AppProps) {
+type NextPageWithProvider = NextPage & {
+  provider?: ComponentType;
+};
+
+type AppPropsWithProvider = AppProps & {
+  Component: NextPageWithProvider;
+};
+
+const DefaultPage = ({ children }: { children: ReactNode }) => <>{children}</>;
+
+function MyApp({ Component, pageProps }: AppPropsWithProvider) {
   useEffect(() => {
     const isBrowser = typeof window !== "undefined";
     const AOS = isBrowser ? require("aos") : undefined;
     AOS.init();
   }, []);
+
+  const ContextProvider = Component.provider || DefaultPage;
 
   return (
     <>
@@ -37,7 +50,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
         <link rel="manifest" href="/favicon/site.webmanifest"></link>
       </Head>
-      <Component {...pageProps} />
+      <ContextProvider>
+        <Component {...pageProps} />
+      </ContextProvider>
     </>
   );
 }

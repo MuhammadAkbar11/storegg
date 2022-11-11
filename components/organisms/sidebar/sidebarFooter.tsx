@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import SidebarFooterIcon from "./sidebarFooterIcon";
 
@@ -15,13 +16,14 @@ function SidebarFooter({}: Props) {
             Be The Winner
           </p>
         </div>
-        <a
-          className="btn btn-get-started w-100 fw-medium text-xs text-center text-white rounded-pill"
-          href="#"
-          role="button"
-        >
-          Get Started
-        </a>
+        <Link href={"/"}>
+          <a
+            className="btn btn-get-started w-100 fw-medium text-xs text-center text-white rounded-pill"
+            role="button"
+          >
+            Get Started
+          </a>
+        </Link>
       </div>
     </div>
   );

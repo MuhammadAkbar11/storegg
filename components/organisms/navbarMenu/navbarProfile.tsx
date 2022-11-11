@@ -34,7 +34,7 @@ function NavbarProfile(props: Props) {
           <div>
             <Dropdown.Toggle
               as={"a"}
-              href="/#"
+              href="#"
               role="button"
               className="ms-lg-40"
               id="dropdown-basic"

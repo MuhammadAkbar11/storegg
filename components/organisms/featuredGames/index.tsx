@@ -16,8 +16,11 @@ function FeaturedGames({}: Props) {
       page: 1,
       sortBy: "featured",
     });
+    if (games.status !== "ERROR") {
+      setFeaturedGames(games);
+    }
 
-    setFeaturedGames(games);
+    setLoadingFeatured(false);
   }, [getFeaturedGameService]);
 
   React.useEffect(() => {
@@ -31,52 +34,30 @@ function FeaturedGames({}: Props) {
           Our Featured
           <br /> Games This Year
         </h2>
+        {loadingFeaturedGames ? (
+          <div className=" w-full d-flex justify-content-center py-5 ">
+            <div className="spinner-border color-palette-4" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        ) : null}
         <div
           className="d-flex flex-row flex-lg-wrap overflow-setting justify-content-lg-start gap-lg-3 gap-4 pb-3 "
           data-aos="fade-up"
         >
-          {featuredGames &&
-            featuredGames.map(gm => {
-              return (
-                <GameItem
-                  key={gm.voucherId}
-                  name={gm.gameName}
-                  link={`/detail/${gm.voucherId}`}
-                  image={gm.thumbnail}
-                  platform={gm.category.name}
-                />
-              );
-            })}
-          {/* <GameItem
-            name="Pubg Mobile"
-            link="/detail/pubg-mobile"
-            image="/img/Thumbnail-6.png"
-            platform="Mobile"
-          />
-          <GameItem
-            name="Valorant"
-            link="/detail/pubg-mobile"
-            image="/img/Thumbnail-5.png"
-            platform="Desktop"
-          />
-          <GameItem
-            name="Dota 2"
-            link="/detail/pubg-mobile"
-            image="/img/Thumbnail-8.png"
-            platform="Desktop"
-          />
-          <GameItem
-            name="Mobile Legends"
-            link="/detail/pubg-mobile"
-            image="/img/Thumbnail-3.png"
-            platform="Mobile"
-          />
-          <GameItem
-            name="Free Fire"
-            link="/detail/pubg-mobile"
-            image="/img/Thumbnail-7.png"
-            platform="Mobile"
-          /> */}
+          {featuredGames.length !== 0
+            ? featuredGames?.map(gm => {
+                return (
+                  <GameItem
+                    key={gm.voucherId}
+                    name={gm.gameName}
+                    link={`/detail/${gm.voucherId}`}
+                    image={gm.thumbnail}
+                    platform={gm.category.name}
+                  />
+                );
+              })
+            : null}
         </div>
       </div>
     </section>

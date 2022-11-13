@@ -1,4 +1,5 @@
 import {
+  IBank,
   IFeaturedGameQueries,
   IGameDetailItem,
   IGameNominal,
@@ -32,7 +33,15 @@ export async function getDetailVouherService(voucherID: string) {
     const response = await axios.get(`${API_URI}/vouchers/${voucherID}`);
     const { data } = response.data;
     const voucher = data.voucher;
-    const banks = data.banks;
+
+    const banks = data.banks.map((bank: any): IBank => {
+      return {
+        bankId: bank.bank_id,
+        bankName: bank.bank_name,
+        accountName: bank.account_name,
+        noRekening: bank.no_rekening,
+      };
+    });
     const voucherResult: IGameDetailItem = {
       voucherId: voucher.voucher_id,
       gameName: voucher.game_name,

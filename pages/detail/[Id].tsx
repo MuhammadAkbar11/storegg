@@ -15,7 +15,8 @@ import {
 type Props = {};
 
 function Detail({}: Props) {
-  const { voucher, loading, onFetchDataHandler } = useVoucherDetailContext();
+  const { voucher, loading, onFetchDataHandler, error } =
+    useVoucherDetailContext();
 
   const { isReady, query } = useRouter();
 
@@ -25,10 +26,12 @@ function Detail({}: Props) {
     }
   }, [isReady]);
 
+  const title = voucher ? voucher?.gameName : "Loading...";
+
   return (
     <>
       <Head>
-        <title>{voucher ? voucher?.gameName : "Loading..."} | StoreGG</title>
+        <title>{title} | StoreGG</title>
       </Head>
       <NavbarMenu />
       {/* Detail Content */}
@@ -65,7 +68,7 @@ function Detail({}: Props) {
             </>
           ) : (
             <>
-              {!loading ? (
+              {!loading && error ? (
                 <div className="detail-header pb-50">
                   <h2 className="text-4xl fw-bold color-palette-1 text-start mb-10">
                     Voucher Tidak Dapat di Temukan

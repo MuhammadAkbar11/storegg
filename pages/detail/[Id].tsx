@@ -26,12 +26,16 @@ function Detail({}: Props) {
     }
   }, [isReady]);
 
-  const title = voucher ? voucher?.gameName : "Loading...";
+  const title = voucher?.gameName;
 
   return (
     <>
       <Head>
-        <title>{title} | StoreGG</title>
+        {voucher ? (
+          <title>{title} | StoreGG</title>
+        ) : (
+          <title>Loading... | StoreGG</title>
+        )}
       </Head>
       <NavbarMenu />
       {/* Detail Content */}

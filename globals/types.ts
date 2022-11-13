@@ -2,6 +2,13 @@ export type Platform = "Desktop" | "Mobile" | "Others";
 export type TransactionStatus = "success" | "pending" | "failed";
 export type PaymentMethodType = "paypal" | "transfer" | "visa";
 
+export interface IBank {
+  bankId: string;
+  accountName: string;
+  bankName: string;
+  noRekening: string;
+}
+
 export interface IFTransaction {
   game: string;
   gameImage: string;

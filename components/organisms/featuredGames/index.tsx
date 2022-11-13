@@ -6,26 +6,35 @@ import { IGameItem } from "@globals/types";
 type Props = {};
 
 function FeaturedGames({}: Props) {
+  const effRun = React.useRef(false);
   const [loadingFeaturedGames, setLoadingFeatured] =
     React.useState<boolean>(true);
   const [featuredGames, setFeaturedGames] = React.useState<IGameItem[]>([]);
 
   const onGetFeaturedGameList = React.useCallback(async () => {
-    const games = await getFeaturedGameService({
-      limit: 5,
-      page: 1,
-      sortBy: "featured",
-    });
-    if (games.status !== "ERROR") {
-      setFeaturedGames(games);
-    }
+    try {
+      const games = await getFeaturedGameService({
+        limit: 5,
+        page: 1,
+        sortBy: "featured",
+      });
 
-    setLoadingFeatured(false);
+      setFeaturedGames(games);
+      console.log("Games");
+      setLoadingFeatured(false);
+    } catch (error) {
+      console.log(error);
+    }
   }, [getFeaturedGameService]);
 
   React.useEffect(() => {
-    onGetFeaturedGameList();
-  }, []);
+    if (effRun.current === true) {
+      onGetFeaturedGameList();
+    }
+    return () => {
+      effRun.current = true;
+    };
+  }, [effRun]);
 
   return (
     <section className="featured-game pt-50 pb-50">

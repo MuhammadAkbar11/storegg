@@ -1,17 +1,23 @@
+import { useVoucherDetailContext } from "@context/VoucherDetailContext";
 import { PaymentMethodType } from "@globals/types";
 import React from "react";
 import TopupFormNomianlList from "./topupFormNomianlList";
 import TopupFormPaymentItem from "./topupFormPaymentItem";
+import TopupFormTransferBank from "./topUpTransferBank";
 
 type Props = {};
 
 function TopUpForm({}: Props) {
+  const { banks } = useVoucherDetailContext();
+
   const [payMethod, setPayMethod] =
-    React.useState<PaymentMethodType>("transfer");
+    React.useState<PaymentMethodType | null>(null);
 
   const onChangePayment = (method: PaymentMethodType) => {
     setPayMethod(method);
   };
+
+  // const banksList =
 
   return (
     <form action="./checkout.html" method="POST">
@@ -67,7 +73,30 @@ function TopUpForm({}: Props) {
           </div>
         </fieldset>
       </div>
-      {payMethod !== "paypal" ? (
+      {payMethod && payMethod === "transfer" ? (
+        <div className="pb-md-50 pb-20">
+          <p className="text-lg fw-medium color-palette-1 mb-md-10 mb-0">
+            Select Bank To Transfer
+          </p>
+          <fieldset id="bankTransfer">
+            <div className="row justify-content-between">
+              {banks.map(bnk => {
+                return (
+                  <TopupFormTransferBank
+                    bankId={bnk?.bankId}
+                    key={bnk?.bankId}
+                    bankName={bnk?.bankName}
+                    accountName={bnk?.accountName}
+                    noRekening={bnk?.noRekening}
+                  />
+                );
+              })}
+              <div className="col-lg-4 col-sm-6">{/* Blank */}</div>
+            </div>
+          </fieldset>
+        </div>
+      ) : null}
+      {payMethod && payMethod === "transfer" ? (
         <div className="pb-50">
           <label
             htmlFor="bankAccount"

@@ -37,7 +37,7 @@ export async function getDetailVouherService(voucherID: string) {
       voucherId: voucher.voucher_id,
       gameName: voucher.game_name,
       thumbnail: ROOT_API + voucher.thumbnail,
-      category: data?.category?.name,
+      category: voucher.category?.name,
       status: voucher.status,
       gameCoinName: voucher.game_coin_name,
       nominals: voucher.nominals.map(

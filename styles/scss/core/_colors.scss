@@ -1,0 +1,95 @@
+$color-palette-1: #0c145a;
+$color-palette-6: #212863;
+$color-palette-2: #7e8cac;
+$color-palette-3: #ccd0dd;
+$color-palette-4: #4d17e2;
+
+$white: #fff;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+$black: #000;
+
+$blue: #007bff;
+$indigo: #6610f2;
+$purple: #6f42c1;
+$pink: #e83e8c;
+$red: #dc3545;
+$orange: #fd7e14;
+$yellow: #ffc107;
+$green: #28a745;
+$teal: #20c997;
+$cyan: #17a2b8;
+
+$font-family-sans-serif: "Poppins", sans-serif;
+
+$poppins: "Poppins", sans-serif;
+$heebo: "Heebo", sans-serif;
+
+$colors: ();
+$colors: map-merge(
+  (
+    "black": $black,
+    "blue": $blue,
+    "indigo": $indigo,
+    "purple": $purple,
+    "pink": $pink,
+    "red": $red,
+    "orange": $orange,
+    "yellow": $yellow,
+    "green": $green,
+    "teal": $teal,
+    "cyan": $cyan,
+    "white": $white,
+    "gray": $gray-600,
+    "gray-dark": $gray-800,
+  ),
+  $colors
+);
+
+$primary: $color-palette-4;
+$secondary: $color-palette-1;
+$success: $green;
+$info: $cyan;
+$warning: $yellow;
+$danger: $red;
+$light: $gray-100;
+$dark: $gray-800;
+
+$theme-colors: map-merge(
+  (
+    "primary": $primary,
+    "danger": #ff4136,
+    "palette-1": $color-palette-1,
+    "palette-2": $color-palette-2,
+    "palette-3": $color-palette-3,
+    "palette-4": $color-palette-4,
+    "palette-6": $color-palette-6,
+    "gray-100": $gray-100,
+    "gray-200": $gray-200,
+    "gray-300": $gray-300,
+    "gray-400": $gray-400,
+    "gray-500": $gray-500,
+    "gray-600": $gray-600,
+    "gray-700": $gray-700,
+    "gray-800": $gray-800,
+    "gray-900": $gray-900,
+  ),
+  $colors
+);
+
+// text Colors ---------------
+$white: #ffffff;
+$black: #000000;
+$bg-black: #000000;
+$bg-white: #ffffff;
+$grey: #fafafa;
+
+// Merge the maps
+// $theme-colors: map-merge($theme-colors, $custom-colors);

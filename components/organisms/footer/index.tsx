@@ -66,7 +66,7 @@ function Footer({}: Props) {
   ];
 
   return (
-    <section className="footer pt-50">
+    <section className="footer ">
       <footer>
         <div className="container-fluid">
           <div className="row">

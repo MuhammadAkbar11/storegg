@@ -244,8 +244,12 @@
 
 
 /* Color Palette */
-.color-palette-1{
+.color-palette-1 {
   color: #0C145A;
+}
+
+.color-palette-6 {
+  color: #212863;
 }
 
 .color-palette-2{
@@ -411,6 +415,8 @@
       padding-bottom: 14.188rem;
   }
 
+
+
   .pe-lg-60{
       padding-right: 3.75rem;
   }
@@ -421,6 +427,18 @@
 
   .pt-lg-60{
       padding-top: 3.75rem;
+  }
+
+  .pe-lg-80{
+      padding-right: 4.25rem;
+  }
+
+  .ps-lg-80{
+      padding-left: 4.25rem;
+  }
+
+  .pt-lg-80{
+      padding-top: 4.25rem;
   }
 
   .pt-lg-145{

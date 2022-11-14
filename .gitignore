@@ -36,3 +36,5 @@ storybook-static
 
 # typescript
 *.tsbuildinfo
+
+*.test.*

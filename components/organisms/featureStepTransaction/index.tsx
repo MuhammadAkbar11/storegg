@@ -1,5 +1,5 @@
 import React from "react";
-import FeatureStepTransactionItem from "../../molecules/featureStepTransactionItem";
+import FeatureStepTransactionItem from "@molecules/featureStepTransactionItem";
 
 type Props = {};
 

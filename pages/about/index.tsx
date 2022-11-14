@@ -2,6 +2,7 @@ import AboutStory from "@components/organisms/aboutStory";
 import Companies from "@components/organisms/companies";
 import Footer from "@components/organisms/footer";
 import NavbarMenu from "@components/organisms/navbarMenu";
+import OurServices from "@components/organisms/ourServices";
 import PageHero from "@components/organisms/pageHero";
 import Head from "next/head";
 import React from "react";
@@ -20,6 +21,7 @@ function AboutUs({}: Props) {
       <NavbarMenu />
       <PageHero title="About Us" />
       <AboutStory type="top" />
+      <OurServices />
       <AboutStory type="bottom" />
       <Companies />
       <Footer />

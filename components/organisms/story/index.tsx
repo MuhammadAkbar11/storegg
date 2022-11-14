@@ -15,21 +15,18 @@ type Props = {
 function Story(props: Props) {
   const { reverse, title1nd, title2nd, image, text, action } = props;
 
-  const imageClassname = csx(
-    "col-lg-7 col-12 d-lg-flex d-none justify-content-lg-end pe-lg-60",
-    {
-      "order-0": !reverse,
-      "order-1": reverse,
-    }
-  );
+  const imageClassname = csx("flex  col-lg-7 col-12 d-lg-flex d-none  ", {
+    "order-0 pe-lg-5 ": !reverse,
+    "order-1 pe-lg-60 flex justify-content-end": reverse,
+  });
 
-  const contentClassname = csx("col-lg-5 col-12 ps-lg-60", {
+  const contentClassname = csx("col-lg-5 col-12 ", {
     "order-1": !reverse,
-    "order-0": reverse,
+    "order-0 ps-lg-60": reverse,
   });
 
   return (
-    <section className="story pt-50 pb-50">
+    <section className="story pt-50 pb-100  ">
       <div className="container-xxl container-fluid">
         <div className="row d-flex align-items-center px-lg-5 mx-auto gap-lg-0 gap-4">
           <div className={imageClassname} data-aos="zoom-in">

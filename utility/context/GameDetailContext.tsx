@@ -1,6 +1,6 @@
 import { IBank, IErrorAPI, IGameDetailItem } from "@globals/types";
 import { getDetailVouherService } from "@services/player.service";
-import { UNKNOWM_ERROR } from "@utils/constant.utils";
+import { UNKNOWM_ERROR } from "@utility/constant.utils";
 import React, {
   createContext,
   useContext,
@@ -9,7 +9,7 @@ import React, {
   useCallback,
 } from "react";
 
-type VoucherDetailContextType = {
+type GameDetailContextType = {
   voucher: IGameDetailItem | null;
   error: IErrorAPI | null;
   banks: Partial<IBank[]>;
@@ -17,7 +17,7 @@ type VoucherDetailContextType = {
   onFetchDataHandler: (ID: any) => void;
 };
 
-const voucherDetailContextDefaultValues: VoucherDetailContextType = {
+const gameDetailContextDefaultValues: GameDetailContextType = {
   loading: true,
   voucher: null,
   banks: [],
@@ -25,19 +25,19 @@ const voucherDetailContextDefaultValues: VoucherDetailContextType = {
   onFetchDataHandler: () => {},
 };
 
-export const VoucherDetailContext = createContext<VoucherDetailContextType>(
-  voucherDetailContextDefaultValues
+export const GameDetailContext = createContext<GameDetailContextType>(
+  gameDetailContextDefaultValues
 );
 
-export function useVoucherDetailContext() {
-  return useContext(VoucherDetailContext);
+export function useGameDetailContext() {
+  return useContext(GameDetailContext);
 }
 
 type Props = {
   children: ReactNode;
 };
 
-export function VoucherDetailProvider({ children }: Props) {
+export function GameDetailProvider({ children }: Props) {
   const [error, setError] = useState<IErrorAPI | null>(null);
   const [banks, setBanks] = useState<Partial<IBank[]>>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -57,7 +57,7 @@ export function VoucherDetailProvider({ children }: Props) {
     setLoading(false);
   }, []);
 
-  const value: VoucherDetailContextType = {
+  const value: GameDetailContextType = {
     error,
     banks,
     voucher,
@@ -67,9 +67,9 @@ export function VoucherDetailProvider({ children }: Props) {
 
   return (
     <>
-      <VoucherDetailContext.Provider value={value}>
+      <GameDetailContext.Provider value={value}>
         {children}
-      </VoucherDetailContext.Provider>
+      </GameDetailContext.Provider>
     </>
   );
 }

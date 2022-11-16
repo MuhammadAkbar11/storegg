@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import clsx from "classnames";
-import { TransactionStatus } from "../../../globals/types";
+import type { TransactionStatus } from "@utility/types";
 
 type ActiveTypes = "*" | TransactionStatus;
 

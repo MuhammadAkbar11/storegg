@@ -1,4 +1,4 @@
-import { IErrorAPI, IGameDetailItem } from "@globals/types";
+import { IErrorAPI, IGameDetailItem } from "@utility/types";
 import { getDetailVouherService } from "@services/player.service";
 import React, {
   createContext,

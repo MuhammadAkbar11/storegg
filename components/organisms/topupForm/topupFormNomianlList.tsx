@@ -1,11 +1,11 @@
 import React from "react";
-import { useVoucherDetailContext } from "@context/VoucherDetailContext";
+import { useGameDetailContext } from "@context/GameDetailContext";
 import TopupFormNomialItem from "./topupFormNomialItem";
 
 type Props = {};
 
 function TopupFormNomianl({}: Props) {
-  const { voucher } = useVoucherDetailContext();
+  const { voucher } = useGameDetailContext();
   const nominals = voucher?.nominals ?? [];
 
   return (

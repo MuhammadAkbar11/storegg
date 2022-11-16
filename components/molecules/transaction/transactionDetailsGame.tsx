@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "classnames";
-import { Platform, TransactionStatus } from "../../../globals/types";
+import type { Platform, TransactionStatus } from "@utility/types";
 
 type Props = {
   image: string;

@@ -1,4 +1,4 @@
-import { IFTransaction } from "./types";
+import { IFTransaction } from "@utility/types";
 
 const dummyTransactionData: IFTransaction[] = [
   {

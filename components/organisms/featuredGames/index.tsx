@@ -1,7 +1,7 @@
 import React from "react";
 import { getFeaturedGameService } from "@services/player.service";
 import GameItem from "@molecules/gameItem";
-import { IGameItem } from "@globals/types";
+import { IGameItem } from "@utility/types";
 
 type Props = {};
 

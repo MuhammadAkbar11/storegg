@@ -1,13 +1,13 @@
 import {
-  IBank,
   IFeaturedGameQueries,
   IGameDetailItem,
   IGameNominal,
-} from "@globals/types";
-import { uTranformAxiosError } from "@utils/error.utils";
+} from "@utility/types";
+import type { IBank } from "@utility/types";
+import { uTranformAxiosError } from "@utility/error.utils";
 import axios from "axios";
-import { API_URI, ROOT_API } from "../globals/constants";
-import { queriesToString, uRupiah } from "../utils/index.utils";
+import { API_URI, ROOT_API } from "@utility/constant.utils";
+import { queriesToString, uRupiah } from "@utility/index.utils";
 
 export async function getFeaturedGameService(queryOpt: IFeaturedGameQueries) {
   const queries = queriesToString<IFeaturedGameQueries>(queryOpt);

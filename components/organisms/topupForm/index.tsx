@@ -1,6 +1,6 @@
-import { useVoucherDetailContext } from "@context/VoucherDetailContext";
-import { PaymentMethodType } from "@globals/types";
 import React from "react";
+import type { PaymentMethodType } from "@utility/types";
+import { useGameDetailContext } from "@context/GameDetailContext";
 import TopupFormNomianlList from "./topupFormNomianlList";
 import TopupFormPaymentItem from "./topupFormPaymentItem";
 import TopupFormTransferBank from "./topUpTransferBank";
@@ -8,7 +8,7 @@ import TopupFormTransferBank from "./topUpTransferBank";
 type Props = {};
 
 function TopUpForm({}: Props) {
-  const { banks } = useVoucherDetailContext();
+  const { banks } = useGameDetailContext();
 
   const [payMethod, setPayMethod] =
     React.useState<PaymentMethodType | null>(null);

@@ -1,4 +1,4 @@
-import { IGameDetailItem } from "@globals/types";
+import { IGameDetailItem } from "@utility/types";
 import React from "react";
 
 type Props = {

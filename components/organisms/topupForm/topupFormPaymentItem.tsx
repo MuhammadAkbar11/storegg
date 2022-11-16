@@ -1,4 +1,4 @@
-import { PaymentMethodType } from "@globals/types";
+import { PaymentMethodType } from "@utility/types";
 import React from "react";
 
 type Props = {

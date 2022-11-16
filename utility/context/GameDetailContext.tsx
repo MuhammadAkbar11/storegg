@@ -1,4 +1,4 @@
-import { IBank, IErrorAPI, IGameDetailItem } from "@globals/types";
+import { IBank, IErrorAPI, IGameDetailItem } from "@utility/types";
 import { getDetailVouherService } from "@services/player.service";
 import { UNKNOWM_ERROR } from "@utility/constant.utils";
 import React, {

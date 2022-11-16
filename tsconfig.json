@@ -33,7 +33,7 @@
         "components/molecules/*"
       ],
       "@hooks/*": [
-        "hooks/*"
+        "utility/hooks/*"
       ],
       "@styles/*": [
         "styles/*"
@@ -47,11 +47,11 @@
       "@globals/*": [
         "globals/*"
       ],
-      "@utils/*": [
-        "utils/*"
+      "@utility/*": [
+        "utility/*"
       ],
       "@context/*": [
-        "context/*"
+        "utility/context/*"
       ],
       "@services/*": [
         "services/*"

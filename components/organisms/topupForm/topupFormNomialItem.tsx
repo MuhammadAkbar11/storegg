@@ -1,4 +1,4 @@
-import { IGameNominal } from "@globals/types";
+import { IGameNominal } from "@utility/types";
 import React from "react";
 
 type Props = {} & Omit<IGameNominal, "description">;

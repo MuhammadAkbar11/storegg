@@ -1,4 +1,4 @@
-import { IBank } from "@globals/types";
+import type { IBank } from "@utility/types";
 import React from "react";
 
 type Props = {

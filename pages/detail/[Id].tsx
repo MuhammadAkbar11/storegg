@@ -8,15 +8,15 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import Head from "next/head";
 import {
-  useVoucherDetailContext,
-  VoucherDetailProvider,
-} from "context/VoucherDetailContext";
+  useGameDetailContext,
+  GameDetailProvider,
+} from "@context/GameDetailContext";
 
 type Props = {};
 
 function Detail({}: Props) {
   const { voucher, loading, onFetchDataHandler, error } =
-    useVoucherDetailContext();
+    useGameDetailContext();
 
   const { isReady, query } = useRouter();
 
@@ -99,6 +99,6 @@ function Detail({}: Props) {
   );
 }
 
-Detail.provider = VoucherDetailProvider;
+Detail.provider = GameDetailProvider;
 
 export default Detail;

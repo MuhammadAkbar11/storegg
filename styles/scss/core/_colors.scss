@@ -65,6 +65,7 @@ $dark: $gray-800;
 $theme-colors: map-merge(
   (
     "primary": $primary,
+    "secondary": $secondary,
     "danger": #ff4136,
     "palette-1": $color-palette-1,
     "palette-2": $color-palette-2,

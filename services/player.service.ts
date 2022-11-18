@@ -2,6 +2,7 @@ import {
   IFeaturedGameQueries,
   IGameDetailItem,
   IGameNominal,
+  IListGamesQueries,
 } from "@utility/types";
 import type { IBank } from "@utility/types";
 import { uTranformAxiosError } from "@utility/error.utils";
@@ -23,6 +24,28 @@ export async function getFeaturedGameService(queryOpt: IFeaturedGameQueries) {
       };
     });
     return result;
+  } catch (error: any) {
+    return { status: "ERROR", error };
+  }
+}
+
+export async function getListGameService(queryOpt: IListGamesQueries) {
+  const queries = queriesToString<IListGamesQueries>(queryOpt);
+  try {
+    const response = await axios.get(`${API_URI}/vouchers?${queries}`);
+    const { data } = response.data;
+
+    const result = data.rows.map((g: any) => {
+      return {
+        voucherId: g.voucher_id,
+        gameName: g.game_name,
+        thumbnail: ROOT_API + g.thumbnail,
+        category: g.category?.name,
+      };
+    });
+
+    delete data.rows;
+    return { games: result, ...data };
   } catch (error: any) {
     return { status: "ERROR", error };
   }

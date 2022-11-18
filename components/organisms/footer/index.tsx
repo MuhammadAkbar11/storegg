@@ -14,7 +14,7 @@ type Props = {};
 function Footer({}: Props) {
   const companyWidgets: WidgetLinks[] = [
     {
-      href: "/about-us",
+      href: "/about",
       label: "About Us",
     },
     {

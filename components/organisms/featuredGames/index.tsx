@@ -20,7 +20,6 @@ function FeaturedGames({}: Props) {
       });
 
       setFeaturedGames(games);
-      console.log("Games");
       setLoadingFeatured(false);
     } catch (error) {
       console.log(error);
@@ -62,7 +61,7 @@ function FeaturedGames({}: Props) {
                     name={gm.gameName}
                     link={`/detail/${gm.voucherId}`}
                     image={gm.thumbnail}
-                    platform={gm.category.name}
+                    platform={gm.category}
                   />
                 );
               })

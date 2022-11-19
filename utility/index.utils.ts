@@ -1,6 +1,14 @@
 export function queriesToString<T extends Record<string, any>>(queries: T) {
   return Object.keys(queries)
-    .map(key => `${key}=${queries[key]}`)
+    .filter(
+      key =>
+        queries[key] !== null ||
+        queries[key] !== undefined ||
+        queries[key]?.trim() !== ""
+    )
+    .map(key => {
+      return `${key}=${queries[key]}`;
+    })
     .join("&");
 }
 

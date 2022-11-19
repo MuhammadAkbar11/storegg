@@ -31,7 +31,7 @@ export interface IGameItem {
   thumbnail: string;
   gameCoinName: string;
   status: string;
-  category: ICategory;
+  category: string;
 }
 
 export interface IGameNominal {
@@ -52,6 +52,29 @@ export interface IFeaturedGameQueries {
   page: number;
   search?: string;
   sortBy?: string;
+}
+
+export interface IGameQueries {
+  limit: number;
+  page?: number;
+  search?: string;
+  sortBy?: string;
+  category?: string;
+}
+
+export interface IListGamesQueries {
+  limit: number;
+  search?: string | null;
+  sortBy?: string;
+  category?: string | null;
+  page?: number;
+}
+
+export interface IListGamesResponse {
+  games: IGameItem[];
+  totalItems?: number;
+  totalPages?: number;
+  currentPage?: number;
 }
 
 export interface IErrorAPI {

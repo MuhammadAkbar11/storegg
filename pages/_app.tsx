@@ -4,6 +4,16 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import { useEffect, ReactNode, ComponentType } from "react";
 import { SSRProvider } from "react-bootstrap";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 1000,
+    },
+  },
+});
 
 type NextPageWithProvider = NextPage & {
   provider?: ComponentType;
@@ -51,11 +61,14 @@ function MyApp({ Component, pageProps }: AppPropsWithProvider) {
         />
         <link rel="manifest" href="/favicon/site.webmanifest"></link>
       </Head>
-      <SSRProvider>
-        <ContextProvider>
-          <Component {...pageProps} />
-        </ContextProvider>
-      </SSRProvider>
+      <QueryClientProvider client={queryClient}>
+        <SSRProvider>
+          <ContextProvider>
+            <Component {...pageProps} />
+          </ContextProvider>
+        </SSRProvider>
+        <ReactQueryDevtools />
+      </QueryClientProvider>
     </>
   );
 }

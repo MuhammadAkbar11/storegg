@@ -1,6 +1,7 @@
 import {
   IFeaturedGameQueries,
   IGameDetailItem,
+  IGameItem,
   IGameNominal,
   IListGamesQueries,
   IListGamesResponse,
@@ -11,7 +12,9 @@ import axios from "axios";
 import { API_URI, ROOT_API } from "@utility/constant.utils";
 import { queriesToString, uRupiah } from "@utility/index.utils";
 
-export async function getFeaturedGameService(queryOpt: IFeaturedGameQueries) {
+export async function getFeaturedGameService(
+  queryOpt: IFeaturedGameQueries
+): Promise<IGameItem[]> {
   const queries = queriesToString<IFeaturedGameQueries>(queryOpt);
   try {
     const response = await axios.get(`${API_URI}/vouchers?${queries}`);

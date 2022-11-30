@@ -11,6 +11,7 @@ import {
   useGameDetailContext,
   GameDetailProvider,
 } from "@context/GameDetailContext";
+import Layout from "@components/organisms/layout";
 
 type Props = {};
 
@@ -26,18 +27,10 @@ function Detail({}: Props) {
     }
   }, [isReady]);
 
-  const title = voucher?.gameName;
+  const pageTitle = voucher?.gameName || "Loading...";
 
   return (
-    <>
-      <Head>
-        {voucher ? (
-          <title>{title} | StoreGG</title>
-        ) : (
-          <title>Loading... | StoreGG</title>
-        )}
-      </Head>
-      <NavbarMenu />
+    <Layout pageTitle={pageTitle}>
       {/* Detail Content */}
       <section className="detail pt-lg-60 pb-50">
         <div className="container-xxl container-fluid">
@@ -94,8 +87,7 @@ function Detail({}: Props) {
           )}
         </div>
       </section>
-      <Footer />
-    </>
+    </Layout>
   );
 }
 

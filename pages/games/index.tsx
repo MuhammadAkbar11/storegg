@@ -1,12 +1,11 @@
 import Head from "next/head";
 import React from "react";
-import Footer from "@components/organisms/footer";
-import NavbarMenu from "@components/organisms/navbarMenu";
 import PageHero from "@components/organisms/pageHero";
 import useInitAOS from "utility/hooks/useInitAOS";
 import FormFilterGames from "@components/molecules/formFilterGames";
 import { IListGamesQueries } from "@utility/types";
 import ListGames from "@components/organisms/listGames";
+import Layout from "@components/organisms/layout";
 
 type Props = {};
 
@@ -36,11 +35,7 @@ function ListGamesPage({}: Props) {
   };
 
   return (
-    <>
-      <Head>
-        <title>Games | StoreGG</title>
-      </Head>
-      <NavbarMenu />
+    <Layout pageTitle="Games">
       <PageHero title="Games" align="start" />
       <section className="">
         <div className="container">
@@ -52,8 +47,7 @@ function ListGamesPage({}: Props) {
         </div>
       </section>
       <ListGames filter={filter} />
-      <Footer />
-    </>
+    </Layout>
   );
 }
 

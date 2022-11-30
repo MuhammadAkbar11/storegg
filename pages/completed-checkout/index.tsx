@@ -1,12 +1,13 @@
+import Layout from "@components/organisms/layout";
+import Link from "next/link";
 import React from "react";
 
 type Props = {};
 
 function CompletedCheckout({}: Props) {
   return (
-    <>
+    <Layout pageTitle="Checkout Completed" footer={false} navbar={false}>
       {/* Complete Checkout Content */}
-
       <section className="complete-checkout mx-auto pt-lg-145 pb-lg-145 pt-100 pb-80">
         <div className="container-fluid">
           <div className="text-center">
@@ -270,13 +271,11 @@ function CompletedCheckout({}: Props) {
             </p>
           </div>
           <div className="button-group d-flex flex-column mx-auto">
-            <a
-              className="btn btn-dashboard fw-medium text-lg text-white rounded-pill mb-16"
-              href="../member/overview.html"
-              role="button"
-            >
-              My Dashboard
-            </a>
+            <Link href={"/member"}>
+              <a className="btn btn-dashboard fw-medium text-lg text-white rounded-pill mb-16">
+                My Dashboard
+              </a>
+            </Link>
             <a
               className="btn btn-whatsapp fw-medium text-lg color-palette-1 rounded-pill"
               href="#"
@@ -287,7 +286,7 @@ function CompletedCheckout({}: Props) {
           </div>
         </div>
       </section>
-    </>
+    </Layout>
   );
 }
 

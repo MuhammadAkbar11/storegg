@@ -4,8 +4,8 @@ import React from "react";
 import Sidebar from "@components/organisms/sidebar";
 import TransactionsTabs from "@components/organisms/transactions/transactionsTabs";
 import TransactionTableRow from "@components/organisms/transactions/TransactionTableRow";
-import dummyTransactionData from "@globals/transaction.data";
-import { IFTransaction, TransactionStatus } from "@globals/types";
+import dummyTransactionData from "@utility/data/transaction";
+import type { IFTransaction, TransactionStatus } from "@utility/types";
 
 type ActiveTypes = "*" | TransactionStatus;
 

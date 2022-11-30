@@ -4,6 +4,7 @@ import { useGameDetailContext } from "@context/GameDetailContext";
 import TopupFormNomianlList from "./topupFormNomianlList";
 import TopupFormPaymentItem from "./topupFormPaymentItem";
 import TopupFormTransferBank from "./topUpTransferBank";
+import Link from "next/link";
 
 type Props = {};
 
@@ -116,13 +117,14 @@ function TopUpForm({}: Props) {
       ) : null}
 
       <div className="d-sm-block d-flex flex-column w-100">
-        <a
-          href="/checkout"
-          type="submit"
-          className="btn btn-submit rounded-pill fw-medium text-white border-0 text-lg"
-        >
-          Continue
-        </a>
+        <Link href="/checkout">
+          <a
+            type="submit"
+            className="btn btn-submit rounded-pill fw-medium text-white border-0 text-lg"
+          >
+            Continue
+          </a>
+        </Link>
         {/* <button type="submit"
                           class="btn btn-submit rounded-pill fw-medium text-white border-0 text-lg">Continue</button> */}
       </div>

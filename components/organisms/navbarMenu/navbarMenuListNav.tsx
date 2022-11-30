@@ -17,21 +17,21 @@ function NavbarTopListNav({ activePath = "/" }: Props) {
       url: "/games",
       text: "Games",
     },
-    {
-      id: 4,
-      url: "/rewards",
-      text: "Rewards",
-    },
+    // {
+    //   id: 4,
+    //   url: "/rewards",
+    //   text: "Rewards",
+    // },
     {
       id: 5,
-      url: "/discover",
-      text: "Discover",
+      url: "/about",
+      text: "About",
     },
-    {
-      id: 6,
-      url: "/global-rank",
-      text: "Global Rank",
-    },
+    // {
+    //   id: 6,
+    //   url: "/global-rank",
+    //   text: "Global Rank",
+    // },
   ];
 
   return (
@@ -42,7 +42,7 @@ function NavbarTopListNav({ activePath = "/" }: Props) {
         return (
           <NavbarMenuNavItem
             key={nav.id}
-            isActive={activePath == nav.url}
+            isActive={activePath === nav.url}
             url={nav.url}
             id={nav.id.toString()}
             isLast={isLast}

@@ -5,12 +5,13 @@ import useDebounce from "utility/hooks/useDebounce";
 import { IListGamesQueries } from "@utility/types";
 
 type Props = {
-  onSetFilter?: (values: IListGamesQueries) => void;
+  filterData: IListGamesQueries;
+  onSetFilter: (values: Partial<IListGamesQueries>) => void;
   onSetSearching: (value: string) => void;
 };
 
-function FormSeachGames({ onSetSearching }: Props) {
-  const [filter, setFilter] = React.useState("NAME");
+function FormSeachGames({ onSetSearching, onSetFilter, filterData }: Props) {
+  const [filterType, setFilterType] = React.useState("NAME");
   const [filterCategory, setFilterCategory] = React.useState("ALL");
   const [loadingSearch, setLoadingSearch] = React.useState(false);
   const [search, setSearch] = React.useState("");
@@ -28,12 +29,19 @@ function FormSeachGames({ onSetSearching }: Props) {
     }
   }, [debounceSearch]);
 
+  React.useEffect(() => {
+    const category =
+      filterCategory !== "ALL" ? filterCategory.toLocaleLowerCase() : "";
+    const sortBy = filterType.toLocaleLowerCase();
+    onSetFilter({ category: category, sortBy: sortBy });
+  }, [filterType, filterCategory]);
+
   const onFilterByCategoryHandler = (value: string) => {
     setFilterCategory(value);
   };
 
   const onFilterByHandler = (eventKey: string) => {
-    setFilter(eventKey);
+    setFilterType(eventKey);
   };
 
   const onChangeSearchHandler = (value: string) => {
@@ -91,12 +99,12 @@ function FormSeachGames({ onSetSearching }: Props) {
             <Form.Control
               size="sm"
               as="select"
-              value={filter}
+              value={filterType}
               className="bg-transparent ms-md-3 px-3 text-black-50 py-2 rounded-pill"
               onChange={e => onFilterByHandler(e.target.value)}
             >
               <option value="NAME">A-Z</option>
-              <option value="POPULAR">Popular</option>
+              <option value="FEATURED">Popular</option>
             </Form.Control>
           </Form.Group>
         </div>

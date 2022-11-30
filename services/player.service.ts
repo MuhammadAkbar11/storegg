@@ -16,7 +16,7 @@ export async function getFeaturedGameService(queryOpt: IFeaturedGameQueries) {
   try {
     const response = await axios.get(`${API_URI}/vouchers?${queries}`);
     const { data } = response.data;
-    const result = data.rows.map((g: any) => {
+    const result = data.vouchers.map((g: any) => {
       return {
         voucherId: g.voucher_id,
         gameName: g.game_name,
@@ -26,15 +26,17 @@ export async function getFeaturedGameService(queryOpt: IFeaturedGameQueries) {
     });
     return result;
   } catch (error: any) {
-    return { status: "ERROR", error };
+    throw error;
   }
 }
 
 export async function getListGameService(
-  url: string
+  queryOpt: IListGamesQueries
 ): Promise<IListGamesResponse> {
+  const queries = queriesToString<IListGamesQueries>(queryOpt);
+
   try {
-    const response = await axios.get(url);
+    const response = await axios.get(`${API_URI}/vouchers?${queries}`);
     const { data } = response.data;
 
     const result = data.vouchers.map((g: any) => {

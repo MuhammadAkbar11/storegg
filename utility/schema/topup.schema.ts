@@ -5,7 +5,12 @@ export const toptupSchema = z.object({
     message: "Game ID is required",
   }),
   bankTransfer: z.string().optional(),
-  bankTransferAccount: z.string().optional(),
+  bankTransferAccount: z
+    .string()
+    .min(1, {
+      message: "Bank Account Name is required",
+    })
+    .optional(),
   paymentMethod: z.string().min(1, {
     message: "Payment is required",
   }),

@@ -1,14 +1,16 @@
+import { TopupInput } from "@utility/schema.utils";
 import { PaymentMethodType } from "@utility/types";
 import React from "react";
+import { useFormContext } from "react-hook-form";
 
 type Props = {
   title: string;
   text: string;
-  onChangePayMethod: (method: PaymentMethodType) => void;
 };
 
-function TopupFormPaymentItem({ title, text, onChangePayMethod }: Props) {
-  const method = title.trim().toLowerCase() as PaymentMethodType;
+function TopupFormPaymentItem({ title, text }: Props) {
+  const { register } = useFormContext<TopupInput>();
+
   return (
     <label
       className="col-lg-4 col-sm-6 ps-md-15 pe-md-15 pt-md-15 pb-md-15 pt-10 pb-10"
@@ -18,9 +20,8 @@ function TopupFormPaymentItem({ title, text, onChangePayMethod }: Props) {
         className="d-none"
         type="radio"
         id={title.trim()}
-        name="paymentMethod"
         defaultValue={title.trim()}
-        onChange={() => onChangePayMethod(method)}
+        {...register("paymentMethod")}
       />
       <div className="detail-card">
         <div className="d-flex justify-content-between">

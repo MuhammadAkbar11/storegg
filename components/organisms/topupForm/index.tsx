@@ -1,134 +1,143 @@
 import React from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FormProvider, useForm } from "react-hook-form";
 import type { PaymentMethodType } from "@utility/types";
 import { useGameDetailContext } from "@context/GameDetailContext";
 import TopupFormNomianlList from "./topupFormNomianlList";
 import TopupFormPaymentItem from "./topupFormPaymentItem";
 import TopupFormTransferBank from "./topUpTransferBank";
-import Link from "next/link";
+import { Form } from "react-bootstrap";
+import { toptupSchema, TopupInput } from "@utility/schema/topup.schema";
 
 type Props = {};
 
 function TopUpForm({}: Props) {
   const { banks } = useGameDetailContext();
 
-  const [payMethod, setPayMethod] =
-    React.useState<PaymentMethodType | null>(null);
+  const methods = useForm<TopupInput>({
+    resolver: zodResolver(toptupSchema),
+    defaultValues: {
+      paymentMethod: "",
+    },
+  });
 
-  const onChangePayment = (method: PaymentMethodType) => {
-    setPayMethod(method);
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    getValues,
+    watch,
+    formState: { errors, isValid },
+  } = methods;
+
+  console.log(isValid, "VALID FORM", !!isValid);
+
+  const payMethod = watch("paymentMethod")?.toLocaleLowerCase();
+
+  const onSubmitHandler = (values: TopupInput) => {
+    console.log(values);
   };
 
-  // const banksList =
-
   return (
-    <form action="./checkout.html" method="POST">
-      <div className="pt-md-50 pt-30">
-        <div className="">
-          <label
-            htmlFor="ID"
-            className="form-label text-lg fw-medium color-palette-1 mb-10"
-          >
-            Verify ID
-          </label>
-          <input
-            type="text"
-            className="form-control rounded-pill text-lg"
-            id="ID"
-            name="ID"
-            aria-describedby="verifyID"
-            placeholder="Enter your ID"
-          />
+    <FormProvider {...methods}>
+      <Form onSubmit={handleSubmit(onSubmitHandler)} method="POST">
+        <div className="pt-md-50 pt-30">
+          <Form.Group controlId="ID">
+            <Form.Label className="form-label text-lg fw-medium color-palette-1 mb-10">
+              Verify ID
+            </Form.Label>
+            <Form.Control
+              type="text"
+              className="form-control rounded-pill text-lg"
+              aria-describedby="verifyID"
+              placeholder="Enter your ID"
+              {...register("accountID")}
+            />
+            {/* <Form.Text className="text-muted">
+            We'll never share your email with anyone else.
+          </Form.Text> */}
+          </Form.Group>
         </div>
-      </div>
-      <div className="pt-md-50 pb-md-50 pt-30 pb-20">
-        <p className="text-lg fw-medium color-palette-1 mb-md-10 mb-0">
-          Nominal Top Up
-        </p>
-        <div className="row justify-content-between">
-          <TopupFormNomianlList />
-          <div className="col-lg-4 col-sm-6">{/* Blank */}</div>
-        </div>
-      </div>
-      <div className="pb-md-50 pb-20">
-        <p className="text-lg fw-medium color-palette-1 mb-md-10 mb-0">
-          Payment Method
-        </p>
-        <fieldset id="paymentMethod">
+        <div className="pt-md-50 pb-md-50 pt-30 pb-20">
+          <p className="text-lg fw-medium color-palette-1 mb-md-10 mb-0">
+            Nominal Top Up
+          </p>
           <div className="row justify-content-between">
-            <TopupFormPaymentItem
-              onChangePayMethod={onChangePayment}
-              title="Transfer"
-              text="Worldwide Available"
-            />
-            <TopupFormPaymentItem
-              onChangePayMethod={onChangePayment}
-              title="Visa"
-              text="Credit Card"
-            />
-            <TopupFormPaymentItem
-              onChangePayMethod={onChangePayment}
-              title="Paypal"
-              text="Simple and fast"
-            />
+            <TopupFormNomianlList />
             <div className="col-lg-4 col-sm-6">{/* Blank */}</div>
           </div>
-        </fieldset>
-      </div>
-      {payMethod && payMethod === "transfer" ? (
+        </div>
         <div className="pb-md-50 pb-20">
           <p className="text-lg fw-medium color-palette-1 mb-md-10 mb-0">
-            Select Bank To Transfer
+            Payment Method
           </p>
-          <fieldset id="bankTransfer">
+          <fieldset id="paymentMethod">
             <div className="row justify-content-between">
-              {banks.map(bnk => {
-                return (
-                  <TopupFormTransferBank
-                    bankId={bnk?.bankId}
-                    key={bnk?.bankId}
-                    bankName={bnk?.bankName}
-                    accountName={bnk?.accountName}
-                    noRekening={bnk?.noRekening}
-                  />
-                );
-              })}
+              <TopupFormPaymentItem
+                title="Transfer"
+                text="Worldwide Available"
+              />
+              <TopupFormPaymentItem title="Visa" text="Credit Card" />
+              <TopupFormPaymentItem title="Paypal" text="Simple and fast" />
               <div className="col-lg-4 col-sm-6">{/* Blank */}</div>
             </div>
           </fieldset>
         </div>
-      ) : null}
-      {payMethod && payMethod === "transfer" ? (
-        <div className="pb-50">
-          <label
-            htmlFor="bankAccount"
-            className="form-label text-lg fw-medium color-palette-1 mb-10"
-          >
-            Bank Account Name
-          </label>
-          <input
-            type="text"
-            className="form-control rounded-pill text-lg"
-            id="bankAccount"
-            name="bankAccount"
-            aria-describedby="bankAccount"
-            placeholder="Enter your Bank Account Name"
-          />
-        </div>
-      ) : null}
+        {payMethod && payMethod === "transfer" ? (
+          <div className="pb-md-50 pb-20">
+            <p className="text-lg fw-medium color-palette-1 mb-md-10 mb-0">
+              Select Bank To Transfer
+            </p>
+            <fieldset id="bankTransfer">
+              <div className="row justify-content-between">
+                {banks.map(bnk => {
+                  return (
+                    <TopupFormTransferBank
+                      bankId={bnk?.bankId}
+                      key={bnk?.bankId}
+                      bankName={bnk?.bankName}
+                      accountName={bnk?.accountName}
+                      noRekening={bnk?.noRekening}
+                    />
+                  );
+                })}
+                <div className="col-lg-4 col-sm-6"></div>
+              </div>
+            </fieldset>
+          </div>
+        ) : null}
+        {payMethod && payMethod === "transfer" ? (
+          <div className="pb-50">
+            <label
+              htmlFor="bankAccount"
+              className="form-label text-lg fw-medium color-palette-1 mb-10"
+            >
+              Bank Account Name
+            </label>
+            <input
+              type="text"
+              className="form-control rounded-pill text-lg"
+              id="bankAccount"
+              aria-describedby="bankAccount"
+              placeholder="Enter your Bank Account Name"
+              {...register("bankTransferAccount", {
+                required: payMethod === "transfer",
+              })}
+            />
+          </div>
+        ) : null}
 
-      <div className="d-sm-block d-flex flex-column w-100">
-        <Link href="/checkout">
-          <a
+        <div className="d-sm-block d-flex flex-column w-100">
+          <button
             type="submit"
             className="btn btn-submit rounded-pill fw-medium text-white border-0 text-lg"
+            disabled={isValid ? false : true}
           >
             Continue
-          </a>
-        </Link>
-        {/* <button type="submit"
-                          class="btn btn-submit rounded-pill fw-medium text-white border-0 text-lg">Continue</button> */}
-      </div>
-    </form>
+          </button>
+        </div>
+      </Form>
+    </FormProvider>
   );
 }
 

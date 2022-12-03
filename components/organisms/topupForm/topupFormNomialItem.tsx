@@ -1,22 +1,22 @@
+import { TopupInput } from "@utility/schema.utils";
 import { IGameNominal } from "@utility/types";
 import React from "react";
+import { useFormContext } from "react-hook-form";
 
 type Props = {} & Omit<IGameNominal, "description">;
 
-function TopupFormNomialItem({ coinName, price, quantity }: Props) {
+function TopupFormNomialItem({ coinName, price, quantity, nominalId }: Props) {
+  const { register } = useFormContext<TopupInput>();
+
   return (
-    <label
-      className="col-lg-4 col-sm-6 ps-md-15 pe-md-15 pt-md-15 pb-md-15 pt-10 pb-10"
-      // htmlFor="topup1"
-    >
+    <label className="col-lg-4 col-sm-6 ps-md-15 pe-md-15 pt-md-15 pb-md-15 pt-10 pb-10">
       <input
         className="d-none"
         type="radio"
-        id="topup1"
-        name="topup"
-        defaultValue="topup1"
+        id={nominalId}
+        {...register("nominal")}
       />
-      <div className="detail-card" onClick={e => {}}>
+      <div className="detail-card">
         <div className="d-flex justify-content-between">
           <p className="text-3xl color-palette-1 m-0 ">
             <span className="fw-medium me-1">{quantity}</span>

@@ -1,17 +1,20 @@
+import { TopupInput } from "@utility/schema/topup.schema";
 import type { IBank } from "@utility/types";
 import React from "react";
+import { useFormContext } from "react-hook-form";
 
-type Props = {
-  onChangeBank?: (method: string) => void;
-} & Partial<IBank>;
+type Props = Partial<IBank>;
 
 function TopupFormTransferBank({
   bankId,
   bankName,
   accountName,
   noRekening,
-  onChangeBank,
 }: Props) {
+  const { register, watch } = useFormContext<TopupInput>();
+
+  const paymethod = watch("paymentMethod")?.toLocaleLowerCase();
+
   return (
     <label
       className="col-lg-6 col-sm-6 ps-md-15 pe-md-15 pt-md-15 pb-md-15 pt-10 pb-10"
@@ -21,11 +24,8 @@ function TopupFormTransferBank({
         className="d-none"
         type="radio"
         id={bankId}
-        name="bankTransfer"
         defaultValue={bankId}
-        onChange={() =>
-          onChangeBank ? onChangeBank(bankId?.toString() || "") : null
-        }
+        {...register("bankTransfer", { required: paymethod === "transfer" })}
       />
       <div className="detail-card">
         <div className="d-flex justify-content-between">

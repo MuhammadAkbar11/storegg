@@ -1,82 +1,124 @@
 import Link from "next/link";
 import React from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SignupInputTypes, signupSchema } from "@utility/schema/auth.schema";
+import { useForm } from "react-hook-form";
+import { Form } from "react-bootstrap";
+import { useRouter } from "next/router";
 
 type Props = {};
 
 function SignUpForm({}: Props) {
+  const router = useRouter();
+
+  const methods = useForm<SignupInputTypes>({
+    resolver: zodResolver(signupSchema),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+
+    formState: { errors, isValid, touchedFields },
+  } = methods;
+
+  const onSubmitHandler = (values: SignupInputTypes) => {
+    sessionStorage.setItem("signup-form", JSON.stringify(values));
+    router.push("/auth/sign-up-photo");
+  };
+
   return (
-    <>
-      <div className="pt-50">
-        <label
-          htmlFor="name"
-          className="form-label text-lg fw-medium color-palette-1 mb-10"
-        >
+    <Form onSubmit={handleSubmit(onSubmitHandler)}>
+      <Form.Group className="pt-50" controlId="name">
+        <Form.Label className="text-lg fw-medium color-palette-1 mb-10">
           Full Name
-        </label>
-        <input
+        </Form.Label>
+        <Form.Control
           type="text"
-          className="form-control rounded-pill text-lg"
-          id="name"
-          name="name"
+          className="rounded-pill text-lg "
           aria-describedby="name"
           placeholder="Enter your name"
+          isInvalid={errors?.name ? true : false}
+          {...register("name")}
         />
-      </div>
-      <div className="pt-30">
-        <label
-          htmlFor="email"
-          className="form-label text-lg fw-medium color-palette-1 mb-10"
-        >
+        {errors?.name?.message ? (
+          <Form.Control.Feedback type="invalid" className="ms-3 pt-1">
+            {errors?.name?.message}
+          </Form.Control.Feedback>
+        ) : null}
+      </Form.Group>
+      <Form.Group controlId="email" className="pt-30">
+        <Form.Label className="text-lg fw-medium color-palette-1 mb-10">
           Email Address
-        </label>
-        <input
+        </Form.Label>
+        <Form.Control
           type="email"
-          className="form-control rounded-pill text-lg"
-          id="email"
-          name="email"
+          className="rounded-pill text-lg"
           aria-describedby="email"
           placeholder="Enter your email address"
+          isInvalid={errors?.email ? true : false}
+          {...register("email")}
         />
-      </div>
-      <div className="pt-30">
-        <label
-          htmlFor="password"
-          className="form-label text-lg fw-medium color-palette-1 mb-10"
-        >
+        {errors?.email?.message ? (
+          <Form.Control.Feedback type="invalid" className="ms-3 pt-1">
+            {errors?.email?.message}
+          </Form.Control.Feedback>
+        ) : null}
+      </Form.Group>
+      <Form.Group className="pt-30" controlId="password">
+        <Form.Label className=" text-lg fw-medium color-palette-1 mb-10">
           Password
-        </label>
-        <input
+        </Form.Label>
+        <Form.Control
           type="password"
-          className="form-control rounded-pill text-lg"
-          id="password"
-          name="password"
+          className=" rounded-pill text-lg"
           aria-describedby="password"
           placeholder="Your password"
+          isInvalid={errors?.password ? true : false}
+          {...register("password")}
         />
-      </div>
+        {errors?.password?.message ? (
+          <Form.Control.Feedback type="invalid" className="ms-3 pt-1">
+            {errors?.password?.message}
+          </Form.Control.Feedback>
+        ) : null}
+      </Form.Group>
+      <Form.Group className="pt-30" controlId="passwordConfirmation">
+        <Form.Label className=" text-lg fw-medium color-palette-1 mb-10">
+          Confirm Password
+        </Form.Label>
+        <Form.Control
+          type="password"
+          className=" rounded-pill text-lg"
+          aria-describedby="passwordConfirmation"
+          placeholder="Confirmation your password"
+          isInvalid={errors?.passwordConfirmation ? true : false}
+          {...register("passwordConfirmation")}
+        />
+        {errors?.passwordConfirmation?.message ? (
+          <Form.Control.Feedback type="invalid" className="ms-3 pt-1">
+            {errors?.passwordConfirmation?.message}
+          </Form.Control.Feedback>
+        ) : null}
+      </Form.Group>
       <div className="button-group d-flex flex-column mx-auto pt-50">
-        <Link href="/auth/sign-up-photo" passHref>
-          <a
-            className="btn btn-sign-up fw-medium text-lg text-white rounded-pill mb-16"
-            href="/auth/sign-up-photo"
-            role="button"
-          >
-            Continue
-          </a>
-        </Link>
-        {/* <button type="submit" class="btn btn-sign-up fw-medium text-lg text-white rounded-pill mb-16"
-                  role="button">Continue</button> */}
+        <button
+          className="btn btn-sign-up fw-medium text-lg text-white rounded-pill mb-16"
+          type="submit"
+        >
+          Continue
+        </button>
         <Link href={"/auth/sign-in"} passHref>
           <a
             className="btn btn-sign-in fw-medium text-lg color-palette-1 rounded-pill"
-            href="/auth/sign-in"
             role="button"
           >
             Sign In
           </a>
         </Link>
       </div>
-    </>
+    </Form>
   );
 }
 

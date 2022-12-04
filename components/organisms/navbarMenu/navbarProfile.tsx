@@ -1,5 +1,6 @@
-import Link from "next/link";
 import React from "react";
+import Link from "next/link";
+import { PROFILE_MENU } from "@utility/constant.utils";
 import { Dropdown, Nav } from "react-bootstrap";
 
 type Props = {
@@ -8,15 +9,10 @@ type Props = {
 
 function NavbarProfile(props: Props) {
   const { isLogin } = props;
-  const profileMenu = [
-    { text: "My Profile", href: "/member" },
-    { text: "Wallet", href: "/member/wallet" },
-    { text: "Account Setting", href: "/member/settings" },
-    { text: "Log Out", href: "/auth/sing-in" },
-  ];
+  const profileMenu = PROFILE_MENU;
   return (
     <>
-      {!isLogin && (
+      {!isLogin ? (
         <Nav.Item className="my-auto">
           <Link href={"/auth/sign-in"} passHref>
             <Nav.Link
@@ -27,8 +23,8 @@ function NavbarProfile(props: Props) {
             </Nav.Link>
           </Link>
         </Nav.Item>
-      )}
-      {isLogin && (
+      ) : null}
+      {isLogin ? (
         <Dropdown as="li" className="my-auto d-flex nav-item">
           <div className="vertical-line d-lg-block d-none" />
           <div>
@@ -60,25 +56,10 @@ function NavbarProfile(props: Props) {
                   </li>
                 );
               })}
-              {/* <li>
-              <a className="dropdown-item text-lg color-palette-2" href="#">
-                Wallet
-              </a>
-            </li>
-            <li>
-              <a className="dropdown-item text-lg color-palette-2" href="#">
-                Account Settings
-              </a>
-            </li>
-            <li>
-              <a className="dropdown-item text-lg color-palette-2" href="#">
-                Log Out
-              </a>
-            </li> */}
             </Dropdown.Menu>
           </div>
         </Dropdown>
-      )}
+      ) : null}
     </>
   );
 }

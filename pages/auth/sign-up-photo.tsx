@@ -24,7 +24,7 @@ function SignUpPhoto({}: Props) {
   }, []);
 
   return (
-    <Layout navbar={false} footer={false} pageTitle="Sing up - Upload Photo">
+    <Layout navbar={false} footer={false} pageTitle="Sign up - Upload Photo">
       <section className="sign-up-photo mx-auto pt-lg-227 pb-lg-227 pt-130 pb-50">
         <div className="container mx-auto">
           <form action="#/">

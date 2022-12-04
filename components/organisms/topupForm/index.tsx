@@ -1,7 +1,6 @@
 import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
-import type { PaymentMethodType } from "@utility/types";
 import { useGameDetailContext } from "@context/GameDetailContext";
 import TopupFormNomianlList from "./topupFormNomianlList";
 import TopupFormPaymentItem from "./topupFormPaymentItem";
@@ -24,13 +23,9 @@ function TopUpForm({}: Props) {
   const {
     register,
     handleSubmit,
-    setValue,
-    getValues,
     watch,
-    formState: { errors, isValid },
+    formState: { isValid },
   } = methods;
-
-  console.log(isValid, "VALID FORM", !!isValid);
 
   const payMethod = watch("paymentMethod")?.toLocaleLowerCase();
 

@@ -49,7 +49,7 @@ function TopupFormTransferBank({
           </svg>
         </div>
         <p className="text-lg color-palette-1 m-0 text-capitalize ">
-          {noRekening} <br /> <small className=" ">a.n : {accountName}</small>
+          Bank Transfer
         </p>
       </div>
     </label>

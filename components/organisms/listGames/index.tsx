@@ -1,16 +1,10 @@
 import Link from "next/link";
-import useSWR from "swr";
 import React from "react";
 import { Button, Card, Spinner } from "react-bootstrap";
 import { getListGameService } from "@services/player.service";
-import { API_URI } from "@utility/constant.utils";
 import { queriesToString } from "@utility/index.utils";
-import {
-  IGameItem,
-  IListGamesQueries,
-  IListGamesResponse,
-} from "@utility/types";
-import { useInfiniteQuery, useQuery } from "react-query";
+import { IGameItem, IListGamesQueries } from "@utility/types";
+import { useInfiniteQuery } from "react-query";
 
 type Props = {
   filter: IListGamesQueries;

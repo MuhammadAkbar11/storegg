@@ -1,4 +1,5 @@
 import {
+  ICategory,
   IFeaturedGameQueries,
   IGameDetailItem,
   IGameItem,
@@ -94,5 +95,24 @@ export async function getDetailVouherService(voucherID: string) {
     return { banks, voucher: voucherResult };
   } catch (error: any) {
     throw uTranformAxiosError(error);
+  }
+}
+
+export async function getCategoryListService(): Promise<ICategory[]> {
+  try {
+    const response = await axios.get(`${API_URI}/categories`);
+    const { data: resData } = response.data;
+
+    const result = resData.map((cat: any): ICategory => {
+      return {
+        categoryId: cat.category_id,
+        name: cat.name,
+        description: cat.description,
+      };
+    });
+    console.log(result);
+    return result;
+  } catch (error: any) {
+    throw error;
   }
 }

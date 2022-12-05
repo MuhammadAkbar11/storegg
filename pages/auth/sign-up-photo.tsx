@@ -3,6 +3,7 @@ import UploadIcon from "@atoms/icons/uploadIcon";
 import Layout from "@components/organisms/layout";
 import { useRouter } from "next/router";
 import { SignupInputTypes } from "@utility/schema/auth.schema";
+import useGetCategories from "@hooks/useGetCategory";
 
 type Props = {};
 
@@ -10,6 +11,8 @@ function SignUpPhoto({}: Props) {
   const [currSignupForm, setCurrSignupForm] =
     React.useState<SignupInputTypes | null>(null);
   const router = useRouter();
+
+  const { data: categories, isSuccess, isLoading } = useGetCategories();
 
   React.useEffect(() => {
     const signupForm = sessionStorage?.getItem("signup-form") as string;
@@ -69,25 +72,24 @@ function SignUpPhoto({}: Props) {
                     defaultValue={""}
                     className="form-select d-block w-100 rounded-pill text-lg"
                     aria-label="Favorite Game"
+                    disabled={isLoading}
                   >
                     <option value="" disabled>
                       Select Category
                     </option>
-                    <option value="fps">First Person Shoter</option>
-                    <option value="rpg">Role Playing Game</option>
-                    <option value="arcade">Arcade</option>
-                    <option value="sport">Sport</option>
+                    {isSuccess
+                      ? categories.map(cat => {
+                          return (
+                            <option value={cat.categoryId} key={cat.categoryId}>
+                              {cat.name}
+                            </option>
+                          );
+                        })
+                      : null}
                   </select>
                 </div>
               </div>
               <div className="button-group d-flex flex-column mx-auto">
-                {/* <a
-                  className="btn btn-create fw-medium text-lg text-white rounded-pill mb-16"
-                  href="/auth/sign-up-success"
-                  role="button"
-                >
-                  Create My Account
-                </a> */}
                 <button
                   type="submit"
                   className="btn btn-create fw-medium text-lg text-white rounded-pill mb-16"

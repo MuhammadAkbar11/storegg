@@ -110,7 +110,6 @@ export async function getCategoryListService(): Promise<ICategory[]> {
         description: cat.description,
       };
     });
-    console.log(result);
     return result;
   } catch (error: any) {
     throw error;

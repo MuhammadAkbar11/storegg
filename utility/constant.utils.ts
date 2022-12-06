@@ -8,3 +8,6 @@ export const PROFILE_MENU = [
   { text: "Account Setting", href: "/member/settings" },
   { text: "Log Out", href: "/auth/sing-in" },
 ];
+
+export const MAX_AVATAR_SIZE = 5000000;
+export const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];

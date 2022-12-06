@@ -1,3 +1,4 @@
+import { ACCEPTED_IMAGE_TYPES, MAX_AVATAR_SIZE } from "@utility/constant.utils";
 import { z } from "zod";
 
 export const signupSchema = z
@@ -25,5 +26,24 @@ export const signupSchema = z
     message: "Password do not match!",
     path: ["passwordConfirmation"],
   });
+
+export const signupPhotoSchema = z.object({
+  favorite: z.string({ required_error: "Favorite is required" }).min(1, {
+    message: "Favorite is required",
+  }),
+  avatar: z
+    .any()
+    .refine(files => files?.length == 1, "Upload your avatar")
+    .refine(
+      files => files?.[0]?.size <= MAX_AVATAR_SIZE,
+      `Max file size is 5MB.`
+    )
+    .refine(
+      files => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
+      ".jpg, .jpeg, .png and files are accepted."
+    ),
+});
+
+export type SignupPhotoInputTypes = z.TypeOf<typeof signupPhotoSchema>;
 
 export type SignupInputTypes = z.TypeOf<typeof signupSchema>;

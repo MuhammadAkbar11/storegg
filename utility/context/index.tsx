@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { AppProvider } from "./AppContext";
 import { SignupProvider } from "./SignupContext";
+import { ToastProvider } from "./ToastContext";
 
 type ComponseProps = {
   providers: React.ElementType[];
@@ -24,7 +25,7 @@ export default function ComposeProvider({
 }: {
   children: React.ReactNode;
 }) {
-  let providers = [AppProvider];
+  let providers = [AppProvider, ToastProvider];
 
   const router = useRouter();
 

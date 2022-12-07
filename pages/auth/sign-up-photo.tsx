@@ -54,13 +54,11 @@ function SignUpPhoto({}: Props) {
     },
     onError(error, variables) {
       const data = variables as FormData;
-
       onSetPhotoFormData({
         avatar: data.get("image"),
         favorite: data.get("category")?.toString() || "",
       });
       onSetErrorSignup(error);
-
       router.push("/auth/sign-up");
     },
   });

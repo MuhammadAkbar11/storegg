@@ -3,13 +3,20 @@ import React from "react";
 import Logo from "@atoms/logo";
 import SignUpForm from "@organisms/auth/signUpForm";
 import Layout from "@components/organisms/layout";
+import { useSignupContext } from "@utility/context/SignupContext";
+import ToastTrigger from "@components/molecules/toast/toastTrigger";
 
 type Props = {};
 
 function SignUp({}: Props) {
+  const { error } = useSignupContext();
+
   return (
     <Layout navbar={false} footer={false} pageTitle="Sign up">
       {/* Sign Up */}
+      {error && (
+        <ToastTrigger show={true} type="error" message={error?.message || ""} />
+      )}
       <section className="sign-up mx-auto pt-lg-100 pb-lg-100 pt-30 pb-47">
         <div className="container mx-auto">
           <div className="pb-50">

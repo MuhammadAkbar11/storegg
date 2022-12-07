@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import MainBannerGameCard from "./mainBannerGameCard";
 import MainBannerReviewCard from "./mainBannerReviewCard";
@@ -24,20 +25,24 @@ function MainBanner({}: Props) {
               sejati
             </p>
             <div className="d-flex flex-lg-row flex-column gap-4">
-              <a
-                className="btn btn-get text-lg text-white rounded-pill"
-                href="#feature"
-                role="button"
-              >
-                Get Started
-              </a>
-              <a
-                className="btn-learn text-lg color-palette-1 my-auto text-center"
-                href="#"
-                role="button"
-              >
-                Learn More
-              </a>
+              <Link passHref href={"/auth/sign-up"}>
+                <a
+                  className="btn btn-get text-lg text-white rounded-pill"
+                  href="/auth/sign-up"
+                  role="button"
+                >
+                  Get Started
+                </a>
+              </Link>
+              <Link href="/games" passHref>
+                <a
+                  className="btn-learn text-lg color-palette-1 my-auto text-center"
+                  href="/games"
+                  role="button"
+                >
+                  Learn More
+                </a>
+              </Link>
             </div>
           </div>
           <div className="col-lg-6 col-12 d-lg-block d-none">

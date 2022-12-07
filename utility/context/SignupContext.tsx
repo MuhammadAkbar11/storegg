@@ -4,6 +4,7 @@ import React, {
   ReactNode,
   useState,
   useEffect,
+  useMemo,
 } from "react";
 import {
   SignupInputTypes,
@@ -112,7 +113,7 @@ export function SignupProvider({ children }: Props) {
   };
 
   const value: SignupContextType = {
-    error,
+    error: useMemo(() => error, [error]),
     onSetError,
     signupFormData: signupFormData,
     signupPhotoFormData: signupPhotoFormData,

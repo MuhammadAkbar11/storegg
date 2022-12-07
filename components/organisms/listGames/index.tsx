@@ -56,7 +56,7 @@ function ListGames({ filter }: Props) {
                   return (
                     <div
                       key={game.voucherId}
-                      className="col-ms-6 col-md-4 col-lg-3 mb-4"
+                      className="col-sm-6 col-md-4 col-lg-3 mb-4"
                     >
                       <div className="list-game-item shadow-none">
                         <Card className=" w-100 border-0 list-game-card shadow-none  ">
@@ -82,7 +82,7 @@ function ListGames({ filter }: Props) {
                                   className="btn btn-topup text-nowrap  rounded-pill w-100"
                                   role="button"
                                 >
-                                  Top-up now
+                                  Top Up Now
                                 </a>
                               </Link>
                             </div>

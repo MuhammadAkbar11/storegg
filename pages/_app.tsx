@@ -1,4 +1,5 @@
 import "@styles/scss/index.scss";
+import ComposeProvider from "@utility/context";
 import { NextPage } from "next";
 import type { AppProps } from "next/app";
 import Head from "next/head";
@@ -32,7 +33,7 @@ function MyApp({ Component, pageProps }: AppPropsWithProvider) {
     AOS.init();
   }, []);
 
-  const ContextProvider = Component.provider || DefaultPage;
+  const PageContextProvider = Component.provider || DefaultPage;
 
   return (
     <>
@@ -63,9 +64,11 @@ function MyApp({ Component, pageProps }: AppPropsWithProvider) {
       </Head>
       <QueryClientProvider client={queryClient}>
         <SSRProvider>
-          <ContextProvider>
-            <Component {...pageProps} />
-          </ContextProvider>
+          <ComposeProvider>
+            <PageContextProvider>
+              <Component {...pageProps} />
+            </PageContextProvider>
+          </ComposeProvider>
         </SSRProvider>
         <ReactQueryDevtools />
       </QueryClientProvider>

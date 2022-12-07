@@ -9,23 +9,29 @@ import {
   SignupInputTypes,
   SignupPhotoInputTypes,
 } from "@utility/schema/auth.schema";
+import { useRouter } from "next/router";
 
-type FormDataType = SignupInputTypes & SignupPhotoInputTypes;
+type SingupFormType = SignupInputTypes;
+type SignupPhotoFormTypes = Omit<SignupPhotoInputTypes, "avatar"> & {
+  avatar: any;
+};
 
 type SignupContextType = {
   error: any;
-  loading: boolean;
-  signupFormData: Partial<FormDataType | null>;
-  onSetFormData: (values: Partial<FormDataType>) => void;
+  signupFormData: SingupFormType | null;
+  signupPhotoFormData: SignupPhotoFormTypes | null;
+  onSetFormData: (values: SingupFormType) => void;
+  onSetPhotoFormData: (values: SignupPhotoFormTypes) => void;
   onResetSignupForm: () => void;
   onSetError: (error: any) => void;
 };
 
 const pageDetailContextDefaultValues: SignupContextType = {
   error: null,
-  loading: true,
   signupFormData: null,
-  onSetFormData: () => {},
+  signupPhotoFormData: null,
+  onSetFormData: () => null,
+  onSetPhotoFormData: () => null,
   onResetSignupForm: () => {},
   onSetError: () => {},
 };
@@ -48,44 +54,70 @@ type Props = {
 };
 
 export function SignupProvider({ children }: Props) {
-  const [loading, setLoading] = useState(true);
   const [signupFormData, setSignupFormData] =
-    useState<Partial<FormDataType> | null>(null);
+    useState<SingupFormType | null>(null);
+  const [signupPhotoFormData, setSignupPhotoFormData] =
+    useState<SignupPhotoFormTypes | null>(null);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const localForm = localStorage.getItem("signup-form");
+  const router = useRouter();
 
-    if (!signupFormData) {
-      if (localForm && typeof localForm === "string") {
-        setSignupFormData(JSON.parse(localForm));
-      }
+  const unsavedChanges = true;
+  const warningText =
+    "Your data will be reset - are you sure you wish to leave this page?";
+
+  useEffect(() => {
+    const handleWindowClose = (e: any) => {
+      if (!unsavedChanges) return;
+      e.preventDefault();
+      return (e.returnValue = warningText);
+    };
+    const handleBrowseAway = (path: string) => {
+      if (path.includes("/auth")) return;
+      if (!unsavedChanges) return;
+      if (window.confirm(warningText)) return;
+      router.events.emit("routeChangeError");
+      throw "routeChange aborted.";
+    };
+
+    if (signupFormData) {
+      window.addEventListener("beforeunload", handleWindowClose);
+      router.events.on("routeChangeStart", handleBrowseAway);
     }
 
-    setLoading(false);
-  }, []);
+    return () => {
+      if (signupFormData) {
+        window.removeEventListener("beforeunload", handleWindowClose);
+        router.events.off("routeChangeStart", handleBrowseAway);
+      }
+    };
+  }, [unsavedChanges, signupFormData]);
 
   const onSetError = (error: any) => {
     setError(error);
   };
 
   const onResetSignupForm = () => {
-    localStorage.removeItem("signup-form");
     setSignupFormData(null);
+    setSignupPhotoFormData(null);
     setError(null);
   };
 
-  const onSetFormData = (values: Partial<FormDataType>) => {
-    localStorage.setItem("signup-form", JSON.stringify(values));
+  const onSetFormData = (values: SingupFormType) => {
     setSignupFormData(values);
+  };
+
+  const onSetPhotoFormData = (values: SignupPhotoFormTypes) => {
+    setSignupPhotoFormData(values);
   };
 
   const value: SignupContextType = {
     error,
     onSetError,
-    loading,
     signupFormData: signupFormData,
+    signupPhotoFormData: signupPhotoFormData,
     onSetFormData: onSetFormData,
+    onSetPhotoFormData: onSetPhotoFormData,
     onResetSignupForm: onResetSignupForm,
   };
 

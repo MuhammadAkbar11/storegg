@@ -1,25 +1,31 @@
 import React from "react";
-import UploadIcon from "@atoms/icons/uploadIcon";
-import Layout from "@components/organisms/layout";
 import { useRouter } from "next/router";
+import { useMutation } from "react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { Spinner } from "react-bootstrap";
+import Layout from "@components/organisms/layout";
+import UploadIcon from "@atoms/icons/uploadIcon";
 import {
   SignupInputTypes,
   SignupPhotoInputTypes,
   signupPhotoSchema,
 } from "@utility/schema/auth.schema";
 import useGetCategories from "@hooks/useGetCategory";
-import { useForm } from "react-hook-form";
-import { array } from "zod";
 import { postSignupService } from "@services/auth.service";
-import { Spinner } from "react-bootstrap";
+import { useSignupContext } from "@utility/context/SignupContext";
 
 type Props = {};
 
 function SignUpPhoto({}: Props) {
-  const [currSignupForm, setCurrSignupForm] =
-    React.useState<SignupInputTypes | null>(null);
-  const [isLoadingSignup, setIsLoadingSignup] = React.useState(false);
+  const {
+    signupPhotoFormData: currSignupPhotoForm,
+    signupFormData: currSignupForm,
+    onResetSignupForm,
+    onSetPhotoFormData,
+    onSetError: onSetErrorSignup,
+  } = useSignupContext();
+
   const router = useRouter();
   const {
     data: categories,
@@ -35,51 +41,60 @@ function SignUpPhoto({}: Props) {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = methods;
 
-  React.useEffect(() => {
-    const signupForm = sessionStorage?.getItem("signup-form") as string;
+  const mutation = useMutation(postSignupService, {
+    onSuccess() {
+      onResetSignupForm();
+      setTimeout(() => {
+        router.push("/auth/sign-up-success");
+      }, 100);
+    },
+    onError(error, variables) {
+      const data = variables as FormData;
 
-    if (!signupForm) {
+      onSetPhotoFormData({
+        avatar: data.get("image"),
+        favorite: data.get("category")?.toString() || "",
+      });
+      onSetErrorSignup(error);
+
       router.push("/auth/sign-up");
-    }
+    },
+  });
 
-    if (signupForm) {
-      setCurrSignupForm(JSON.parse(signupForm));
-    }
-
-    return () => setCurrSignupForm(null);
-  }, []);
-
-  const onSubmitHandler = async (values: SignupPhotoInputTypes) => {
-    const localSignupForm = (await sessionStorage?.getItem(
-      "signup-form"
-    )) as string;
-    const signupFormData = JSON.parse(localSignupForm) as SignupInputTypes;
-
-    const data = new FormData();
-
-    data.append("image", values.avatar[0]);
-    data.append("category", values.favorite);
-    data.append("email", signupFormData.email);
-    data.append("name", signupFormData.name);
-    data.append("password", signupFormData.password);
-    data.append("password2", signupFormData.passwordConfirmation);
-
-    setIsLoadingSignup(true);
-    try {
-      const result = await postSignupService(data);
-
-      console.log("RESULT", result);
-      setIsLoadingSignup(false);
-    } catch (error: any) {
-      console.log("ERROR", error);
-      setIsLoadingSignup(false);
-      if (error.name?.includes("EMAIL")) {
+  React.useEffect(() => {
+    if (!mutation.isSuccess) {
+      if (!currSignupForm) {
         router.push("/auth/sign-up");
+      } else {
+        if (currSignupPhotoForm) {
+          const fileList = new DataTransfer();
+          fileList.items?.add(currSignupPhotoForm.avatar);
+          setValue("favorite", currSignupPhotoForm?.favorite || "");
+          setValue("avatar", fileList.files);
+        }
       }
     }
+  }, [currSignupForm, currSignupPhotoForm, setValue, mutation.isSuccess]);
+
+  const onSubmitHandler = async (values: SignupPhotoInputTypes) => {
+    const data = new FormData();
+
+    const formDataValues = currSignupForm as SignupInputTypes;
+
+    const { avatar, favorite } = values;
+
+    data.append("image", avatar[0]);
+    data.append("category", favorite);
+    data.append("email", formDataValues?.email);
+    data.append("name", formDataValues?.name);
+    data.append("password", formDataValues?.password);
+    data.append("password2", formDataValues?.passwordConfirmation);
+
+    mutation.mutate(data);
   };
 
   const avatarValue = watch("avatar");
@@ -95,7 +110,7 @@ function SignUpPhoto({}: Props) {
       >
         <img
           className=" w-100 h-100  "
-          src={URL.createObjectURL(avatarValue[0])}
+          src={URL?.createObjectURL(avatarValue[0])}
           alt=""
         />
         <div className="signup-photo-img-icon">
@@ -186,9 +201,9 @@ function SignUpPhoto({}: Props) {
                   type="submit"
                   className="btn btn-create fw-medium text-lg text-white rounded-pill mb-16"
                   role="button"
-                  disabled={isLoadingSignup}
+                  disabled={mutation.isLoading}
                 >
-                  {isLoadingSignup ? (
+                  {mutation.isLoading ? (
                     <Spinner
                       as="span"
                       animation="border"

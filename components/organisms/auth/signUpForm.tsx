@@ -5,11 +5,19 @@ import { SignupInputTypes, signupSchema } from "@utility/schema/auth.schema";
 import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { useRouter } from "next/router";
+import { useSignupContext } from "@utility/context/SignupContext";
 
 type Props = {};
 
 function SignUpForm({}: Props) {
   const router = useRouter();
+
+  const {
+    signupFormData,
+    onSetFormData,
+    error: errorSignup,
+    onSetError: onSetErrorSignup,
+  } = useSignupContext();
 
   const methods = useForm<SignupInputTypes>({
     resolver: zodResolver(signupSchema),
@@ -18,13 +26,39 @@ function SignUpForm({}: Props) {
   const {
     register,
     handleSubmit,
-    watch,
+    setValue,
+    setError,
 
-    formState: { errors, isValid, touchedFields },
+    formState: { errors, isValid },
   } = methods;
 
+  React.useEffect(() => {
+    if (signupFormData) {
+      setValue("email", signupFormData?.email || "");
+      setValue("name", signupFormData?.name || "");
+      setValue("password", signupFormData?.password || "");
+      setValue(
+        "passwordConfirmation",
+        signupFormData?.passwordConfirmation || ""
+      );
+    }
+  }, [signupFormData]);
+
+  React.useEffect(() => {
+    if (
+      errorSignup &&
+      errorSignup?.validation &&
+      errorSignup?.validation?.email
+    ) {
+      setError("email", {
+        message: errorSignup?.validation?.email?.message[0],
+      });
+    }
+  }, [errorSignup]);
+
   const onSubmitHandler = (values: SignupInputTypes) => {
-    sessionStorage.setItem("signup-form", JSON.stringify(values));
+    onSetFormData(values);
+    onSetErrorSignup(null);
     router.push("/auth/sign-up-photo");
   };
 
@@ -104,6 +138,7 @@ function SignUpForm({}: Props) {
       </Form.Group>
       <div className="button-group d-flex flex-column mx-auto pt-50">
         <button
+          disabled={isValid ? false : true}
           className="btn btn-sign-up fw-medium text-lg text-white rounded-pill mb-16"
           type="submit"
         >

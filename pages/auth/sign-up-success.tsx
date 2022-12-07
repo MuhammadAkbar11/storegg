@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React from "react";
 import WalletIcon from "@atoms/icons/walletIcon";
 
@@ -25,7 +24,7 @@ function SignUpSuccess({}: Props) {
           <div className="button-group d-flex flex-column mx-auto">
             <a
               className="btn btn-top-up fw-medium text-lg text-white rounded-pill"
-              href="../index.html"
+              href="/games"
               role="button"
             >
               Top Up

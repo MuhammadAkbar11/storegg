@@ -1,5 +1,4 @@
 import "@styles/scss/index.scss";
-import ComposeProvider from "@utility/context";
 import { NextPage } from "next";
 import type { AppProps } from "next/app";
 import Head from "next/head";
@@ -7,6 +6,8 @@ import { useEffect, ReactNode, ComponentType } from "react";
 import { SSRProvider } from "react-bootstrap";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import ToastWrapper from "@components/organisms/toastWrapper";
+import ComposeProvider from "@utility/context";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -67,6 +68,7 @@ function MyApp({ Component, pageProps }: AppPropsWithProvider) {
           <ComposeProvider>
             <PageContextProvider>
               <Component {...pageProps} />
+              <ToastWrapper />
             </PageContextProvider>
           </ComposeProvider>
         </SSRProvider>

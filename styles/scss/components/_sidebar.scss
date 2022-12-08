@@ -1,8 +1,6 @@
-
 .sidebar .content {
-  background: #FFFFFF;
+  background: #ffffff;
   width: 290px;
-  position: relative;
   height: 100vh;
   position: fixed;
   top: 0;
@@ -15,55 +13,54 @@
   display: none;
 }
 
-.sidebar .menus .item{
+.sidebar .menus .item {
   display: flex;
   align-items: center;
   position: relative;
 }
 
 .sidebar .menus .item.active a,
-.sidebar .menus .item:hover a{
-  color: #0C145A;
+.sidebar .menus .item:hover a {
+  color: #0c145a;
   font-weight: 500;
 }
 
 .sidebar .menus .item.active > svg path,
-.sidebar .menus .item:hover > svg path{
+.sidebar .menus .item:hover > svg path {
   transition: all 0.2s linear;
-  stroke: #4D17E2;
+  stroke: #4d17e2;
 }
 
-.sidebar .menus .item.active::after{
+.sidebar .menus .item.active::after {
   content: " ";
-  border: 2px solid #00BAFF;
+  border: 2px solid #00baff;
   border-radius: 999px;
   width: 0px;
   height: 100%;
   position: absolute;
-  background-color: #00BAFF;
+  background-color: #00baff;
   right: 0;
   transition: all 0.2s linear;
 }
 
-
-.sidebar .menus .item a{
-  color: #7E8CAC;
+.sidebar .menus .item a {
+  color: #7e8cac;
   transition: all 0.2s linear;
 }
 
-.sidebar-footer .footer-card{
-  background-color: #F9FAFF;
+.sidebar-footer .footer-card {
+  background-color: #f9faff;
   border-radius: 1rem;
   padding: 20px;
 }
 
-.sidebar-footer .btn-get-started{
-  background-color: #4D17E2;
+.sidebar-footer .btn-get-started {
+  background-color: #4d17e2;
   padding: 0.438rem;
 }
 
-@media (min-height: 900px){
+@media (min-height: 900px) {
   .sidebar .content {
-      overflow-y: hidden;
+    overflow-y: hidden;
   }
 }

@@ -1,5 +1,5 @@
-import { ACCEPTED_IMAGE_TYPES, MAX_AVATAR_SIZE } from "@utility/constant.utils";
 import { z } from "zod";
+import { ACCEPTED_IMAGE_TYPES, MAX_AVATAR_SIZE } from "@utility/constant.utils";
 
 export const signupSchema = z
   .object({
@@ -44,6 +44,21 @@ export const signupPhotoSchema = z.object({
     ),
 });
 
-export type SignupPhotoInputTypes = z.TypeOf<typeof signupPhotoSchema>;
+export const signinSchema = z.object({
+  email: z
+    .string()
+    .min(1, {
+      message: "Email is required",
+    })
+    .email("Not a valid email"),
+  password: z
+    .string()
+    .min(1, {
+      message: "Password is required",
+    })
+    .min(6, "Password too short - should be 6 chars minimum"),
+});
 
+export type SignupPhotoInputTypes = z.TypeOf<typeof signupPhotoSchema>;
 export type SignupInputTypes = z.TypeOf<typeof signupSchema>;
+export type SigninInputTypes = z.TypeOf<typeof signinSchema>;

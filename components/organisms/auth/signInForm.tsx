@@ -1,58 +1,132 @@
 import Link from "next/link";
 import React from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SigninInputTypes, signinSchema } from "@utility/schema/auth.schema";
+import { Form, Spinner } from "react-bootstrap";
+import { useRouter } from "next/router";
+import { useMutation } from "react-query";
+import {
+  postSigninService,
+  saveUserTokenService,
+} from "@services/auth.service";
+import { useToastContext } from "@utility/context/ToastContext";
 
 type Props = {};
 
 function SignInForm({}: Props) {
+  const router = useRouter();
+  const toastCtx = useToastContext();
+  const methods = useForm<SigninInputTypes>({
+    resolver: zodResolver(signinSchema),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = methods;
+
+  const mutation = useMutation(postSigninService);
+
+  React.useEffect(() => {
+    if (mutation.isSuccess) {
+      router.push("/");
+      toastCtx.onAddToast({
+        variant: "success",
+        message: "Sign in succcess! and will redirect to home page!",
+      });
+    }
+  }, [mutation.isSuccess]);
+
+  const onSubmitHandler = (values: SigninInputTypes) => {
+    mutation.mutate(values, {
+      onSuccess(data) {
+        if (data.token) saveUserTokenService(data.token);
+      },
+      onError(error: any) {
+        if (error && error?.validation) {
+          if (error?.validation?.email)
+            setError("email", {
+              message: error?.validation?.email?.message[0],
+            });
+          if (error?.validation?.password)
+            setError("password", {
+              message: error?.validation?.password?.message[0],
+            });
+        } else {
+          toastCtx.onAddToast({
+            variant: "error",
+            message: error.message || "Signin Failed! Please try again",
+          });
+        }
+      },
+    });
+  };
+
   return (
-    <>
+    <Form onSubmit={handleSubmit(onSubmitHandler)}>
       <h2 className="text-4xl fw-bold color-palette-1 mb-10">Sign In</h2>
       <p className="text-lg color-palette-1 m-0">
         Masuk untuk melakukan proses top up
       </p>
-      <div className="pt-50">
-        <label
-          htmlFor="email"
-          className="form-label text-lg fw-medium color-palette-1 mb-10"
-        >
+      <Form.Group className="pt-50" controlId="email">
+        <Form.Label className="text-lg fw-medium color-palette-1 mb-10">
           Email Address
-        </label>
-        <input
+        </Form.Label>
+        <Form.Control
           type="email"
-          className="form-control rounded-pill text-lg"
-          id="email"
-          name="email"
+          className=" rounded-pill text-lg"
           aria-describedby="email"
           placeholder="Enter your email address"
+          isInvalid={errors?.email ? true : false}
+          {...register("email")}
         />
-      </div>
-      <div className="pt-30">
-        <label
-          htmlFor="password"
-          className="form-label text-lg fw-medium color-palette-1 mb-10"
-        >
+        {errors?.email?.message ? (
+          <Form.Control.Feedback type="invalid" className="ms-3 pt-1">
+            {errors?.email?.message}
+          </Form.Control.Feedback>
+        ) : null}
+      </Form.Group>
+      <Form.Group className="pt-30" controlId="password">
+        <Form.Label className=" text-lg fw-medium color-palette-1 mb-10">
           Password
-        </label>
-        <input
+        </Form.Label>
+        <Form.Control
           type="password"
-          className="form-control rounded-pill text-lg"
-          id="password"
-          name="password"
+          className=" rounded-pill text-lg"
           aria-describedby="password"
           placeholder="Your password"
+          isInvalid={errors?.password ? true : false}
+          {...register("password")}
         />
-      </div>
+        {errors?.password?.message ? (
+          <Form.Control.Feedback type="invalid" className="ms-3 pt-1">
+            {errors?.password?.message}
+          </Form.Control.Feedback>
+        ) : null}
+      </Form.Group>
       <div className="button-group d-flex flex-column mx-auto pt-50">
-        <a
+        <button
+          type="submit"
           className="btn btn-sign-in fw-medium text-lg text-white rounded-pill mb-16"
-          href="../index.html"
           role="button"
+          disabled={mutation.isLoading || mutation.isSuccess}
         >
+          {mutation.isLoading ? (
+            <Spinner
+              as="span"
+              animation="border"
+              className="me-2"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+            />
+          ) : null}
           Continue to Sign In
-        </a>
-        {/* <button type="submit"
-                          class="btn btn-sign-in fw-medium text-lg text-white rounded-pill mb-16"
-                          role="button">Continue to Sign In</button> */}
+        </button>
+
         <Link href="/auth/sign-up">
           <a
             className="btn btn-sign-up fw-medium text-lg color-palette-1 rounded-pill"
@@ -63,7 +137,7 @@ function SignInForm({}: Props) {
           </a>
         </Link>
       </div>
-    </>
+    </Form>
   );
 }
 

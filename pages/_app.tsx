@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import ToastWrapper from "@components/organisms/toastWrapper";
 import ComposeProvider from "@utility/context";
+import PageProgress from "@components/molecules/pageProgress";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -67,6 +68,7 @@ function MyApp({ Component, pageProps }: AppPropsWithProvider) {
         <SSRProvider>
           <ComposeProvider>
             <PageContextProvider>
+              <PageProgress />
               <Component {...pageProps} />
               <ToastWrapper />
             </PageContextProvider>

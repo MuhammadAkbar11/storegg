@@ -1,5 +1,4 @@
 import { IToast } from "@utility/types/toast";
-import { useRouter } from "next/router";
 import React, {
   createContext,
   useContext,
@@ -41,40 +40,30 @@ type Props = {
 
 export function ToastProvider({ children }: Props) {
   const [toasts, setToasts] = useState<IToast[]>([]);
-  const router = useRouter();
 
   useEffect(() => {
-    const handleBrowseAway = () => {
-      setToasts([]);
-    };
-
-    if (toasts.length !== 0) {
-      router.events.on("routeChangeStart", handleBrowseAway);
+    console.log(toasts.length, "TOASTS");
+    let currState = toasts;
+    if (toasts.length > 4) {
+      currState.pop();
+      setToasts(currState);
     }
-
-    return () => {
-      if (toasts.length !== 0) {
-        router.events.off("routeChangeStart", handleBrowseAway);
-      }
-    };
   }, [toasts]);
 
-  const onAddToastHandler = (item: IToast, delay: number = 100) => {
-    setTimeout(() => {
+  const onAddToastHandler = (item: IToast, delay: number = 500) => {
+    return setTimeout(() => {
       const id = new Date().getTime();
       const newItem: IToast = { id: id.toString(), ...item };
       setToasts(prevState => [newItem, ...prevState]);
     }, delay);
   };
 
-  const onRemoveToastHandler = useCallback(
-    (id: string) => {
-      const oldState = toasts;
-      const newState = oldState.filter(t => t.id !== id);
-      setToasts(newState);
-    },
-    [toasts]
-  );
+  const onRemoveToastHandler = (id: string) => {
+    setToasts(prevState => {
+      const updatedState = prevState.filter(t => t.id !== id);
+      return updatedState;
+    });
+  };
 
   const seen = new Set();
   const resultToast = useMemo(() => {

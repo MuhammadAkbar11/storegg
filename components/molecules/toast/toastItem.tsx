@@ -1,28 +1,31 @@
 import React from "react";
-import clsx from "classnames";
 import { IToast } from "@utility/types/toast";
 import { CloseButton, Toast } from "react-bootstrap";
 import ToastIcon from "./toastIcon";
+import { useToastContext } from "@utility/context/ToastContext";
 
 interface Props extends IToast {
   onCloseHandler: (id: string) => void;
 }
 
 function ToastItem(props: Props) {
-  const classNames = clsx({
-    "border-danger": props.variant === "error",
-    "border-primary": props.variant === "default",
-    "border-cyan": props.variant === "info",
-    "border-success": props.variant === "success",
-  });
+  const { onRemoveToast } = useToastContext();
+
+  React.useEffect(() => {
+    if (props.id) {
+      setTimeout(() => {
+        onRemoveToast(props?.id || "");
+      }, 5000);
+    }
+  }, [props.id]);
 
   return (
-    <Toast className={`bg-white shadow-sm rounded ${classNames}`}>
+    <Toast className={`bg-white shadow-sm rounded`}>
       <Toast.Body className={""}>
-        <div className=" d-flex w-100 align-items-start justify-content-between  pt-2 pb-3 px-2">
-          <div className={"opacity-100 d-flex gap-2 align-items-center"}>
+        <div className=" d-flex w-100 align-items-start justify-content-between  pt-2 pb-3 ps-2">
+          <div className={"opacity-100 d-flex gap-2 align-items-start"}>
             <ToastIcon variant={props.variant} />
-            <span className="mt-1 ms-1 text-dark ">{props.message}</span>
+            <span className=" ms-1 text-dark ">{props.message}</span>
           </div>
           <CloseButton
             className=" "

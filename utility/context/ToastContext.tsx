@@ -1,11 +1,10 @@
+import { uHandleDuplicates } from "@utility/index.utils";
 import { IToast } from "@utility/types/toast";
 import React, {
   createContext,
   useContext,
   ReactNode,
   useState,
-  useCallback,
-  useMemo,
   useEffect,
 } from "react";
 
@@ -15,14 +14,14 @@ type ToastContextType = {
   onRemoveToast: (id: string) => void;
 };
 
-const toastDetailContextDefaultValues: ToastContextType = {
+const toastContextDefaultValues: ToastContextType = {
   toasts: [],
   onAddToast() {},
   onRemoveToast() {},
 };
 
 export const ToastContext = createContext<ToastContextType>(
-  toastDetailContextDefaultValues
+  toastContextDefaultValues
 );
 
 export function useToastContext() {
@@ -42,8 +41,7 @@ export function ToastProvider({ children }: Props) {
   const [toasts, setToasts] = useState<IToast[]>([]);
 
   useEffect(() => {
-    console.log(toasts.length, "TOASTS");
-    let currState = toasts;
+    const currState = toasts;
     if (toasts.length > 4) {
       currState.pop();
       setToasts(currState);
@@ -65,14 +63,7 @@ export function ToastProvider({ children }: Props) {
     });
   };
 
-  const seen = new Set();
-  const resultToast = useMemo(() => {
-    return toasts.filter(el => {
-      const duplicate = seen.has(el.id);
-      seen.add(el.id);
-      return !duplicate;
-    });
-  }, [toasts, seen]);
+  const resultToast = uHandleDuplicates(toasts, (a, b) => a.id === b.id);
 
   const value: ToastContextType = {
     toasts: resultToast,

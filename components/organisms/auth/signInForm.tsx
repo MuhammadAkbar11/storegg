@@ -35,7 +35,7 @@ function SignInForm({}: Props) {
       router.push("/");
       toastCtx.onAddToast({
         variant: "success",
-        message: "Sign in succcess! and will redirect to home page!",
+        message: "Sign in succcess!",
       });
     }
   }, [mutation.isSuccess]);

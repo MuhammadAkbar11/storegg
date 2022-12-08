@@ -24,7 +24,7 @@ function MainBanner({}: Props) {
               <br className="d-md-block d-none" /> players menjadi pemenang
               sejati
             </p>
-            <div className="d-flex flex-lg-row flex-column gap-4">
+            <div className="d-flex flex-sm-row flex-column gap-4">
               <Link passHref href={"/auth/sign-up"}>
                 <a
                   className="btn btn-get text-lg text-white rounded-pill"
@@ -34,15 +34,14 @@ function MainBanner({}: Props) {
                   Get Started
                 </a>
               </Link>
-              <Link href="/games" passHref>
-                <a
-                  className="btn-learn text-lg color-palette-1 my-auto text-center"
-                  href="/games"
-                  role="button"
-                >
-                  Learn More
-                </a>
-              </Link>
+              {/* <Link  href="/games"> */}
+              <a
+                className="btn-learn text-lg color-palette-1 my-auto text-center"
+                href="#feature"
+                role="button"
+              >
+                Learn More
+              </a>
             </div>
           </div>
           <div className="col-lg-6 col-12 d-lg-block d-none">

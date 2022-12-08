@@ -25,7 +25,7 @@ function ToastItem(props: Props) {
         <div className=" d-flex w-100 align-items-start justify-content-between  pt-2 pb-3 ps-2">
           <div className={"opacity-100 d-flex gap-2 align-items-start"}>
             <ToastIcon variant={props.variant} />
-            <span className=" ms-1 text-dark ">{props.message}</span>
+            <span className=" ms-1 text-palette-1">{props.message}</span>
           </div>
           <CloseButton
             className=" "

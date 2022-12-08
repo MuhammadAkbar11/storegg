@@ -13,10 +13,15 @@ function SignUp({}: Props) {
 
   return (
     <Layout navbar={false} footer={false} pageTitle="Sign up">
-      {/* Sign Up */}
-      {error && (
-        <ToastTrigger show={true} type="error" message={error?.message || ""} />
-      )}
+      {error ? (
+        !error.name.includes("VALIDATION") ? (
+          <ToastTrigger
+            show={true}
+            variant="error"
+            message={"Sign Up failed! Please try again"}
+          />
+        ) : null
+      ) : null}
       <section className="sign-up mx-auto pt-lg-100 pb-lg-100 pt-30 pb-47">
         <div className="container mx-auto">
           <div className="pb-50">

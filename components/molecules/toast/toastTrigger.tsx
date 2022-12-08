@@ -7,7 +7,7 @@ type Props = {
   delay?: number;
 } & Omit<IToast, "id">;
 
-const ToastTrigger = ({ show, message, type, delay = 300 }: Props) => {
+const ToastTrigger = ({ show, message, variant, delay = 300 }: Props) => {
   const effRan = React.useRef(false);
   const toastCtx = useToastContext();
 
@@ -16,7 +16,7 @@ const ToastTrigger = ({ show, message, type, delay = 300 }: Props) => {
       if (show) {
         toastCtx.onAddToast(
           {
-            type: type,
+            variant: variant,
             message,
           },
           delay

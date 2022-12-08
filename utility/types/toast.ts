@@ -1,6 +1,13 @@
+export type ToastVariantsType =
+  | "error"
+  | "warning"
+  | "success"
+  | "info"
+  | "default";
+
 export interface IToast {
   id?: string;
-  type: "error" | "warning" | "success" | "default";
+  variant: ToastVariantsType;
   title?: string;
   message?: string;
 }

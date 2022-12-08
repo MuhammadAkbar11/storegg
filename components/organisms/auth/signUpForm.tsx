@@ -3,13 +3,15 @@ import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SignupInputTypes, signupSchema } from "@utility/schema/auth.schema";
 import { useForm } from "react-hook-form";
-import { Form } from "react-bootstrap";
+import { Form, Spinner } from "react-bootstrap";
 import { useRouter } from "next/router";
 import { useSignupContext } from "@utility/context/SignupContext";
 
 type Props = {};
 
 function SignUpForm({}: Props) {
+  const [loading, setLoading] = React.useState(false);
+
   const router = useRouter();
 
   const {
@@ -28,8 +30,7 @@ function SignUpForm({}: Props) {
     handleSubmit,
     setValue,
     setError,
-
-    formState: { errors, isValid },
+    formState: { errors },
   } = methods;
 
   React.useEffect(() => {
@@ -57,9 +58,13 @@ function SignUpForm({}: Props) {
   }, [errorSignup]);
 
   const onSubmitHandler = (values: SignupInputTypes) => {
+    setLoading(true);
     onSetFormData(values);
     onSetErrorSignup(null);
-    router.push("/auth/sign-up-photo");
+    setTimeout(() => {
+      setLoading(false);
+      router.push("/auth/sign-up-photo");
+    }, 300);
   };
 
   return (
@@ -138,10 +143,20 @@ function SignUpForm({}: Props) {
       </Form.Group>
       <div className="button-group d-flex flex-column mx-auto pt-50">
         <button
-          disabled={isValid ? false : true}
+          disabled={loading}
           className="btn btn-sign-up fw-medium text-lg text-white rounded-pill mb-16"
           type="submit"
         >
+          {loading ? (
+            <Spinner
+              as="span"
+              animation="border"
+              className="me-2"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+            />
+          ) : null}
           Continue
         </button>
         <Link href={"/auth/sign-in"} passHref>

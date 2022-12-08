@@ -20,3 +20,27 @@ export function uRupiah(value: number) {
   });
   return result;
 }
+
+export function uHandleDuplicates<T extends Record<string, any>>(
+  arr: T[],
+  compareFn: (a: T, b: T) => boolean
+): T[] {
+  // Create a new Map object to store the unique objects.
+  const uniqueObjects = new Map();
+  for (const obj of arr) {
+    let isUnique = true;
+
+    uniqueObjects.forEach((value, key) => {
+      if (compareFn(obj, value)) {
+        isUnique = false;
+        return;
+      }
+    });
+
+    if (isUnique) {
+      uniqueObjects.set(obj, obj);
+    }
+  }
+
+  return Array.from(uniqueObjects.values());
+}

@@ -12,7 +12,7 @@ function Sidebar({ activePath }: Props) {
     <section className="sidebar">
       <div className="content pt-50 pb-30 ps-30">
         <SidebarAvatar name="Lee Jieun" email="leejieun@gmai.com" />
-        <div className="menus ">
+        <div className="menus">
           <SidebarMenuItem
             title="Overview"
             icon="overview"

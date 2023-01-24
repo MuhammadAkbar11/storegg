@@ -16,7 +16,9 @@ function SignUpSuccess({}: Props) {
               Well Done!
             </h2>
             <p className="text-lg text-center color-palette-1 m-0">
-              Kamu sudah bisa melakukan top up
+              Sign up Berhasil!
+              <br className="d-sm-block d-none" />
+              Kamu sudah bisa melakukan top up sekarang
               <br className="d-sm-block d-none" />
               dan menjadi pemenang!
             </p>
@@ -24,10 +26,10 @@ function SignUpSuccess({}: Props) {
           <div className="button-group d-flex flex-column mx-auto">
             <a
               className="btn btn-top-up fw-medium text-lg text-white rounded-pill"
-              href="/games"
+              href="/auth/sign-in"
               role="button"
             >
-              Top Up
+              Login Now
             </a>
           </div>
         </div>

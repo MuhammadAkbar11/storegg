@@ -1,6 +1,7 @@
 import { API_URI } from "@utility/constant.utils";
 import { uTranformAxiosError } from "@utility/error.utils";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export const nothing = {};
 
@@ -25,5 +26,8 @@ export async function postSigninService(data: any) {
 }
 
 export function saveUserTokenService(token: string) {
-  return localStorage.setItem("userToken", token);
+  const tokenBase64 = btoa(token);
+  return Cookies.set("userToken", tokenBase64, {
+    expires: 30,
+  });
 }

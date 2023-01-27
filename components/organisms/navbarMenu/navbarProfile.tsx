@@ -3,6 +3,9 @@ import Link from "next/link";
 import { PROFILE_MENU } from "@utility/constant.utils";
 import { Dropdown, Nav } from "react-bootstrap";
 import { IUserAuth } from "@utility/types";
+import Cookies from "js-cookie";
+import { useQueryClient } from "react-query";
+import { useRouter } from "next/router";
 
 type Props = {
   isLogin: boolean;
@@ -12,6 +15,17 @@ type Props = {
 function NavbarProfile(props: Props) {
   const { isLogin, profile } = props;
   const profileMenu = PROFILE_MENU;
+
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
+  const onLogout = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    Cookies.remove("userToken");
+    queryClient.removeQueries("userAuth", { exact: true });
+    router.push("/");
+  };
+
   return (
     <>
       {!isLogin ? (
@@ -61,6 +75,15 @@ function NavbarProfile(props: Props) {
                   </li>
                 );
               })}
+              <li>
+                <Dropdown.Item
+                  href="/log-out"
+                  className="text-lg color-palette-2"
+                  onClick={onLogout}
+                >
+                  Log Out
+                </Dropdown.Item>
+              </li>
             </Dropdown.Menu>
           </div>
         </Dropdown>

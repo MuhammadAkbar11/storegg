@@ -6,7 +6,6 @@ export const PROFILE_MENU = [
   { text: "My Profile", href: "/member" },
   { text: "Wallet", href: "/member/wallet" },
   { text: "Account Setting", href: "/member/settings" },
-  { text: "Log Out", href: "/auth/sing-in" },
 ];
 
 export const MAX_AVATAR_SIZE = 5000000;

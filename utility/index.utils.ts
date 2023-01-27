@@ -44,3 +44,12 @@ export function uHandleDuplicates<T extends Record<string, any>>(
 
   return Array.from(uniqueObjects.values());
 }
+
+export function convertKeysToCamelCase(obj: any) {
+  let newObj: any = {};
+  for (let key in obj) {
+    let newKey = key.replace(/_([a-z])/g, match => match[1].toUpperCase());
+    newObj[newKey] = obj[key];
+  }
+  return newObj;
+}

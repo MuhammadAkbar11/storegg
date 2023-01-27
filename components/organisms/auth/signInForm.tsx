@@ -16,6 +16,7 @@ type Props = {};
 
 function SignInForm({}: Props) {
   const router = useRouter();
+
   const toastCtx = useToastContext();
   const methods = useForm<SigninInputTypes>({
     resolver: zodResolver(signinSchema),
@@ -33,17 +34,15 @@ function SignInForm({}: Props) {
   React.useEffect(() => {
     if (mutation.isSuccess) {
       router.push("/");
-      toastCtx.onAddToast({
-        variant: "success",
-        message: "Sign in succcess!",
-      });
     }
   }, [mutation.isSuccess]);
 
   const onSubmitHandler = (values: SigninInputTypes) => {
     mutation.mutate(values, {
       onSuccess(data) {
-        if (data.token) saveUserTokenService(data.token);
+        if (data.token) {
+          saveUserTokenService(data.token);
+        }
       },
       onError(error: any) {
         if (error && error?.validation) {
@@ -58,7 +57,7 @@ function SignInForm({}: Props) {
         } else {
           toastCtx.onAddToast({
             variant: "error",
-            message: error.message || "Signin Failed! Please try again",
+            message: error.message || "Sign-in Failed! Please try again",
           });
         }
       },

@@ -1,5 +1,6 @@
-import { API_URI } from "@utility/constant.utils";
+import { API_URI, ROOT_API } from "@utility/constant.utils";
 import { uTranformAxiosError } from "@utility/error.utils";
+import { convertKeysToCamelCase } from "@utility/index.utils";
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -25,8 +26,41 @@ export async function postSigninService(data: any) {
   }
 }
 
+export async function getAuthService() {
+  try {
+    const token = Cookies.get("userToken");
+    // const  tokenBase64 = btoa(token);
+    if (!token) {
+      return {
+        isAuth: false,
+      };
+    }
+
+    const undecodedToken = window.atob(token);
+
+    const response = await axios.get(`${API_URI}/session`, {
+      headers: {
+        Authorization: `Bearer ${undecodedToken}`,
+      },
+    });
+
+    let userAuth = { ...response.data?.data };
+
+    userAuth = convertKeysToCamelCase(userAuth);
+    userAuth.avatar = ROOT_API + userAuth.avatar;
+
+    return {
+      isAuth: true,
+      authData: userAuth,
+    };
+  } catch (error) {
+    console.log(error);
+    throw uTranformAxiosError(error);
+  }
+}
+
 export function saveUserTokenService(token: string) {
-  const tokenBase64 = btoa(token);
+  const tokenBase64 = window.btoa(token);
   return Cookies.set("userToken", tokenBase64, {
     expires: 30,
   });

@@ -5,12 +5,17 @@ import Logo from "../../atoms/logo";
 import NavbarProfile from "./navbarProfile";
 import NavbarMenuList from "./navbarMenuListNav";
 import NavbarToggle from "./navbarToggle";
+import useAuth from "@hooks/useAuth";
 
 type Props = {
   activePath?: string;
 };
 
 function NavbarMenu({ activePath }: Props) {
+  const { data: userAuth, isLoading } = useAuth() as any;
+
+  const isAuth = userAuth?.isAuth;
+  const authData = userAuth?.authData;
   return (
     <section>
       <Navbar
@@ -28,7 +33,20 @@ function NavbarMenu({ activePath }: Props) {
           <Navbar.Collapse id="navbarNav">
             <Nav as="ul" className="ms-auto text-lg gap-lg-0 gap-2">
               <NavbarMenuList activePath={activePath} />
-              <NavbarProfile isLogin={true} />
+              {!isLoading ? (
+                <NavbarProfile isLogin={isAuth} profile={authData} />
+              ) : (
+                <>
+                  <div className=" w-full d-flex justify-content-center ">
+                    <div
+                      className="spinner-border color-palette-4"
+                      role="status"
+                    >
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  </div>
+                </>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>

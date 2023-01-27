@@ -83,3 +83,14 @@ export interface IErrorAPI {
   statusCode: string;
   [key: string]: any;
 }
+
+export interface IUserAuth {
+  playerId: string;
+  userId: string;
+  username: string;
+  name: string;
+  email: string;
+  phoneNumber: string;
+  avatar: string;
+  favorite: string;
+}

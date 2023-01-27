@@ -2,13 +2,15 @@ import React from "react";
 import Link from "next/link";
 import { PROFILE_MENU } from "@utility/constant.utils";
 import { Dropdown, Nav } from "react-bootstrap";
+import { IUserAuth } from "@utility/types";
 
 type Props = {
   isLogin: boolean;
+  profile: IUserAuth;
 };
 
 function NavbarProfile(props: Props) {
-  const { isLogin } = props;
+  const { isLogin, profile } = props;
   const profileMenu = PROFILE_MENU;
   return (
     <>
@@ -36,11 +38,14 @@ function NavbarProfile(props: Props) {
               id="dropdown-basic"
             >
               <img
-                src="/img/avatar-1.png"
+                src={profile?.avatar || "/img/avatar-1.png"}
                 className="rounded-circle"
                 width={40}
                 height={40}
                 alt={"avatar"}
+                style={{
+                  objectFit: "cover",
+                }}
               />
             </Dropdown.Toggle>
             <Dropdown.Menu as={"ul"} className="border-0">

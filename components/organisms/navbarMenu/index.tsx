@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { Container, Nav, Navbar, Spinner } from "react-bootstrap";
 import Logo from "../../atoms/logo";
 import NavbarProfile from "./navbarProfile";
 import NavbarMenuList from "./navbarMenuListNav";
@@ -16,6 +16,7 @@ function NavbarMenu({ activePath }: Props) {
 
   const isAuth = userAuth?.isAuth;
   const authData = userAuth?.authData;
+
   return (
     <section>
       <Navbar
@@ -37,13 +38,13 @@ function NavbarMenu({ activePath }: Props) {
                 <NavbarProfile isLogin={isAuth} profile={authData} />
               ) : (
                 <>
-                  <div className=" w-full d-flex justify-content-center ">
-                    <div
-                      className="spinner-border color-palette-4"
-                      role="status"
-                    >
-                      <span className="visually-hidden">Loading...</span>
-                    </div>
+                  <div
+                    className=" w-full d-flex justify-content-center align-items-center  "
+                    style={{
+                      minWidth: 60,
+                    }}
+                  >
+                    <Spinner animation="border" size="sm" variant="primary" />
                   </div>
                 </>
               )}

@@ -5,7 +5,6 @@ import { Dropdown, Nav } from "react-bootstrap";
 import { IUserAuth } from "@utility/types";
 import Cookies from "js-cookie";
 import { useQueryClient } from "react-query";
-import { useRouter } from "next/router";
 
 type Props = {
   isLogin: boolean;
@@ -17,13 +16,12 @@ function NavbarProfile(props: Props) {
   const profileMenu = PROFILE_MENU;
 
   const queryClient = useQueryClient();
-  const router = useRouter();
 
   const onLogout = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     Cookies.remove("userToken");
     queryClient.removeQueries("userAuth", { exact: true });
-    router.push("/");
+    window.location.href = "/";
   };
 
   return (

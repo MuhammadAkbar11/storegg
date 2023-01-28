@@ -11,13 +11,14 @@ import {
   saveUserTokenService,
 } from "@services/auth.service";
 import { useToastContext } from "@utility/context/ToastContext";
+import useAuth from "@hooks/useAuth";
 
 type Props = {};
 
 function SignInForm({}: Props) {
   const router = useRouter();
-
   const toastCtx = useToastContext();
+  const { refetch: refetchAuth } = useAuth();
   const methods = useForm<SigninInputTypes>({
     resolver: zodResolver(signinSchema),
   });
@@ -42,6 +43,7 @@ function SignInForm({}: Props) {
       onSuccess(data) {
         if (data.token) {
           saveUserTokenService(data.token);
+          refetchAuth();
         }
       },
       onError(error: any) {

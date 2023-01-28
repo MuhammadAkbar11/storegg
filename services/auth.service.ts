@@ -65,3 +65,7 @@ export function saveUserTokenService(token: string) {
     expires: 30,
   });
 }
+
+export function getUserTokenService() {
+  return Cookies.get("userToken");
+}

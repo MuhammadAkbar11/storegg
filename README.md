@@ -1,9 +1,26 @@
+<h1 align="center">
+  StoreGG - StoreGG Main Website
+</h1>
 
+<p align="center">
+  The Administrator + APIs project here <a href="https://github.com/MuhammadAkbar11/storegg-dashboard" target="_blank">StoreGG Dashboard</a>.
+</p>
+<br>
+<div align="center">
+  <p>Landing Page</p>
+  <!-- <a href="https://muhammad-akbar.herokuapp.com/" target="_blank"> -->
+  <img src="https://raw.githubusercontent.com/MuhammadAkbar11/storegg/main/docs/demo1.png" width="80%" />
+  <!-- </a> -->
+</div>
+<div align="center">
+  <p>List Games Page</p>
+  <img src="https://raw.githubusercontent.com/MuhammadAkbar11/storegg/main/docs/demo2.png" width="80%" />
+</div>
+<br>
 
-# StoreGG Website
- Website for top up game vouchers
+<br>
 
-> still under development
+> This project is still in the development stage.
 
 
 
@@ -17,6 +34,7 @@
 1. **Typescript**
 2. **React.js**
 3. **Next.js** React Framework
+3. **React-Query 3** React data-fetching library
 4. **Bootstrap 5** Css Framework
 
 ## Get Started

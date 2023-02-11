@@ -12,6 +12,7 @@
   <img src="https://raw.githubusercontent.com/MuhammadAkbar11/storegg/main/docs/demo1.png" width="80%" />
   <!-- </a> -->
 </div>
+
 <div align="center">
   <p>List Games Page</p>
   <img src="https://raw.githubusercontent.com/MuhammadAkbar11/storegg/main/docs/demo2.png" width="80%" />
@@ -31,9 +32,9 @@
 
 ## Technology Stack
 
-1. **Typescript**
-2. **React.js**
-3. **Next.js** React Framework
+1. **Typescript v4.7**
+2. **React.js 18**
+3. **Next.js 12** React Framework
 3. **React-Query 3** React data-fetching library
 4. **Bootstrap 5** Css Framework
 

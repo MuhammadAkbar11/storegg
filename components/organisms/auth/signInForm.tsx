@@ -18,7 +18,7 @@ type Props = {};
 function SignInForm({}: Props) {
   const router = useRouter();
   const toastCtx = useToastContext();
-  const { refetch: refetchAuth } = useAuth();
+  const { refetchAuth } = useAuth();
   const methods = useForm<SigninInputTypes>({
     resolver: zodResolver(signinSchema),
   });
@@ -35,6 +35,7 @@ function SignInForm({}: Props) {
   React.useEffect(() => {
     if (mutation.isSuccess) {
       router.push("/");
+      refetchAuth();
     }
   }, [mutation.isSuccess]);
 
@@ -43,7 +44,10 @@ function SignInForm({}: Props) {
       onSuccess(data) {
         if (data.token) {
           saveUserTokenService(data.token);
-          refetchAuth();
+          toastCtx.onAddToast({
+            variant: "success",
+            message: `Sign in berhasil, selamat datang kembali <strong>${data.name}</strong>!`,
+          });
         }
       },
       onError(error: any) {

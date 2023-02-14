@@ -45,6 +45,15 @@ export function uHandleDuplicates<T extends Record<string, any>>(
   return Array.from(uniqueObjects.values());
 }
 
+export function notAuthRedirect() {
+  return {
+    redirect: {
+      destination: "/auth/sign-in",
+      permanent: false,
+    },
+  };
+}
+
 export function convertKeysToCamelCase(obj: any) {
   let newObj: any = {};
   for (let key in obj) {

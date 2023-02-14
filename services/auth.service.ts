@@ -26,21 +26,11 @@ export async function postSigninService(data: any) {
   }
 }
 
-export async function getAuthService() {
+export async function getAuthService(token: string | null) {
   try {
-    const token = Cookies.get("userToken");
-    // const  tokenBase64 = btoa(token);
-    if (!token) {
-      return {
-        isAuth: false,
-      };
-    }
-
-    const undecodedToken = window.atob(token);
-
     const response = await axios.get(`${API_URI}/session`, {
       headers: {
-        Authorization: `Bearer ${undecodedToken}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -49,13 +39,15 @@ export async function getAuthService() {
     userAuth = convertKeysToCamelCase(userAuth);
     userAuth.avatar = ROOT_API + userAuth.avatar;
 
-    return {
-      isAuth: true,
-      authData: userAuth,
-    };
+    return userAuth;
   } catch (error) {
-    console.log(error);
-    throw uTranformAxiosError(error);
+    const errRes = uTranformAxiosError(error);
+
+    if (errRes.name.includes("NOT_AUTH")) {
+      return false;
+    }
+
+    throw errRes;
   }
 }
 
@@ -67,5 +59,8 @@ export function saveUserTokenService(token: string) {
 }
 
 export function getUserTokenService() {
-  return Cookies.get("userToken");
+  const token = Cookies.get("userToken");
+  if (!token) return null;
+  const undecodedToken = window.atob(token);
+  return undecodedToken;
 }

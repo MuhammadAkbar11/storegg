@@ -10,4 +10,5 @@ export interface IToast {
   variant: ToastVariantsType;
   title?: string;
   message?: string;
+  hideDelay?: number;
 }

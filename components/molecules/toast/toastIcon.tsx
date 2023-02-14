@@ -23,15 +23,18 @@ function ToastIcon({ variant }: Props) {
   };
 
   const Icon = icons[variant as keyof IconOptions];
-  const classNames = clsx("my-0", {
+  const classNames = clsx("my-0 ", {
     "text-danger": variant === "error",
     "text-primary": variant === "default",
-    "text-cyan": variant === "info",
+    "text-cyan ": variant === "info",
     "text-success": variant === "success",
   });
 
   return (
-    <div className={classNames} style={{ height: 25, width: 25 }}>
+    <div
+      className={classNames}
+      style={{ minHeight: 25, minWidth: 25, maxHeight: 32, maxWidth: 32 }}
+    >
       {Icon}
     </div>
   );

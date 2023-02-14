@@ -13,22 +13,28 @@ function ToastItem(props: Props) {
 
   React.useEffect(() => {
     if (props.id) {
+      const delay = props.hideDelay || 5000;
       setTimeout(() => {
         onRemoveToast(props?.id || "");
-      }, 5000);
+      }, delay);
     }
-  }, [props.id]);
-
+  }, [props.id, props.hideDelay]);
   return (
-    <Toast className={`bg-white shadow-sm rounded`}>
-      <Toast.Body className={""}>
-        <div className=" d-flex w-100 align-items-start justify-content-between  pt-2 pb-3 ps-2">
-          <div className={"opacity-100 d-flex gap-2 align-items-start"}>
+    <Toast
+      className={`bg-white shadow rounded-pill border-0 `}
+      style={{ width: "max-content" }}
+    >
+      <Toast.Body className={"p-2 "}>
+        <div className="d-flex w-100 align-items-center justify-content-between flex-nowrap ">
+          <div className={"opacity-100 d-flex gap-2 align-items-center pe-2 "}>
             <ToastIcon variant={props.variant} />
-            <span className=" ms-1 text-palette-1">{props.message}</span>
+            <div
+              className=" ms-1 text-dark my-0 "
+              dangerouslySetInnerHTML={{ __html: props?.message || "" }}
+            />
           </div>
           <CloseButton
-            className=" "
+            className=""
             onClick={() => props.id && props.onCloseHandler(props.id)}
           />
         </div>

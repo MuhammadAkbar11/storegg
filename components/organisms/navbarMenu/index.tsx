@@ -12,10 +12,10 @@ type Props = {
 };
 
 function NavbarMenu({ activePath }: Props) {
-  const { data: userAuth, isLoading } = useAuth() as any;
+  const userAuth = useAuth() as any;
 
   const isAuth = userAuth?.isAuth;
-  const authData = userAuth?.authData;
+  const authState = userAuth?.authState;
 
   return (
     <section>
@@ -34,18 +34,23 @@ function NavbarMenu({ activePath }: Props) {
           <Navbar.Collapse id="navbarNav">
             <Nav as="ul" className="ms-auto text-lg gap-lg-0 gap-2">
               <NavbarMenuList activePath={activePath} />
-              {!isLoading ? (
-                <NavbarProfile isLogin={isAuth} profile={authData} />
+              {userAuth?.isLoading ? (
+                <>
+                  <div className="vertical-line d-lg-block d-none" />
+                  <div
+                    style={{
+                      minWidth: 50,
+                    }}
+                    className="ms-lg-40 d-flex-center "
+                  >
+                    <div className="spinner-grow text-gray" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  </div>
+                </>
               ) : (
                 <>
-                  <div
-                    className=" w-full d-flex justify-content-center align-items-center  "
-                    style={{
-                      minWidth: 60,
-                    }}
-                  >
-                    <Spinner animation="border" size="sm" variant="primary" />
-                  </div>
+                  <NavbarProfile isLogin={isAuth} profile={authState} />
                 </>
               )}
             </Nav>

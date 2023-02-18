@@ -39,13 +39,12 @@ function NavbarMenu({ activePath }: Props) {
                   <div className="vertical-line d-lg-block d-none" />
                   <div
                     style={{
-                      minWidth: 50,
+                      width: 45,
+                      height: 45,
                     }}
-                    className="ms-lg-40 d-flex-center "
+                    className="ms-lg-40 d-flex-center loading-skeleton bg-palette-3 rounded-circle "
                   >
-                    <div className="spinner-grow text-gray" role="status">
-                      <span className="visually-hidden">Loading...</span>
-                    </div>
+                    <span className="visually-hidden">Loading...</span>
                   </div>
                 </>
               ) : (

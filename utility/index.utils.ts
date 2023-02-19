@@ -45,10 +45,10 @@ export function uHandleDuplicates<T extends Record<string, any>>(
   return Array.from(uniqueObjects.values());
 }
 
-export function notAuthRedirect() {
+export function notAuthRedirect(destination: string = "/auth/sign-in") {
   return {
     redirect: {
-      destination: "/auth/sign-in",
+      destination: destination,
       permanent: false,
     },
   };

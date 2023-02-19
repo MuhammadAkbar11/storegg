@@ -6,12 +6,19 @@ import {
   IGameNominal,
   IListGamesQueries,
   IListGamesResponse,
+  IPaymentMethods,
 } from "@utility/types";
 import type { IBank } from "@utility/types";
 import { uTranformAxiosError } from "@utility/error.utils";
 import axios from "axios";
 import { API_URI, ROOT_API } from "@utility/constant.utils";
-import { queriesToString, uRupiah } from "@utility/index.utils";
+import {
+  convertKeysToCamelCase,
+  queriesToString,
+  uRupiah,
+} from "@utility/index.utils";
+import { getUserTokenService } from "./auth.service";
+import { ICheckout } from "@utility/types/transaction";
 
 export async function getFeaturedGameService(
   queryOpt: IFeaturedGameQueries
@@ -28,6 +35,7 @@ export async function getFeaturedGameService(
         category: g.category?.name,
       };
     });
+
     return result;
   } catch (error: any) {
     throw error;
@@ -51,8 +59,8 @@ export async function getListGameService(
         category: g.category?.name,
       };
     });
-
     delete data.vouchers;
+
     return { games: result, ...data };
   } catch (error: any) {
     throw error;
@@ -86,13 +94,21 @@ export async function getDetailVouherService(voucherID: string) {
             nominalId: nm.nominal_id,
             quantity: nm.coin_quantity,
             coinName: nm.coin_name,
-            price: uRupiah(Number(nm.price)),
+            price: nm.price,
             description: nm.description,
           }
       ),
     };
 
-    return { banks, voucher: voucherResult };
+    const payments = data.payments.map((py: IPaymentMethods) => {
+      const item = convertKeysToCamelCase(py);
+      return {
+        ...item,
+        banks: py.banks.map(bnk => convertKeysToCamelCase(bnk)),
+      };
+    });
+
+    return { banks, voucher: voucherResult, payments };
   } catch (error: any) {
     throw uTranformAxiosError(error);
   }
@@ -113,5 +129,23 @@ export async function getCategoryListService(): Promise<ICategory[]> {
     return result;
   } catch (error: any) {
     throw error;
+  }
+}
+
+export async function postCheckoutService(data: ICheckout) {
+  try {
+    const token = getUserTokenService();
+
+    console.log(token, "TOKEN");
+    const response = await axios.post(`${API_URI}/checkout`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    // console.log();
+    const { data: resData } = response.data;
+    return resData;
+  } catch (error: any) {
+    throw uTranformAxiosError(error);
   }
 }

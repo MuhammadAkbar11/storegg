@@ -4,13 +4,14 @@ import { AppProvider } from "./AppContext";
 import ModalProvider from "./ModalContext";
 import { SignupProvider } from "./SignupContext";
 import { ToastProvider } from "./ToastContext";
+import { TopupProvider } from "./TopupContext";
 
 type ComponseProps = {
   providers: React.ElementType[];
   children: React.ReactNode;
 };
 
-function ComposeContext(props: ComponseProps) {
+export function ComposeContext(props: ComponseProps) {
   const { providers = [], children } = props;
   return (
     <>
@@ -21,18 +22,20 @@ function ComposeContext(props: ComponseProps) {
   );
 }
 
-export default function ComposeProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+function ComposeProvider({ children }: { children: React.ReactNode }) {
   let providers = [AppProvider, ToastProvider, ModalProvider];
 
   const router = useRouter();
-
-  if (router.pathname.includes("/auth")) {
+  const pathname = router.pathname;
+  if (pathname.includes("/auth")) {
     providers.push(SignupProvider);
+  }
+
+  if (pathname.includes("/detail") || pathname.includes("/checkout")) {
+    providers.push(TopupProvider);
   }
 
   return <ComposeContext providers={providers}>{children}</ComposeContext>;
 }
+
+export default ComposeProvider;

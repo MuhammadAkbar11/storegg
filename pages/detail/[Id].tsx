@@ -12,15 +12,15 @@ import {
   GameDetailProvider,
 } from "@context/GameDetailContext";
 import Layout from "@components/organisms/layout";
+import { useTopupContext } from "@utility/context/TopupContext";
 
 type Props = {};
 
 function Detail({}: Props) {
   const { voucher, loading, onFetchDataHandler, error } =
     useGameDetailContext();
-
+  const topupCtx = useTopupContext();
   const { isReady, query } = useRouter();
-
   React.useEffect(() => {
     if (isReady) {
       onFetchDataHandler(query.Id);
@@ -91,6 +91,6 @@ function Detail({}: Props) {
   );
 }
 
-Detail.provider = GameDetailProvider;
+Detail.providers = [GameDetailProvider];
 
 export default Detail;

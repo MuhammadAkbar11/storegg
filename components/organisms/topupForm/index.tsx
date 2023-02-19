@@ -7,30 +7,108 @@ import TopupFormPaymentItem from "./topupFormPaymentItem";
 import TopupFormTransferBank from "./topUpTransferBank";
 import { Form } from "react-bootstrap";
 import { toptupSchema, TopupInput } from "@utility/schema/topup.schema";
+import useAuth from "@hooks/useAuth";
+import { useToastContext } from "@utility/context/ToastContext";
+import Cookies from "js-cookie";
+import { useTopupContext } from "@utility/context/TopupContext";
+import {
+  IBank,
+  IGameDetailItem,
+  IGameNominal,
+  IPaymentMethods,
+  ITopupGame,
+} from "@utility/types";
+import { useRouter } from "next/router";
 
 type Props = {};
 
 function TopUpForm({}: Props) {
-  const { banks } = useGameDetailContext();
+  const { banks, voucher, payments: listPayments } = useGameDetailContext();
+  const toastCtx = useToastContext();
+  const auth = useAuth();
+  const topupCtx = useTopupContext();
+  const router = useRouter();
 
+  const defaultPayMethodCtx = topupCtx.topupFormData?.payment?.paymentMethod;
+  const defaultPayMethodValues =
+    typeof defaultPayMethodCtx === "string"
+      ? defaultPayMethodCtx
+      : defaultPayMethodCtx?.paymentMethodId;
   const methods = useForm<TopupInput>({
     resolver: zodResolver(toptupSchema),
     defaultValues: {
-      paymentMethod: "",
+      accountID: topupCtx?.topupFormData?.accountGame || "",
+      paymentMethod: defaultPayMethodValues,
+      nominal: topupCtx.topupFormData?.nominal?.nominalId || "",
     },
+    shouldUnregister: true,
   });
 
   const {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { isValid },
+    unregister,
   } = methods;
 
-  const payMethod = watch("paymentMethod")?.toLocaleLowerCase();
+  const payMethodState = watch("paymentMethod") ?? "";
+  const bankTransferState = watch("bankTransfer");
+  const bankTransferAccountState = watch("bankTransferAccount");
+
+  const findPayment =
+    payMethodState?.trim() !== ""
+      ? listPayments.filter(
+          py =>
+            py &&
+            py?.paymentMethodId
+              .toLowerCase()
+              .includes(payMethodState?.toLowerCase())
+        )
+      : null;
+
+  const listBanks =
+    findPayment && findPayment.length !== 0 ? findPayment[0].banks : null;
+
+  const isTransferMethod = (findPayment && findPayment?.length > 0) ?? false;
 
   const onSubmitHandler = (values: TopupInput) => {
-    console.log(values);
+    if (!auth.isAuth) {
+      toastCtx.onAddToast({
+        variant: "error",
+        message: `Silahkan <strong>Sign in</strong> untuk melanjutkan top up`,
+        hideDelay: 6000,
+      });
+      return;
+    }
+
+    const topupVoucher = voucher as IGameDetailItem;
+    const selectedBank = banks.find(
+      b => b?.bankId === values?.bankTransfer
+    ) as IBank;
+    const selectedNominal = voucher?.nominals?.find(
+      nm => nm.nominalId === values.nominal
+    ) as IGameNominal;
+    const selectedPayment = listPayments.find(
+      py => py.paymentMethodId === values.paymentMethod.trim()
+    ) as IPaymentMethods;
+
+    const inputValues: ITopupGame = {
+      voucher: topupVoucher,
+      accountGame: values.accountID,
+      payment: {
+        bank: selectedBank,
+        paymentMethod: selectedPayment ? selectedPayment : values.paymentMethod,
+        bankAccountName: values?.bankTransferAccount || "",
+      },
+      nominal: selectedNominal,
+    };
+
+    if (voucher) {
+      topupCtx.onSetToptupForm(inputValues);
+      router.push("/checkout");
+    }
   };
 
   return (
@@ -68,26 +146,39 @@ function TopUpForm({}: Props) {
           </p>
           <fieldset id="paymentMethod">
             <div className="row justify-content-between">
-              <TopupFormPaymentItem
+              {listPayments.map(py => {
+                return (
+                  <TopupFormPaymentItem
+                    key={py.paymentMethodId}
+                    payMethodId={py.paymentMethodId}
+                    title={py.type}
+                    text={py?.text || ""}
+                  />
+                );
+              })}
+              {/* <TopupFormPaymentItem
                 title="Transfer"
                 text="Worldwide Available"
-              />
+              /> */}
               <TopupFormPaymentItem title="Visa" text="Credit Card" />
-              <TopupFormPaymentItem title="Paypal" text="Simple and fast" />
+              {/*
+              <TopupFormPaymentItem title="Paypal" text="Simple and fast" /> */}
               <div className="col-lg-4 col-sm-6">{/* Blank */}</div>
             </div>
           </fieldset>
         </div>
-        {payMethod && payMethod === "transfer" ? (
+        {listBanks ? (
           <div className="pb-md-50 pb-20">
             <p className="text-lg fw-medium color-palette-1 mb-md-10 mb-0">
               Select Bank To Transfer
             </p>
             <fieldset id="bankTransfer">
               <div className="row justify-content-between">
-                {banks.map(bnk => {
+                {listBanks.map(bnk => {
                   return (
                     <TopupFormTransferBank
+                      isRequired={isTransferMethod}
+                      paymentMethod={payMethodState}
                       bankId={bnk?.bankId}
                       key={bnk?.bankId}
                       bankName={bnk?.bankName}
@@ -101,7 +192,7 @@ function TopUpForm({}: Props) {
             </fieldset>
           </div>
         ) : null}
-        {payMethod && payMethod === "transfer" ? (
+        {listBanks ? (
           <div className="pb-50">
             <label
               htmlFor="bankAccount"
@@ -116,7 +207,7 @@ function TopUpForm({}: Props) {
               aria-describedby="bankAccount"
               placeholder="Enter your Bank Account Name"
               {...register("bankTransferAccount", {
-                required: payMethod === "transfer",
+                required: isTransferMethod,
               })}
             />
           </div>

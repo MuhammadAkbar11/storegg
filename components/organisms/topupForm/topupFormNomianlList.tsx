@@ -1,6 +1,7 @@
 import React from "react";
 import { useGameDetailContext } from "@context/GameDetailContext";
 import TopupFormNomialItem from "./topupFormNomialItem";
+import { uRupiah } from "@utility/index.utils";
 
 type Props = {};
 
@@ -17,7 +18,7 @@ function TopupFormNomianl({}: Props) {
                 key={nm.nominalId}
                 coinName={nm.coinName}
                 nominalId={nm.nominalId}
-                price={nm.price}
+                price={uRupiah(Number(nm.price))}
                 quantity={nm.quantity}
               />
             );

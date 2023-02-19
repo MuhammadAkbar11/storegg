@@ -9,6 +9,14 @@ export interface IBank {
   noRekening: string;
 }
 
+export interface IPaymentMethods {
+  paymentMethodId: string;
+  type: string;
+  status: string;
+  banks: IBank[];
+  text?: string;
+}
+
 export interface IFTransaction {
   game: string;
   gameImage: string;
@@ -45,6 +53,18 @@ export interface IGameNominal {
 export interface IGameDetailItem extends Omit<IGameItem, "category"> {
   nominals: IGameNominal[] | null;
   category: string;
+}
+
+export interface ITopupGame {
+  voucher: IGameDetailItem;
+  accountGame: string;
+  payment: {
+    bankAccountName?: string;
+    paymentMethod: IPaymentMethods | string;
+    bank?: IBank | null;
+  };
+  nominal: IGameNominal;
+  [key: string]: any;
 }
 
 export interface IFeaturedGameQueries {

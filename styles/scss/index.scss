@@ -31,9 +31,11 @@
 
 // @import "/node_modules/bootstrap/scss/bootstrap";
 
+@import "./core/utils";
+@import "./core/animation";
+
 @import "./pages/homepage";
 @import "./pages/about";
-@import "./core/utils";
 @import "./pages/detail";
 @import "./pages/list";
 @import "./pages/checkout";
@@ -48,7 +50,6 @@
 @import "./components/navbar";
 @import "./components/hero";
 @import "./components/toast";
-@import "./components/skeleton";
 
 @import "./pages/member-overview";
 @import "./pages/member-transactions";

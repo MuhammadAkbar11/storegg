@@ -7,7 +7,7 @@ import GameOthersIcon from "../../atoms/icons/gameOthersIcon";
 type Props = {
   title: string;
   nominal: string;
-  platform: "desktop" | "mobile" | "others";
+  platform: string;
 };
 
 function OverviewWidgetCard({ platform, title, nominal }: Props) {

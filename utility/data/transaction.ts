@@ -1,6 +1,6 @@
-import { IFTransaction } from "@utility/types";
+import { ITransaction } from "@utility/types/transaction";
 
-const dummyTransactionData: IFTransaction[] = [
+const dummyTransactionData: ITransaction[] = [
   {
     game: "Mobile Legends: The New Battle 2021",
     gameImage: "/img/overview-1.png",

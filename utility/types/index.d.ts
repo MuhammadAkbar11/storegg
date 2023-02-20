@@ -1,5 +1,4 @@
 export type Platform = "Desktop" | "Mobile" | "Others";
-export type TransactionStatus = "success" | "pending" | "failed";
 export type PaymentMethodType = "paypal" | "transfer" | "visa";
 
 export interface IBank {
@@ -15,15 +14,6 @@ export interface IPaymentMethods {
   status: string;
   banks: IBank[];
   text?: string;
-}
-
-export interface IFTransaction {
-  game: string;
-  gameImage: string;
-  platform: Platform;
-  item: string;
-  price: string;
-  status: TransactionStatus;
 }
 
 export interface ICategory {

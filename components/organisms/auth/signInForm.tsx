@@ -31,13 +31,13 @@ function SignInForm({}: Props) {
   } = methods;
 
   const mutation = useMutation(postSigninService);
-
   React.useEffect(() => {
+    const redirect = router.query?.redirect?.toString() || "/";
     if (mutation.isSuccess) {
-      router.push("/");
+      router.push(redirect);
       refetchAuth();
     }
-  }, [mutation.isSuccess]);
+  }, [mutation.isSuccess, router.query]);
 
   const onSubmitHandler = (values: SigninInputTypes) => {
     mutation.mutate(values, {

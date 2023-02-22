@@ -62,3 +62,29 @@ export function convertKeysToCamelCase(obj: any) {
   }
   return newObj;
 }
+
+export function convertNestedObjKeysToCamelCase(obj: any): any {
+  if (Array.isArray(obj)) {
+    return obj.map(v => {
+      if (typeof v === "object") {
+        return convertNestedObjKeysToCamelCase(v);
+      } else {
+        return v;
+      }
+    });
+  } else {
+    return Object.keys(obj).reduce((result, key) => {
+      const value = obj[key];
+      const newKey = key.replace(/_([a-z])/g, (m, p1) => p1.toUpperCase());
+      let newValue;
+
+      if (value && typeof value === "object") {
+        newValue = convertNestedObjKeysToCamelCase(value);
+      } else {
+        newValue = value;
+      }
+
+      return { ...result, [newKey]: newValue };
+    }, {});
+  }
+}

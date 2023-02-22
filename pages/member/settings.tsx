@@ -1,13 +1,30 @@
 import Head from "next/head";
 import React from "react";
-import { Button, ButtonGroup, Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import TrashIcon from "@atoms/icons/trashIcon";
 import UploadIcon from "@atoms/icons/uploadIcon";
 import Sidebar from "@organisms/sidebar";
+import {
+  PrivateAuthProvider,
+  usePrivateAuthContext,
+} from "@utility/context/PrivateAuthContext";
+import { IUserAuth } from "@utility/types";
+import { GetServerSidePropsContext } from "next";
+import { notAuthRedirect } from "@utility/index.utils";
+import { getAuthService } from "@services/auth.service";
+import MemberPageTitle from "@components/molecules/memberPageTitle";
 
-type Props = {};
+type Props = {
+  userAuth: IUserAuth;
+};
 
-function Profile({}: Props) {
+function Profile({ userAuth }: Props) {
+  const privateAuthCtx = usePrivateAuthContext();
+
+  React.useEffect(() => {
+    privateAuthCtx.onSetUser(userAuth);
+  }, [userAuth]);
+
   return (
     <>
       <Head>
@@ -17,7 +34,8 @@ function Profile({}: Props) {
         <Sidebar activePath="/member/settings" />
         <main className="main-wrapper">
           <div className="ps-lg-0">
-            <h2 className="text-4xl fw-bold color-palette-1 mb-30">Settings</h2>
+            <MemberPageTitle title="Settings" />
+
             <div className="bg-card pt-30 ps-30 pe-30 pb-30">
               <Form action="#/">
                 <div className="photo d-flex">
@@ -116,5 +134,27 @@ function Profile({}: Props) {
     </>
   );
 }
+
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+  const token = ctx.req.cookies?.userToken;
+  if (!token) {
+    return notAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
+  }
+  const jwtToken = Buffer.from(token, "base64").toString("ascii");
+  try {
+    const userAuth = await getAuthService(jwtToken);
+    if (!userAuth)
+      return notAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
+    return {
+      props: {
+        userAuth,
+      },
+    };
+  } catch (error) {
+    return notAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
+  }
+}
+
+Profile.providers = [PrivateAuthProvider];
 
 export default Profile;

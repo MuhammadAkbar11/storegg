@@ -5,17 +5,36 @@ import Sidebar from "@components/organisms/sidebar";
 import TransactionsTabs from "@components/organisms/transactions/transactionsTabs";
 import TransactionTableRow from "@components/organisms/transactions/TransactionTableRow";
 import dummyTransactionData from "@utility/data/transaction";
-import type { IFTransaction, TransactionStatus } from "@utility/types";
+import type { IUserAuth } from "@utility/types";
+import { GetServerSidePropsContext } from "next";
+import { notAuthRedirect } from "@utility/index.utils";
+import { getAuthService } from "@services/auth.service";
+import {
+  PrivateAuthProvider,
+  usePrivateAuthContext,
+} from "@utility/context/PrivateAuthContext";
+import { ITransaction } from "@utility/types/transaction";
+import useActiveClass from "@hooks/useActiveClass";
+import useMediaQuery from "@hooks/useMediaQuery";
+import MemberPageTitle from "@components/molecules/memberPageTitle";
 
-type ActiveTypes = "*" | TransactionStatus;
+type ActiveTypes = "*" | string;
 
-type Props = {};
+type Props = {
+  userAuth: IUserAuth;
+};
 
-function Transactions({}: Props) {
-  const [transactions, setTransactions] = React.useState<IFTransaction[]>([
+function Transactions({ userAuth }: Props) {
+  const [transactions, setTransactions] = React.useState<ITransaction[]>([
     ...dummyTransactionData,
   ]);
   const [activeTab, setActiveTab] = React.useState<ActiveTypes>("*");
+
+  const privateAuthCtx = usePrivateAuthContext();
+
+  React.useEffect(() => {
+    privateAuthCtx.onSetUser(userAuth);
+  }, [userAuth]);
 
   const onSetActiveTabHandler = (value: ActiveTypes) => {
     setActiveTab(value);
@@ -26,6 +45,13 @@ function Transactions({}: Props) {
       setTransactions(dummyTransactionData);
     }
   };
+  const mdscreen = useMediaQuery("md");
+
+  const tableClassname = useActiveClass({
+    isActive: !mdscreen,
+    defaultClass: "main-content main-content-table",
+    activeClass: ["scroll-x"],
+  });
 
   return (
     <>
@@ -34,11 +60,9 @@ function Transactions({}: Props) {
       </Head>
       <section className="transactions overflow-auto">
         <Sidebar activePath="/member/transactions" />
-        <main className="main-wrapper">
+        <main className={"main-wrapper"}>
           <div className="ps-lg-0">
-            <h2 className="text-4xl fw-bold color-palette-1 mb-30">
-              My Transactions
-            </h2>
+            <MemberPageTitle title="My Transactions" />
             <div className="mb-30">
               <p className="text-lg color-palette-2 mb-12">You’ve spent</p>
               <h3 className="text-5xl fw-medium color-palette-1">
@@ -57,7 +81,7 @@ function Transactions({}: Props) {
               <p className="text-lg fw-medium color-palette-1 mb-14">
                 Latest Transactions
               </p>
-              <div className="main-content main-content-table overflow-auto">
+              <div className={tableClassname}>
                 <table className="table table-borderless">
                   <thead>
                     <tr className="color-palette-1">
@@ -71,7 +95,7 @@ function Transactions({}: Props) {
                     </tr>
                   </thead>
                   <tbody>
-                    {transactions.map((tr: IFTransaction, idx) => {
+                    {transactions.map((tr: ITransaction, idx) => {
                       const key = idx;
                       return (
                         <TransactionTableRow
@@ -102,5 +126,27 @@ function Transactions({}: Props) {
     </>
   );
 }
+
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+  const token = ctx.req.cookies?.userToken;
+  if (!token) {
+    return notAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
+  }
+  const jwtToken = Buffer.from(token, "base64").toString("ascii");
+  try {
+    const userAuth = await getAuthService(jwtToken);
+    if (!userAuth)
+      return notAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
+    return {
+      props: {
+        userAuth,
+      },
+    };
+  } catch (error) {
+    return notAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
+  }
+}
+
+Transactions.providers = [PrivateAuthProvider];
 
 export default Transactions;

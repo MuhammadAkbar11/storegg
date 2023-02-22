@@ -10,6 +10,8 @@ import {
   PrivateAuthProvider,
   usePrivateAuthContext,
 } from "@utility/context/PrivateAuthContext";
+import useMediaQuery from "@hooks/useMediaQuery";
+import useActiveClass from "@hooks/useActiveClass";
 
 type Props = {
   userAuth: IUserAuth;
@@ -21,16 +23,24 @@ function Member({ userAuth }: Props) {
     privateAuthCtx.onSetUser(userAuth);
   }, [userAuth]);
 
+  const mdscreen = useMediaQuery("md");
+
+  const mainClsName = useActiveClass({
+    isActive: !mdscreen,
+    defaultClass: "main-wrapper desktop",
+    inactiveClass: ["desktop"],
+  });
+
   return (
     <>
       {/* Overview */}
       <Head>
         <title>Member Dashboard | StoreGG</title>;
       </Head>
-      <section className="overview overflow-auto">
+      <div className={`overview overflow-auto`}>
         <Sidebar activePath="/member" />
-        <OverviewContent />
-      </section>
+        <OverviewContent className={mainClsName} />
+      </div>
     </>
   );
 }

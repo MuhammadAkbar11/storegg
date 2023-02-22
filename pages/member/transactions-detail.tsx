@@ -3,19 +3,35 @@ import TransactionDetailsGame from "@molecules/transaction/transactionDetailsGam
 import TransactionDetailsItem from "@molecules/transaction/transactionDetailsItem";
 import TransactionDetailsWrapper from "@molecules/transaction/transactionDetailsWrapper";
 import Sidebar from "@organisms/sidebar";
+import { notAuthRedirect } from "@utility/index.utils";
+import { getAuthService } from "@services/auth.service";
+import { GetServerSidePropsContext } from "next";
+import {
+  PrivateAuthProvider,
+  usePrivateAuthContext,
+} from "@utility/context/PrivateAuthContext";
+import { IUserAuth } from "@utility/types";
+import MemberPageTitle from "@components/molecules/memberPageTitle";
 
-type Props = {};
+type Props = {
+  userAuth: IUserAuth;
+};
 
-function TransactionsDetail({}: Props) {
+function TransactionsDetail({ userAuth }: Props) {
+  const privateAuthCtx = usePrivateAuthContext();
+
+  React.useEffect(() => {
+    privateAuthCtx.onSetUser(userAuth);
+  }, [userAuth]);
+
   return (
     <>
       <section className="transactions-detail overflow-auto">
         <Sidebar />
         <main className="main-wrapper">
           <div className="ps-lg-0">
-            <h2 className="text-4xl fw-bold color-palette-1 mb-30">
-              Details #GG001
-            </h2>
+            <MemberPageTitle title="Details #GG001" />
+
             <div className="details">
               <div className="main-content main-content-card overflow-auto">
                 <section className="checkout mx-auto">
@@ -95,5 +111,27 @@ function TransactionsDetail({}: Props) {
     </>
   );
 }
+
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+  const token = ctx.req.cookies?.userToken;
+  if (!token) {
+    return notAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
+  }
+  const jwtToken = Buffer.from(token, "base64").toString("ascii");
+  try {
+    const userAuth = await getAuthService(jwtToken);
+    if (!userAuth)
+      return notAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
+    return {
+      props: {
+        userAuth,
+      },
+    };
+  } catch (error) {
+    return notAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
+  }
+}
+
+TransactionsDetail.providers = [PrivateAuthProvider];
 
 export default TransactionsDetail;

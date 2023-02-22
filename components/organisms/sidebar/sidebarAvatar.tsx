@@ -16,7 +16,7 @@ function SidebarAvatar({ name, email, image }: Props) {
         height={90}
         className="img-fluid mb-20 rounded-circle"
       />
-      <h2 className="fw-bold text-xl color-palette-1 m-0">{name}</h2>
+      <h2 className="fw-bold text-xl color-palette-1 m-0 ">{name}</h2>
       <p className="color-palette-2 m-0">{email}</p>
     </div>
   );

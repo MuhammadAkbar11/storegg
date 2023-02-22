@@ -14,10 +14,12 @@ type Props = {
 function Layout({ navbar, children, footer, pageTitle }: Props) {
   const { pathname } = useRouter();
 
+  const title = pageTitle ? `${pageTitle} | StoreGG` : "Loading... | StoreGG";
+
   return (
     <>
       <Head>
-        <title>{pageTitle} | StoreGG</title>
+        <title>{title}</title>
       </Head>
       {navbar ? <NavbarMenu activePath={pathname} /> : null}
       {children}

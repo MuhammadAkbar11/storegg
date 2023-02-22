@@ -5,6 +5,9 @@ const imagesDomains = process.env.UPLOAD_DOMAINS.split(",");
 
 const nextConfig = {
   reactStrictMode: true,
+  compiler: {
+    styledComponents: true,
+  },
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")],
   },

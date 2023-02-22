@@ -5,6 +5,7 @@ import ModalProvider from "./ModalContext";
 import { SignupProvider } from "./SignupContext";
 import { ToastProvider } from "./ToastContext";
 import { TopupProvider } from "./TopupContext";
+import { MemberPageProvider } from "./MemberPageContext";
 
 type ComponseProps = {
   providers: React.ElementType[];
@@ -33,6 +34,10 @@ function ComposeProvider({ children }: { children: React.ReactNode }) {
 
   if (pathname.includes("/detail") || pathname.includes("/checkout")) {
     providers.push(TopupProvider);
+  }
+
+  if (pathname.includes("/member")) {
+    providers.push(MemberPageProvider);
   }
 
   return <ComposeContext providers={providers}>{children}</ComposeContext>;

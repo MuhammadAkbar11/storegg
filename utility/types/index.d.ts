@@ -1,5 +1,6 @@
 export type Platform = "Desktop" | "Mobile" | "Others";
 export type PaymentMethodType = "paypal" | "transfer" | "visa";
+export type BootstrapBreakpoints = "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
 
 export interface IBank {
   bankId: string;

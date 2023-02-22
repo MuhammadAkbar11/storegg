@@ -1,9 +1,8 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import clsx from "classnames";
-import type { TransactionStatus } from "@utility/types";
 
-type ActiveTypes = "*" | TransactionStatus;
+type ActiveTypes = "*" | string;
 
 type Props = {
   active: ActiveTypes;
@@ -12,7 +11,7 @@ type Props = {
 
 function TransactionsTabs({ active, onSetActive }: Props) {
   const tabClassName = (filter: ActiveTypes) =>
-    clsx("btn-status border-0 rounded-pill text-sm me-3", {
+    clsx("btn-status border-0 rounded-pill text-sm me-3 mb-3", {
       "btn-active": active === filter,
     });
 
@@ -23,7 +22,7 @@ function TransactionsTabs({ active, onSetActive }: Props) {
   };
 
   return (
-    <div>
+    <div className="d-flex w-100 align-items-center flex-wrap overflow-x-scroll ">
       <Button
         data-filter="*"
         // href="#"

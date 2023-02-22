@@ -42,7 +42,7 @@ function NavbarMenu({ activePath }: Props) {
                       width: 45,
                       height: 45,
                     }}
-                    className="ms-lg-40 d-flex-center loading-skeleton bg-palette-3 rounded-circle "
+                    className="ms-lg-40 d-flex-center animate-pulse bg-palette-3 rounded-circle "
                   >
                     <span className="visually-hidden">Loading...</span>
                   </div>

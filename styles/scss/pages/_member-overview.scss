@@ -1,74 +1,79 @@
-
 .overview {
-  background-color: #FBFCFD;
+  background-color: #fbfcfd;
 }
 
-.overview main.main-wrapper{
-  margin-left: 340px;
+.overview main.main-wrapper {
   height: 100%;
   margin-right: auto;
   position: relative;
-  padding: 50px 50px 50px 0px;
+  padding: 50px 20px 50px 20px;
+
+  @media (min-width: 768px) {
+    padding: 50px 50px 50px 0px;
+    margin-left: 340px;
+  }
 }
 
-.overview main .main-content{
-  max-width: 900px;
-}
+// .overview main .main-content {
+//   max-width: 900px;
+// }
 
-.overview .latest-transaction .main-content-table{
-  background-color: #FFFFFF;
+.overview .latest-transaction .main-content-table {
+  background-color: #ffffff;
   padding: 1.25rem 1.875rem;
   border-radius: 1rem;
-  max-width: 900px;
+  &.scroll-x {
+    overflow-x: scroll;
+  }
 }
 
-.overview .latest-transaction .game-title-header{
+.overview .latest-transaction .game-title-header {
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-.overview .latest-transaction .game-title{
+.overview .latest-transaction .game-title {
   white-space: nowrap;
   width: 135px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.overview .table>:not(caption)>*>*{
+.overview .table > :not(caption) > * > * {
   padding: 10px 0px;
 }
 
-.overview .latest-transaction table thead tr th{
+.overview .latest-transaction table thead tr th {
   font-weight: 400;
 }
 
-.overview .latest-transaction .icon-status{
+.overview .latest-transaction .icon-status {
   width: 6px;
   height: 6px;
   border-radius: 999px;
   margin: 9px 6px 0px 0px;
 }
 
-.overview .latest-transaction .icon-status.pending{
-  background-color: #FEBD57;
+.overview .latest-transaction .icon-status.pending {
+  background-color: #febd57;
 }
 
-.overview .latest-transaction .icon-status.success{
-  background-color: #1ABC9C;
+.overview .latest-transaction .icon-status.success {
+  background-color: #1abc9c;
 }
 
-.overview .latest-transaction .icon-status.failed{
-  background-color: #FE5761;
+.overview .latest-transaction .icon-status.failed {
+  background-color: #fe5761;
 }
 
-.overview .top-up-categories .categories-card{
-  background-color: #FFFFFF;
+.overview .top-up-categories .categories-card {
+  background-color: #ffffff;
   padding: 1.875rem;
   border-radius: 1rem;
 }
 
-@media (max-width:992px){
-  .overview main.main-wrapper{
-      width: 100%;
+@media (max-width: 992px) {
+  .overview main.main-wrapper {
+    width: 100%;
   }
 }

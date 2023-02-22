@@ -48,7 +48,7 @@ function OverviewTopupWidgets({}: Props) {
               return (
                 <div
                   key={c.categoryId}
-                  className="col-lg-4 ps-15 pe-15 pb-lg-0 pb-4"
+                  className="col-md-6 col-lg-4 ps-15 pe-15 pb-lg-0 pb-4"
                 >
                   <OverviewWidgetCard
                     title={`Game ${c.name}`}

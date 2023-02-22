@@ -25,15 +25,15 @@ function useMediaQuery(variant: BootstrapBreakpoints): boolean {
     handleChange();
 
     // Listen matchMedia
-    if (matchMedia.addListener) {
-      matchMedia.addListener(handleChange);
+    if (matchMedia.addEventListener) {
+      matchMedia.addEventListener("change", handleChange);
     } else {
       matchMedia.addEventListener("change", handleChange);
     }
 
     return () => {
-      if (matchMedia.removeListener) {
-        matchMedia.removeListener(handleChange);
+      if (matchMedia.removeEventListener) {
+        matchMedia.removeEventListener("change", handleChange);
       } else {
         matchMedia.removeEventListener("change", handleChange);
       }

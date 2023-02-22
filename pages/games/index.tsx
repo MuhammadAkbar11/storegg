@@ -10,7 +10,7 @@ import Layout from "@components/organisms/layout";
 type Props = {};
 
 const defaultFilter = {
-  limit: 8,
+  limit: 12,
   page: 0,
 };
 
@@ -50,7 +50,5 @@ function ListGamesPage({}: Props) {
     </Layout>
   );
 }
-
-// ListGamesPage.provider = ListGamesProvider;
 
 export default ListGamesPage;

@@ -21,6 +21,38 @@ export function uRupiah(value: number) {
   return result;
 }
 
+export function uDate(_date: string) {
+  const date = new Date(_date);
+  const weekdays = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  const formattedDate = `${weekdays[date.getDay()]}, ${date.getDate()} ${
+    months[date.getMonth()]
+  } ${date.getFullYear()}`;
+  return formattedDate;
+}
+
 export function uHandleDuplicates<T extends Record<string, any>>(
   arr: T[],
   compareFn: (a: T, b: T) => boolean

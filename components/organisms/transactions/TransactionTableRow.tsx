@@ -1,5 +1,6 @@
 import React from "react";
 import { ITransaction } from "@utility/types/transaction";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 interface Props extends ITransaction {
   actionNode?: React.ReactNode;
@@ -9,20 +10,21 @@ function TransactionTableRow(props: Props) {
   return (
     <tr data-category="pending" className="align-middle">
       <td>
-        <div className="d-flex">
+        <div className=" d-flex ">
           <img
-            className="me-3 mb-lg-0 mb-3"
-            src={props.gameImage ? props.gameImage : "/img/overview-1.png"}
+            className="float-start me-3 mb-lg-0 mb-3  object-cover "
+            src={props?.gameImage}
             width={80}
             height={60}
-            alt={""}
+            alt={props?.game}
+            style={{ borderRadius: ".8rem" }}
           />
           <div className="game-title-header">
             <p className="game-title fw-medium text-start color-palette-1 m-0">
-              {props.game}
+              {props?.game}
             </p>
             <p className="text-xs fw-normal text-start color-palette-2 m-0">
-              {props.platform}
+              {props?.platform}
             </p>
           </div>
         </div>

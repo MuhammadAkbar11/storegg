@@ -83,7 +83,7 @@ function OverviewLatestTransactions({}: Props) {
                     key={tr?.transactionId || idx}
                   >
                     <td>
-                      <div>
+                      <div className="d-flex">
                         <img
                           className="float-start me-3 mb-lg-0 mb-3  object-cover "
                           src={tr?.gameImage}

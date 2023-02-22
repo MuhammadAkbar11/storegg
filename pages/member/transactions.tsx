@@ -7,7 +7,7 @@ import TransactionTableRow from "@components/organisms/transactions/TransactionT
 import dummyTransactionData from "@utility/data/transaction";
 import type { IUserAuth } from "@utility/types";
 import { GetServerSidePropsContext } from "next";
-import { notAuthRedirect } from "@utility/index.utils";
+import { notAuthRedirect, uRupiah } from "@utility/index.utils";
 import { getAuthService } from "@services/auth.service";
 import {
   PrivateAuthProvider,
@@ -17,6 +17,11 @@ import { ITransaction } from "@utility/types/transaction";
 import useActiveClass from "@hooks/useActiveClass";
 import useMediaQuery from "@hooks/useMediaQuery";
 import MemberPageTitle from "@components/molecules/memberPageTitle";
+import { useInfiniteQuery } from "react-query";
+import { getListTransactionService } from "@services/member.service";
+import { Button, Spinner } from "react-bootstrap";
+import Skeleton from "@components/atoms/skeleton";
+import SkeletonListTrxTable from "@components/organisms/skeleton/skeletonListTrxTable";
 
 type ActiveTypes = "*" | string;
 
@@ -31,6 +36,44 @@ function Transactions({ userAuth }: Props) {
   const [activeTab, setActiveTab] = React.useState<ActiveTypes>("*");
 
   const privateAuthCtx = usePrivateAuthContext();
+
+  const {
+    data,
+    isFetched,
+    isLoading,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+    isSuccess,
+    error,
+  } = useInfiniteQuery(
+    [
+      "member-transactions",
+      {
+        status: activeTab,
+      },
+    ],
+    {
+      queryFn: ({ pageParam = 1 }) => {
+        return getListTransactionService({
+          limit: 5,
+          page: pageParam,
+          status: activeTab.includes("*") ? "" : activeTab,
+        });
+      },
+      getNextPageParam: lastPage => {
+        if (lastPage) {
+          const nextPage = lastPage?.currentPage as number;
+          const totaPages = lastPage?.totalPages as number;
+          if (nextPage < totaPages) {
+            return (nextPage + 1) as number;
+          } else {
+            return undefined;
+          }
+        }
+      },
+    }
+  );
 
   React.useEffect(() => {
     privateAuthCtx.onSetUser(userAuth);
@@ -53,6 +96,8 @@ function Transactions({ userAuth }: Props) {
     activeClass: ["scroll-x"],
   });
 
+  const totalSpent = data?.pages[0]?.totalSpent || "Rp. 0";
+  console.log(totalSpent);
   return (
     <>
       <Head>
@@ -61,12 +106,16 @@ function Transactions({ userAuth }: Props) {
       <section className="transactions overflow-auto">
         <Sidebar activePath="/member/transactions" />
         <main className={"main-wrapper"}>
-          <div className="ps-lg-0">
+          <div className="ps-lg-0 pb-5">
             <MemberPageTitle title="My Transactions" />
             <div className="mb-30">
               <p className="text-lg color-palette-2 mb-12">You’ve spent</p>
-              <h3 className="text-5xl fw-medium color-palette-1">
-                Rp 4.518.000.500
+              <h3 className="text-5xl fw-medium color-palette-1 ">
+                {isLoading ? (
+                  <Skeleton height={"2.6rem"} width={"300px"} />
+                ) : (
+                  uRupiah(+totalSpent)
+                )}
               </h3>
             </div>
             <div className="row mt-30 mb-20">
@@ -95,30 +144,90 @@ function Transactions({ userAuth }: Props) {
                     </tr>
                   </thead>
                   <tbody>
-                    {transactions.map((tr: ITransaction, idx) => {
-                      const key = idx;
-                      return (
-                        <TransactionTableRow
-                          key={idx}
-                          actionNode={
-                            <td>
-                              <Link href="/member/transactions-detail" passHref>
-                                <a
-                                  href="/member/transactions-detail"
-                                  className="btn btn-status rounded-pill text-sm"
-                                >
-                                  Details
-                                </a>
-                              </Link>
-                            </td>
-                          }
-                          {...tr}
-                        />
-                      );
-                    })}
+                    {isSuccess
+                      ? data.pages.map(page =>
+                          page?.histories?.map((tr: ITransaction) => {
+                            return (
+                              <TransactionTableRow
+                                key={tr.transactionId}
+                                actionNode={
+                                  <td>
+                                    <Link
+                                      href={`/member/transactions-detail/${tr.transactionId}`}
+                                      passHref
+                                    >
+                                      <a
+                                        href={`/member/transactions-detail/${tr.transactionId}`}
+                                        className="btn btn-status rounded-pill text-sm"
+                                      >
+                                        Details
+                                      </a>
+                                    </Link>
+                                  </td>
+                                }
+                                {...tr}
+                              />
+                            );
+                          })
+                        )
+                      : null}
+
+                    {!isFetched ? (
+                      <>
+                        <SkeletonListTrxTable />
+                      </>
+                    ) : null}
+
+                    {data?.pages.length === 1 &&
+                    data.pages[0].histories.length === 0 ? (
+                      <tr className="align-middle text-center">
+                        <td colSpan={4}>
+                          <div className="py-3 text-palette-2 ">
+                            <p>
+                              Belum ada transaksi{" "}
+                              {activeTab !== "*" ? (
+                                <>
+                                  dengan status
+                                  <strong> {activeTab}</strong>
+                                </>
+                              ) : (
+                                "saat ini"
+                              )}
+                            </p>
+                          </div>{" "}
+                        </td>
+                      </tr>
+                    ) : null}
                   </tbody>
                 </table>
               </div>
+              {data && hasNextPage ? (
+                <div className="col-12 py-4 d-flex justify-content-center ">
+                  <div>
+                    {!isFetchingNextPage ? (
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        onClick={() => fetchNextPage()}
+                      >
+                        Load More
+                      </Button>
+                    ) : (
+                      <Button variant="secondary" size="sm" disabled>
+                        <Spinner
+                          as="span"
+                          animation="border"
+                          className="me-2"
+                          size="sm"
+                          role="status"
+                          aria-hidden="true"
+                        />
+                        Loading...
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              ) : null}
             </div>
           </div>
         </main>

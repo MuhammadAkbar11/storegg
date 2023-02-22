@@ -1,6 +1,4 @@
 import { getAuthService, getUserTokenService } from "@services/auth.service";
-import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
 const useAuth = () => {

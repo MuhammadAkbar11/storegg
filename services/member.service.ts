@@ -3,8 +3,8 @@ import { API_URI, ROOT_API } from "@utility/constant.utils";
 import { getUserTokenService } from "./auth.service";
 import { uTranformAxiosError } from "@utility/error.utils";
 import {
-  convertKeysToCamelCase,
-  convertNestedObjKeysToCamelCase,
+  uConvertKeysToCamelCase,
+  uConvertNestedObjKeysToCamelCase,
   queriesToString,
   uRupiah,
 } from "@utility/index.utils";
@@ -25,7 +25,7 @@ export async function getDashboardService() {
       },
     });
     const { data } = response;
-    const resData = convertNestedObjKeysToCamelCase(data);
+    const resData = uConvertNestedObjKeysToCamelCase(data);
     const latestTransactions = resData.latestTransactions.map((tr: any) => {
       const history = tr?.history;
       const historyVoucher = history?.historyVoucher;
@@ -58,7 +58,7 @@ export async function getListTransactionService(queryOpt: IListTRQueries) {
     });
     const { data } = response;
 
-    const resData = convertNestedObjKeysToCamelCase(data);
+    const resData = uConvertNestedObjKeysToCamelCase(data);
     const {
       totalItems,
       totalPages,
@@ -97,13 +97,13 @@ export async function getDetailTransactionService(transactionId: string) {
 
     const { data } = response;
 
-    const resData = convertNestedObjKeysToCamelCase(data);
+    const resData = uConvertNestedObjKeysToCamelCase(data);
     const transaction = resData.history;
     const history = transaction.history;
     const historyVoucher = history?.historyVoucher;
     const historyPayment = history?.historyPayment;
     const payerData = historyPayment?.payer
-      ? convertKeysToCamelCase(JSON.parse(historyPayment?.payer))
+      ? uConvertKeysToCamelCase(JSON.parse(historyPayment?.payer))
       : null;
 
     const result: IDetailTransaction = {

@@ -1,6 +1,6 @@
 import { API_URI, ROOT_API } from "@utility/constant.utils";
 import { uTranformAxiosError } from "@utility/error.utils";
-import { convertKeysToCamelCase } from "@utility/index.utils";
+import { uConvertKeysToCamelCase } from "@utility/index.utils";
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -36,7 +36,7 @@ export async function getAuthService(token: string | null) {
 
     let userAuth = { ...response.data?.data };
 
-    userAuth = convertKeysToCamelCase(userAuth);
+    userAuth = uConvertKeysToCamelCase(userAuth);
     userAuth.avatar = ROOT_API + userAuth.avatar;
 
     return userAuth;

@@ -1,5 +1,5 @@
 export function queriesToString<T extends Record<string, any>>(queries: T) {
-  Object.keys(queries).forEach(key => {
+  Object.keys(queries).forEach((key) => {
     if (queries[key] === null) delete queries[key];
     if (queries[key] === undefined) delete queries[key];
     if (typeof queries[key] === "string" && queries[key].trim() === "")
@@ -7,7 +7,7 @@ export function queriesToString<T extends Record<string, any>>(queries: T) {
   });
 
   return Object.keys(queries)
-    .map(key => {
+    .map((key) => {
       return `${key}=${queries[key]}`;
     })
     .join("&");
@@ -77,7 +77,7 @@ export function uHandleDuplicates<T extends Record<string, any>>(
   return Array.from(uniqueObjects.values());
 }
 
-export function notAuthRedirect(destination: string = "/auth/sign-in") {
+export function uNotAuthRedirect(destination: string = "/auth/sign-in") {
   return {
     redirect: {
       destination: destination,
@@ -86,20 +86,29 @@ export function notAuthRedirect(destination: string = "/auth/sign-in") {
   };
 }
 
-export function convertKeysToCamelCase(obj: any) {
+export function uIsAuthRedirect(destination: string = "/") {
+  return {
+    redirect: {
+      destination: destination,
+      permanent: false,
+    },
+  };
+}
+
+export function uConvertKeysToCamelCase(obj: any) {
   let newObj: any = {};
   for (let key in obj) {
-    let newKey = key.replace(/_([a-z])/g, match => match[1].toUpperCase());
+    let newKey = key.replace(/_([a-z])/g, (match) => match[1].toUpperCase());
     newObj[newKey] = obj[key];
   }
   return newObj;
 }
 
-export function convertNestedObjKeysToCamelCase(obj: any): any {
+export function uConvertNestedObjKeysToCamelCase(obj: any): any {
   if (Array.isArray(obj)) {
-    return obj.map(v => {
+    return obj.map((v) => {
       if (typeof v === "object") {
-        return convertNestedObjKeysToCamelCase(v);
+        return uConvertNestedObjKeysToCamelCase(v);
       } else {
         return v;
       }
@@ -111,7 +120,7 @@ export function convertNestedObjKeysToCamelCase(obj: any): any {
       let newValue;
 
       if (value && typeof value === "object") {
-        newValue = convertNestedObjKeysToCamelCase(value);
+        newValue = uConvertNestedObjKeysToCamelCase(value);
       } else {
         newValue = value;
       }

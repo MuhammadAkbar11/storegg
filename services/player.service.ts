@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 import {
   ICategory,
   IFeaturedGameQueries,
@@ -12,13 +13,9 @@ import type { IBank } from "@utility/types";
 import { uTranformAxiosError } from "@utility/error.utils";
 import axios from "axios";
 import { API_URI, ROOT_API } from "@utility/constant.utils";
-import {
-  convertKeysToCamelCase,
-  queriesToString,
-  uRupiah,
-} from "@utility/index.utils";
-import { getUserTokenService } from "./auth.service";
+import { uConvertKeysToCamelCase, queriesToString } from "@utility/index.utils";
 import { ICheckout } from "@utility/types/transaction";
+import { getUserTokenService } from "./auth.service";
 
 export async function getFeaturedGameService(
   queryOpt: IFeaturedGameQueries
@@ -27,14 +24,12 @@ export async function getFeaturedGameService(
   try {
     const response = await axios.get(`${API_URI}/vouchers?${queries}`);
     const { data } = response.data;
-    const result = data.vouchers.map((g: any) => {
-      return {
-        voucherId: g.voucher_id,
-        gameName: g.game_name,
-        thumbnail: ROOT_API + g.thumbnail,
-        category: g.category?.name,
-      };
-    });
+    const result = data.vouchers.map((g: any) => ({
+      voucherId: g.voucher_id,
+      gameName: g.game_name,
+      thumbnail: ROOT_API + g.thumbnail,
+      category: g.category?.name,
+    }));
 
     return result;
   } catch (error: any) {
@@ -51,14 +46,12 @@ export async function getListGameService(
     const response = await axios.get(`${API_URI}/vouchers?${queries}`);
     const { data } = response.data;
 
-    const result = data.vouchers.map((g: any) => {
-      return {
-        voucherId: g.voucher_id,
-        gameName: g.game_name,
-        thumbnail: ROOT_API + g.thumbnail,
-        category: g.category?.name,
-      };
-    });
+    const result = data.vouchers.map((g: any) => ({
+      voucherId: g.voucher_id,
+      gameName: g.game_name,
+      thumbnail: ROOT_API + g.thumbnail,
+      category: g.category?.name,
+    }));
     delete data.vouchers;
 
     return { games: result, ...data };
@@ -71,16 +64,16 @@ export async function getDetailVouherService(voucherID: string) {
   try {
     const response = await axios.get(`${API_URI}/vouchers/${voucherID}`);
     const { data } = response.data;
-    const voucher = data.voucher;
+    const { voucher } = data;
 
-    const banks = data.banks.map((bank: any): IBank => {
-      return {
+    const banks = data.banks.map(
+      (bank: any): IBank => ({
         bankId: bank.bank_id,
         bankName: bank.bank_name,
         accountName: bank.account_name,
         noRekening: bank.no_rekening,
-      };
-    });
+      })
+    );
     const voucherResult: IGameDetailItem = {
       voucherId: voucher.voucher_id,
       gameName: voucher.game_name,
@@ -101,10 +94,10 @@ export async function getDetailVouherService(voucherID: string) {
     };
 
     const payments = data.payments.map((py: IPaymentMethods) => {
-      const item = convertKeysToCamelCase(py);
+      const item = uConvertKeysToCamelCase(py);
       return {
         ...item,
-        banks: py.banks.map(bnk => convertKeysToCamelCase(bnk)),
+        banks: py.banks.map((bnk) => uConvertKeysToCamelCase(bnk)),
       };
     });
 
@@ -119,13 +112,13 @@ export async function getCategoryListService(): Promise<ICategory[]> {
     const response = await axios.get(`${API_URI}/categories`);
     const { data: resData } = response.data;
 
-    const result = resData.map((cat: any): ICategory => {
-      return {
+    const result = resData.map(
+      (cat: any): ICategory => ({
         categoryId: cat.category_id,
         name: cat.name,
         description: cat.description,
-      };
-    });
+      })
+    );
     return result;
   } catch (error: any) {
     throw error;
@@ -136,13 +129,11 @@ export async function postCheckoutService(data: ICheckout) {
   try {
     const token = getUserTokenService();
 
-    console.log(token, "TOKEN");
     const response = await axios.post(`${API_URI}/checkout`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    // console.log();
     const { data: resData } = response.data;
     return resData;
   } catch (error: any) {

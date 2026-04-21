@@ -11,7 +11,7 @@ function FeaturedGames({}: Props) {
     isLoading,
     isSuccess,
   } = useQuery("featuredGames", () =>
-    getFeaturedGameService({ limit: 5, page: 1, sortBy: "featured" })
+    getFeaturedGameService({ limit: 5, page: 0, sortBy: "featured" })
   );
 
   return (

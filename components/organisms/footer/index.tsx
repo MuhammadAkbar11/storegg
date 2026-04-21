@@ -71,8 +71,8 @@ function Footer({}: Props) {
         <div className="container-fluid">
           <div className="row">
             <div className="col-lg-4 text-lg-start text-center">
-              <Link href="/">
-                <a href="" className="mb-30">
+              <Link href="/" passHref>
+                <a href="/" className="mb-30" aria-label="Logo StoreGG">
                   <Logo />
                 </a>
               </Link>

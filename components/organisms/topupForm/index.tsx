@@ -9,7 +9,6 @@ import { Form } from "react-bootstrap";
 import { toptupSchema, TopupInput } from "@utility/schema/topup.schema";
 import useAuth from "@hooks/useAuth";
 import { useToastContext } from "@utility/context/ToastContext";
-import Cookies from "js-cookie";
 import { useTopupContext } from "@utility/context/TopupContext";
 import {
   IBank,
@@ -25,7 +24,7 @@ type Props = {};
 function TopUpForm({}: Props) {
   const { banks, voucher, payments: listPayments } = useGameDetailContext();
   const toastCtx = useToastContext();
-  const auth = useAuth();
+  const auth = useAuth({ isStale: true, isRetry: true });
   const topupCtx = useTopupContext();
   const router = useRouter();
 

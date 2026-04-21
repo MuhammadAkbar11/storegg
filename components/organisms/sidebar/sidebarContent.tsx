@@ -4,6 +4,8 @@ import SidebarFooter from "./sidebarFooter";
 import SidebarAvatar from "./sidebarAvatar";
 import Skeleton from "@components/atoms/skeleton";
 import { usePrivateAuthContext } from "@utility/context/PrivateAuthContext";
+import Cookies from "js-cookie";
+import { useQueryClient } from "react-query";
 
 type Props = {
   activePath: string;
@@ -12,6 +14,14 @@ type Props = {
 function SidebarContent({ activePath }: Props) {
   const privateAuthCtx = usePrivateAuthContext();
   const authState = privateAuthCtx.user;
+  const queryClient = useQueryClient();
+
+  const onLogout = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    Cookies.remove("userToken");
+    queryClient.removeQueries("userAuth", { exact: true });
+    window.location.href = "/";
+  };
 
   return (
     <section className={"sidebar"}>
@@ -65,12 +75,13 @@ function SidebarContent({ activePath }: Props) {
             href="/member/settings"
             activePath={activePath}
           />
-          {/* <SidebarMenuItem
-            title="Messages"
-            icon="messages"
-            href="/member/rewards"
+          <SidebarMenuItem
+            title="Logout"
+            icon="logout"
+            href="/member/logout"
+            onClick={onLogout}
             activePath={activePath}
-          /> */}
+          />
         </div>
         <SidebarFooter />
       </div>

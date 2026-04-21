@@ -1,7 +1,7 @@
+// @ts-ignore
 import "@styles/scss/index.scss";
 import { NextPage } from "next";
 import type { AppProps } from "next/app";
-import Head from "next/head";
 import { useEffect, ReactNode, ComponentType } from "react";
 import { SSRProvider } from "react-bootstrap";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -27,17 +27,20 @@ type AppPropsWithProvider = AppProps & {
   Component: NextPageWithProvider;
 };
 
-const PageCtxProvider = ({
+function PageCtxProvider({
   children,
   prov,
 }: {
   children: ReactNode;
   prov: React.ElementType[];
-}) => <ComposeContext providers={prov}>{children}</ComposeContext>;
+}) {
+  return <ComposeContext providers={prov}>{children}</ComposeContext>;
+}
 
 function MyApp({ Component, pageProps }: AppPropsWithProvider) {
   useEffect(() => {
     const isBrowser = typeof window !== "undefined";
+    // eslint-disable-next-line global-require
     const AOS = isBrowser ? require("aos") : undefined;
     AOS.init();
   }, []);
@@ -45,20 +48,18 @@ function MyApp({ Component, pageProps }: AppPropsWithProvider) {
   const pageProviders = Component.providers ? Component.providers : [];
 
   return (
-    <>
-      <QueryClientProvider client={queryClient}>
-        <SSRProvider>
-          <MainProvider>
-            <PageCtxProvider prov={pageProviders}>
-              <PageProgress />
-              <Component {...pageProps} />
-              <ToastWrapper />
-            </PageCtxProvider>
-          </MainProvider>
-        </SSRProvider>
-        <ReactQueryDevtools />
-      </QueryClientProvider>
-    </>
+    <QueryClientProvider client={queryClient}>
+      <SSRProvider>
+        <MainProvider>
+          <PageCtxProvider prov={pageProviders}>
+            <PageProgress />
+            <Component {...pageProps} />
+            <ToastWrapper />
+          </PageCtxProvider>
+        </MainProvider>
+      </SSRProvider>
+      <ReactQueryDevtools />
+    </QueryClientProvider>
   );
 }
 

@@ -48,13 +48,16 @@ export function ToastProvider({ children }: Props) {
     }
   }, [toasts]);
 
-  const onAddToastHandler = (item: IToast, delay: number = 500) => {
-    return setTimeout(() => {
-      const id = new Date().getTime();
-      const newItem: IToast = { id: id.toString(), ...item };
-      setToasts(prevState => [newItem, ...prevState]);
-    }, delay);
-  };
+  const onAddToastHandler = React.useCallback(
+    (item: IToast, delay: number = 500) => {
+      return setTimeout(() => {
+        const id = new Date().getTime();
+        const newItem: IToast = { id: id.toString(), ...item };
+        setToasts(prevState => [newItem, ...prevState]);
+      }, delay);
+    },
+    []
+  );
 
   const onRemoveToastHandler = (id: string) => {
     setToasts(prevState => {

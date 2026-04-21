@@ -14,7 +14,7 @@ import { useRouter } from "next/router";
 
 type SingupFormType = SignupInputTypes;
 type SignupPhotoFormTypes = Omit<SignupPhotoInputTypes, "avatar"> & {
-  avatar: any;
+  [avatar: string]: any;
 };
 
 type SignupContextType = {

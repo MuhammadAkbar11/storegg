@@ -22,7 +22,7 @@ function ToastItem(props: Props) {
   return (
     <Toast
       className={`bg-white shadow rounded-pill border-0 `}
-      style={{ width: "max-content" }}
+      style={{ width: "max-content", minWidth: "230px" }}
     >
       <Toast.Body className={"p-2 "}>
         <div className="d-flex w-100 align-items-center justify-content-between flex-nowrap ">

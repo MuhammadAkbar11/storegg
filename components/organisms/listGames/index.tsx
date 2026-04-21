@@ -5,6 +5,7 @@ import { getListGameService } from "@services/player.service";
 import { queriesToString } from "@utility/index.utils";
 import { IGameItem, IListGamesQueries } from "@utility/types";
 import { useInfiniteQuery } from "react-query";
+import Image from "next/image";
 
 type Props = {
   filter: IListGamesQueries;
@@ -61,18 +62,27 @@ function ListGames({ filter }: Props) {
                       <div className="list-game-item shadow-none">
                         <Card className=" w-100 border-0 list-game-card shadow-none  ">
                           <div className=" card-img-box ">
-                            <Card.Img
+                            <Image
+                              className="card-img-top"
+                              src={game.thumbnail}
+                              alt={game?.gameName}
+                              layout="responsive"
+                              objectFit="cover"
+                              width={"100%"}
+                              height={160}
+                            />
+                            {/* <Card.Img
                               variant="top"
                               className="h-100 object-cover"
                               src={game.thumbnail}
-                            />
+                            /> */}
                           </div>
                           <Card.Body className="d-flex flex-column justify-content-between ">
                             <div className="pb-2">
                               <Card.Title className="flex-1  ">
                                 {game.gameName}
                               </Card.Title>
-                              <Card.Text className=" fw-normal mb-0  ">
+                              <Card.Text className="fw-normal mb-0">
                                 {game.category}
                               </Card.Text>
                             </div>

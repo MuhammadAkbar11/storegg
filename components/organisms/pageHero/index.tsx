@@ -23,10 +23,15 @@ function PageHero({ title, text, align }: Props) {
       <div className="container">
         <div className={rowClassName}>
           <div className={colClassName}>
-            <h1 className="hero-title fw-bold color-palette-1 mb-1 lh-base">
-              {title}
-            </h1>
+            <div style={{ width: "max-content" }}>
+              <h1 className="hero-title fw-bold color-palette-1 mb-0">
+                {title}
+              </h1>
+            </div>
             <p className="text-md color-palette-6">{text}</p>
+          </div>
+          <div className="col-auto">
+            <span className=" visually-hidden ">....</span>
           </div>
         </div>
       </div>

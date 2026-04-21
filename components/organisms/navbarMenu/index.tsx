@@ -12,7 +12,7 @@ type Props = {
 };
 
 function NavbarMenu({ activePath }: Props) {
-  const userAuth = useAuth() as any;
+  const userAuth = useAuth({ isStale: true, isRetry: true }) as any;
 
   const isAuth = userAuth?.isAuth;
   const authState = userAuth?.authState;
@@ -26,7 +26,7 @@ function NavbarMenu({ activePath }: Props) {
       >
         <Container fluid>
           <Link href={"/"} passHref>
-            <Navbar.Brand>
+            <Navbar.Brand aria-label="Logo StoreGG">
               <Logo />
             </Navbar.Brand>
           </Link>

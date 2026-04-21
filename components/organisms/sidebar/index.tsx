@@ -13,7 +13,7 @@ function Sidebar({ activePath }: Props) {
   const memberPageCtx = useMemberPageContext();
   const mdscreen = useMediaQuery("md");
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     if (!mdscreen) {
       setDesktop(false);
     } else {
@@ -38,7 +38,7 @@ function Sidebar({ activePath }: Props) {
               <span className=" visually-hidden ">....</span>
             </Offcanvas.Title>
           </Offcanvas.Header>
-          <Offcanvas.Body className="offcanvas-sidebar ">
+          <Offcanvas.Body className="offcanvas-sidebar px-0">
             <SidebarContent activePath={activePath} />
           </Offcanvas.Body>
         </Offcanvas>

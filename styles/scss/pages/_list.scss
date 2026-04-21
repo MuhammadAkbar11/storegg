@@ -17,9 +17,7 @@
     }
 
     .list-game-card .card-img-box {
-      height: 170px;
-    }
-    .list-game-card .card-img-box img {
+      overflow: hidden;
       border-radius: 1.625rem;
       border-bottom-right-radius: 0.4rem;
       border-bottom-left-radius: 0.4rem;
@@ -61,13 +59,12 @@
   & .card-img-box {
     height: 160px;
     overflow: hidden;
+    width: 100%;
     box-sizing: border-box;
     transition: all 0.4s;
-    img {
-      border-radius: 1.625rem;
-      border-bottom-right-radius: 0.3rem;
-      border-bottom-left-radius: 0.3rem;
-    }
+    border-radius: 1.625rem;
+    border-bottom-right-radius: 0.3rem;
+    border-bottom-left-radius: 0.3rem;
   }
 }
 

@@ -62,7 +62,11 @@ function FormSeachGames({ onSetSearching, onSetFilter, filterData }: Props) {
                 activeSearching,
               ].join(" ")}
             >
-              <button className=" ps-0 pe-3 ">
+              <button
+                className=" ps-0 pe-3 "
+                type="button"
+                aria-label="search game button"
+              >
                 {loadingSearch ? (
                   <div className="spin relative ">
                     <span

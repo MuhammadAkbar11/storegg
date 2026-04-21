@@ -7,7 +7,7 @@ import TransactionTableRow from "@components/organisms/transactions/TransactionT
 import dummyTransactionData from "@utility/data/transaction";
 import type { IUserAuth } from "@utility/types";
 import { GetServerSidePropsContext } from "next";
-import { notAuthRedirect, uRupiah } from "@utility/index.utils";
+import { uNotAuthRedirect, uRupiah } from "@utility/index.utils";
 import { getAuthService } from "@services/auth.service";
 import {
   PrivateAuthProvider,
@@ -61,7 +61,7 @@ function Transactions({ userAuth }: Props) {
           status: activeTab.includes("*") ? "" : activeTab,
         });
       },
-      getNextPageParam: lastPage => {
+      getNextPageParam: (lastPage) => {
         if (lastPage) {
           const nextPage = lastPage?.currentPage as number;
           const totaPages = lastPage?.totalPages as number;
@@ -82,7 +82,9 @@ function Transactions({ userAuth }: Props) {
   const onSetActiveTabHandler = (value: ActiveTypes) => {
     setActiveTab(value);
     if (value !== "*") {
-      const filtredTrs = dummyTransactionData.filter(tr => tr.status === value);
+      const filtredTrs = dummyTransactionData.filter(
+        (tr) => tr.status === value
+      );
       setTransactions(filtredTrs);
     } else {
       setTransactions(dummyTransactionData);
@@ -96,8 +98,7 @@ function Transactions({ userAuth }: Props) {
     activeClass: ["scroll-x"],
   });
 
-  const totalSpent = data?.pages[0]?.totalSpent || "Rp. 0";
-  console.log(totalSpent);
+  const totalSpent = data?.pages[0]?.totalSpent || 0;
   return (
     <>
       <Head>
@@ -111,7 +112,7 @@ function Transactions({ userAuth }: Props) {
             <div className="mb-30">
               <p className="text-lg color-palette-2 mb-12">You’ve spent</p>
               <h3 className="text-5xl fw-medium color-palette-1 ">
-                {isLoading ? (
+                {!isFetched ? (
                   <Skeleton height={"2.6rem"} width={"300px"} />
                 ) : (
                   uRupiah(+totalSpent)
@@ -145,7 +146,7 @@ function Transactions({ userAuth }: Props) {
                   </thead>
                   <tbody>
                     {isSuccess
-                      ? data.pages.map(page =>
+                      ? data.pages.map((page) =>
                           page?.histories?.map((tr: ITransaction) => {
                             return (
                               <TransactionTableRow
@@ -239,20 +240,20 @@ function Transactions({ userAuth }: Props) {
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const token = ctx.req.cookies?.userToken;
   if (!token) {
-    return notAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
+    return uNotAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
   }
   const jwtToken = Buffer.from(token, "base64").toString("ascii");
   try {
     const userAuth = await getAuthService(jwtToken);
     if (!userAuth)
-      return notAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
+      return uNotAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
     return {
       props: {
         userAuth,
       },
     };
   } catch (error) {
-    return notAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
+    return uNotAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
   }
 }
 

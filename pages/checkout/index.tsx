@@ -7,7 +7,7 @@ import TransactionDetailsWrapper from "@molecules/transaction/transactionDetails
 import Layout from "@components/organisms/layout";
 import { GetServerSidePropsContext } from "next";
 import { getAuthService } from "@services/auth.service";
-import { notAuthRedirect, uRupiah } from "@utility/index.utils";
+import { uNotAuthRedirect, uRupiah } from "@utility/index.utils";
 import { useTopupContext } from "@utility/context/TopupContext";
 import { useRouter } from "next/router";
 import { useToastContext } from "@utility/context/ToastContext";
@@ -248,20 +248,20 @@ function Checkout({}: Props) {
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const token = ctx.req.cookies?.userToken;
   if (!token) {
-    return notAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
+    return uNotAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
   }
   const jwtToken = Buffer.from(token, "base64").toString("ascii");
   try {
     const userAuth = await getAuthService(jwtToken);
     if (!userAuth)
-      return notAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
+      return uNotAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
     return {
       props: {
         userAuth,
       },
     };
   } catch (error) {
-    return notAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
+    return uNotAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
   }
 }
 

@@ -10,7 +10,7 @@ import {
 } from "@utility/context/PrivateAuthContext";
 import { IUserAuth } from "@utility/types";
 import { GetServerSidePropsContext } from "next";
-import { notAuthRedirect } from "@utility/index.utils";
+import { uNotAuthRedirect } from "@utility/index.utils";
 import { getAuthService } from "@services/auth.service";
 import MemberPageTitle from "@components/molecules/memberPageTitle";
 
@@ -138,20 +138,20 @@ function Profile({ userAuth }: Props) {
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const token = ctx.req.cookies?.userToken;
   if (!token) {
-    return notAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
+    return uNotAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
   }
   const jwtToken = Buffer.from(token, "base64").toString("ascii");
   try {
     const userAuth = await getAuthService(jwtToken);
     if (!userAuth)
-      return notAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
+      return uNotAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
     return {
       props: {
         userAuth,
       },
     };
   } catch (error) {
-    return notAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
+    return uNotAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
   }
 }
 

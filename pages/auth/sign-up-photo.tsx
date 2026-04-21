@@ -14,6 +14,8 @@ import {
 import useGetCategories from "@hooks/useGetCategory";
 import { postSignupService } from "@services/auth.service";
 import { useSignupContext } from "@utility/context/SignupContext";
+import useOnMount from "@hooks/useOnMount";
+import useAuth from "@hooks/useAuth";
 
 type Props = {};
 
@@ -25,6 +27,8 @@ function SignUpPhoto({}: Props) {
     onSetPhotoFormData,
     onSetError: onSetErrorSignup,
   } = useSignupContext();
+
+  const { isAuth } = useAuth({});
 
   const router = useRouter();
   const {
@@ -62,6 +66,12 @@ function SignUpPhoto({}: Props) {
       router.push("/auth/sign-up");
     },
   });
+
+  useOnMount(() => {
+    if (isAuth) {
+      router.push("/");
+    }
+  }, []);
 
   React.useEffect(() => {
     if (!mutation.isSuccess) {

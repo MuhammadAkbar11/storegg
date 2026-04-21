@@ -3,7 +3,7 @@ import TransactionDetailsGame from "@molecules/transaction/transactionDetailsGam
 import TransactionDetailsItem from "@molecules/transaction/transactionDetailsItem";
 import TransactionDetailsWrapper from "@molecules/transaction/transactionDetailsWrapper";
 import Sidebar from "@organisms/sidebar";
-import { notAuthRedirect, uDate } from "@utility/index.utils";
+import { uNotAuthRedirect, uDate } from "@utility/index.utils";
 import { getAuthService } from "@services/auth.service";
 import { GetServerSidePropsContext } from "next";
 import {
@@ -163,13 +163,13 @@ function TransactionsDetail({ userAuth }: Props) {
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const token = ctx.req.cookies?.userToken;
   if (!token) {
-    return notAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
+    return uNotAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
   }
   const jwtToken = Buffer.from(token, "base64").toString("ascii");
   try {
     const userAuth = await getAuthService(jwtToken);
     if (!userAuth)
-      return notAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
+      return uNotAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
 
     return {
       props: {
@@ -177,7 +177,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
       },
     };
   } catch (error) {
-    return notAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
+    return uNotAuthRedirect(`/auth/sign-in?redirect=${ctx.req.url}`);
   }
 }
 

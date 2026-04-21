@@ -1,12 +1,23 @@
 import { getAuthService, getUserTokenService } from "@services/auth.service";
 import { useQuery } from "react-query";
 
-const useAuth = () => {
+type Props = {
+  isRetry?: boolean;
+  isStale?: boolean;
+};
+
+const useAuth = (props?: Props) => {
   const token = getUserTokenService();
 
+  const isRetry = props?.isRetry as boolean;
+  const isStale = props?.isStale as boolean;
+
   const queryAuth = useQuery("userAuth", () => getAuthService(token || ""), {
-    staleTime: 5 * 1000,
+    staleTime: isStale ? 5 * 1000 : 0,
     retry(failureCount: number, error: any) {
+      if (!isRetry) {
+        return false;
+      }
       if (error) {
         return false;
       }
@@ -17,6 +28,7 @@ const useAuth = () => {
         return null;
       }
     },
+    enabled: token ? true : false,
     useErrorBoundary(_error, _query) {
       return false;
     },
@@ -40,5 +52,7 @@ const useAuth = () => {
     refetchAuth,
   };
 };
+
+useAuth.defaultProps = {};
 
 export default useAuth;

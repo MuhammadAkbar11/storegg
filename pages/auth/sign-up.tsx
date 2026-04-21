@@ -5,11 +5,23 @@ import SignUpForm from "@organisms/auth/signUpForm";
 import Layout from "@components/organisms/layout";
 import { useSignupContext } from "@utility/context/SignupContext";
 import ToastTrigger from "@components/molecules/toast/toastTrigger";
+import useAuth from "@hooks/useAuth";
+import { useRouter } from "next/router";
+import useOnMount from "@hooks/useOnMount";
+import SkeletonSignUp from "@components/organisms/skeleton/skeletonSignUp";
 
 type Props = {};
 
 function SignUp({}: Props) {
   const { error } = useSignupContext();
+  const { isLoading, isAuth } = useAuth({});
+  const router = useRouter();
+
+  useOnMount(() => {
+    if (isAuth) {
+      router.push("/");
+    }
+  }, []);
 
   return (
     <Layout navbar={false} footer={false} pageTitle="Sign up">
@@ -31,11 +43,18 @@ function SignUp({}: Props) {
               </a>
             </Link>
           </div>
-          <h2 className="text-4xl fw-bold color-palette-1 mb-10">Sign Up</h2>
-          <p className="text-lg color-palette-1 m-0">
-            Daftar dan bergabung dengan kami
-          </p>
-          <SignUpForm />
+          {isLoading ? <SkeletonSignUp /> : null}
+          {!isLoading ? (
+            <>
+              <h2 className="text-4xl fw-bold color-palette-1 mb-10">
+                Sign Up
+              </h2>
+              <p className="text-lg color-palette-1 m-0">
+                Daftar dan bergabung dengan kami
+              </p>
+              <SignUpForm />
+            </>
+          ) : null}
         </div>
       </section>
     </Layout>

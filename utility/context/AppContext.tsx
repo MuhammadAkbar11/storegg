@@ -1,7 +1,10 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 import React, { createContext, useContext, ReactNode, useState } from "react";
 
 type AppContextType = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   error: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onSetError?: (error: any) => void;
 };
 
@@ -29,6 +32,7 @@ type Props = {
 export function AppProvider({ children }: Props) {
   const [error, setError] = useState(null);
 
+  // eslint-disable-next-line @typescript-eslint/no-shadow
   const onSetError = (error: any) => {
     setError(error);
   };
@@ -38,9 +42,5 @@ export function AppProvider({ children }: Props) {
     onSetError,
   };
 
-  return (
-    <>
-      <AppContext.Provider value={value}>{children}</AppContext.Provider>
-    </>
-  );
+  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }

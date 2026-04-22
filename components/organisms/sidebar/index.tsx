@@ -1,10 +1,11 @@
 import React from "react";
-import SidebarContent from "./sidebarContent";
 import useMediaQuery from "@hooks/useMediaQuery";
 import { Offcanvas } from "react-bootstrap";
 import { useMemberPageContext } from "@utility/context/MemberPageContext";
+import SidebarContent from "./sidebarContent";
 
 type Props = {
+  // eslint-disable-next-line react/require-default-props
   activePath: string;
 };
 
@@ -48,6 +49,7 @@ function Sidebar({ activePath }: Props) {
 }
 
 Sidebar.defaultProps = {
+  // eslint-disable-next-line react/default-props-match-prop-types
   activePath: "",
 };
 

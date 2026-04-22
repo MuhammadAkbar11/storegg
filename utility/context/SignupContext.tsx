@@ -1,3 +1,8 @@
+/* eslint-disable no-alert */
+/* eslint-disable no-return-assign */
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react/jsx-no-constructed-context-values */
 import React, {
   createContext,
   useContext,
@@ -55,8 +60,9 @@ type Props = {
 };
 
 export function SignupProvider({ children }: Props) {
-  const [signupFormData, setSignupFormData] =
-    useState<SingupFormType | null>(null);
+  const [signupFormData, setSignupFormData] = useState<SingupFormType | null>(
+    null
+  );
   const [signupPhotoFormData, setSignupPhotoFormData] =
     useState<SignupPhotoFormTypes | null>(null);
   const [error, setError] = useState(null);
@@ -71,6 +77,7 @@ export function SignupProvider({ children }: Props) {
     const handleWindowClose = (e: any) => {
       if (!unsavedChanges) return;
       e.preventDefault();
+      // eslint-disable-next-line consistent-return
       return (e.returnValue = warningText);
     };
     const handleBrowseAway = (path: string) => {
@@ -115,16 +122,14 @@ export function SignupProvider({ children }: Props) {
   const value: SignupContextType = {
     error: useMemo(() => error, [error]),
     onSetError,
-    signupFormData: signupFormData,
-    signupPhotoFormData: signupPhotoFormData,
-    onSetFormData: onSetFormData,
-    onSetPhotoFormData: onSetPhotoFormData,
-    onResetSignupForm: onResetSignupForm,
+    signupFormData,
+    signupPhotoFormData,
+    onSetFormData,
+    onSetPhotoFormData,
+    onResetSignupForm,
   };
 
   return (
-    <>
-      <SignupContext.Provider value={value}>{children}</SignupContext.Provider>
-    </>
+    <SignupContext.Provider value={value}>{children}</SignupContext.Provider>
   );
 }

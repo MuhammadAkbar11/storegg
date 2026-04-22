@@ -23,13 +23,14 @@ const useAuth = (props?: Props) => {
       }
       return true;
     },
+    // eslint-disable-next-line consistent-return
     onError(err) {
       if (err.name === "NOT_AUTH") {
         return null;
       }
     },
-    enabled: token ? true : false,
-    useErrorBoundary(_error, _query) {
+    enabled: !!token,
+    useErrorBoundary() {
       return false;
     },
   });

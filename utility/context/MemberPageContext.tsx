@@ -34,16 +34,15 @@ export function MemberPageProvider({ children }: Props) {
     setCanvarSidebar(!canvasSidebar);
   };
 
+  // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value: MemberPageContextType = {
     canvasSidebar,
     onToggleMobileSidebar,
   };
 
   return (
-    <>
-      <MemberPageContext.Provider value={value}>
-        {children}
-      </MemberPageContext.Provider>
-    </>
+    <MemberPageContext.Provider value={value}>
+      {children}
+    </MemberPageContext.Provider>
   );
 }

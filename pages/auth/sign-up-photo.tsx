@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/no-redundant-roles */
 import React from "react";
 import { useRouter } from "next/router";
 import { useMutation } from "react-query";
@@ -77,13 +79,11 @@ function SignUpPhoto({}: Props) {
     if (!mutation.isSuccess) {
       if (!currSignupForm) {
         router.push("/auth/sign-up");
-      } else {
-        if (currSignupPhotoForm) {
-          const fileList = new DataTransfer();
-          fileList.items?.add(currSignupPhotoForm.avatar);
-          setValue("favorite", currSignupPhotoForm?.favorite || "");
-          setValue("avatar", fileList.files);
-        }
+      } else if (currSignupPhotoForm) {
+        const fileList = new DataTransfer();
+        fileList.items?.add(currSignupPhotoForm.avatar);
+        setValue("favorite", currSignupPhotoForm?.favorite || "");
+        setValue("avatar", fileList.files);
       }
     }
   }, [currSignupForm, currSignupPhotoForm, setValue, mutation.isSuccess]);
@@ -176,7 +176,7 @@ function SignUpPhoto({}: Props) {
                   </label>
                   <select
                     id="favorite"
-                    defaultValue={""}
+                    defaultValue=""
                     className="form-select d-block w-100 rounded-pill text-lg"
                     aria-label="Favorite Game"
                     disabled={isLoadingCategories}
@@ -186,7 +186,7 @@ function SignUpPhoto({}: Props) {
                       Select Category
                     </option>
                     {isSuccess
-                      ? categories.map(cat => {
+                      ? categories.map((cat) => {
                           return (
                             <option value={cat.categoryId} key={cat.categoryId}>
                               {cat.name}

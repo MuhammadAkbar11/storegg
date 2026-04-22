@@ -21,7 +21,7 @@ function Member({ userAuth }: Props) {
   const privateAuthCtx = usePrivateAuthContext();
   React.useEffect(() => {
     privateAuthCtx.onSetUser(userAuth);
-  }, [userAuth]);
+  }, [privateAuthCtx, userAuth]);
 
   const mdscreen = useMediaQuery("md");
 
@@ -37,7 +37,7 @@ function Member({ userAuth }: Props) {
       <Head>
         <title>Member Dashboard | StoreGG</title>;
       </Head>
-      <div className={`overview overflow-auto`}>
+      <div className="overview overflow-auto">
         <Sidebar activePath="/member" />
         <OverviewContent className={mainClsName} />
       </div>

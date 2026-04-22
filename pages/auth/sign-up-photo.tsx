@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/no-redundant-roles */
 import React from "react";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useMutation } from "react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -116,10 +117,13 @@ function SignUpPhoto({}: Props) {
           width: 120,
         }}
       >
-        <img
-          className=" w-100 h-100  "
+        <Image
+          className="w-100 h-100"
           src={URL?.createObjectURL(avatarValue[0])}
-          alt=""
+          alt="Avatar Preview"
+          width={120}
+          height={120}
+          style={{ objectFit: "cover" }}
         />
         <div className="signup-photo-img-icon">
           <UploadIcon />

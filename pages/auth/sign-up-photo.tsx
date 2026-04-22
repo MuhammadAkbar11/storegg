@@ -87,6 +87,7 @@ function SignUpPhoto({}: Props) {
         setValue("avatar", fileList.files);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currSignupForm, currSignupPhotoForm, setValue, mutation.isSuccess]);
 
   const onSubmitHandler = async (values: SignupPhotoInputTypes) => {

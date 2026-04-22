@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Link from "next/link";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -37,7 +38,7 @@ function SignInForm({}: Props) {
       router.push(redirect);
       refetchAuth();
     }
-  }, [mutation.isSuccess, router.query]);
+  }, [mutation.isSuccess, refetchAuth, router, router.query]);
 
   const onSubmitHandler = (values: SigninInputTypes) => {
     mutation.mutate(values, {
@@ -85,7 +86,7 @@ function SignInForm({}: Props) {
           className=" rounded-pill text-lg"
           aria-describedby="email"
           placeholder="Enter your email address"
-          isInvalid={errors?.email ? true : false}
+          isInvalid={!!errors?.email}
           {...register("email")}
         />
         {errors?.email?.message ? (
@@ -103,7 +104,7 @@ function SignInForm({}: Props) {
           className=" rounded-pill text-lg"
           aria-describedby="password"
           placeholder="Your password"
-          isInvalid={errors?.password ? true : false}
+          isInvalid={!!errors?.password}
           {...register("password")}
         />
         {errors?.password?.message ? (
@@ -116,7 +117,6 @@ function SignInForm({}: Props) {
         <button
           type="submit"
           className="btn btn-sign-in fw-medium text-lg text-white rounded-pill mb-16"
-          role="button"
           disabled={mutation.isLoading || mutation.isSuccess}
         >
           {mutation.isLoading ? (

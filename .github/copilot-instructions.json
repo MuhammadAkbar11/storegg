@@ -1,0 +1,98 @@
+{
+  "$schema": "https://bendera.github.io/vscode-commit-message-editor/schemas/config-v1.schema.json",
+  "configVersion": "1",
+
+  "staticTemplate": [
+    "feat: short description",
+    "",
+    "optional body explaining WHY",
+    "",
+    "optional footer (e.g., Closes #123)"
+  ],
+
+  "dynamicTemplate": [
+    "{type}{scope}{breaking}: {description}",
+    "",
+    "{body}",
+    "",
+    "{breaking_change}{footer}"
+  ],
+
+  "tokens": [
+    {
+      "label": "Type",
+      "name": "type",
+      "type": "enum",
+      "description": "Select the type of change",
+      "options": [
+        { "label": "---", "value": "" },
+        { "label": "feat", "description": "add a new feature" },
+        { "label": "fix", "description": "fix a bug" },
+        {
+          "label": "refactor",
+          "description": "restructure code without behavior change"
+        },
+        { "label": "perf", "description": "improve performance" },
+        {
+          "label": "style",
+          "description": "formatting only (no logic change)"
+        },
+        { "label": "test", "description": "add or update tests" },
+        { "label": "docs", "description": "documentation only" },
+        { "label": "build", "description": "build system or dependencies" },
+        { "label": "ci", "description": "CI/CD configuration" },
+        {
+          "label": "ops",
+          "description": "deployment, infrastructure, scripts"
+        },
+        { "label": "chore", "description": "maintenance tasks" }
+      ]
+    },
+    {
+      "label": "Scope",
+      "name": "scope",
+      "type": "text",
+      "description": "Optional: module/component (e.g., auth, api, dashboard)",
+      "prefix": "(",
+      "suffix": ")",
+      "multiline": false
+    },
+    {
+      "label": "Description",
+      "name": "description",
+      "type": "text",
+      "description": "Short description (imperative, lowercase, no period)",
+      "multiline": false
+    },
+    {
+      "label": "Body",
+      "name": "body",
+      "type": "text",
+      "description": "Explain WHY the change was made (optional)",
+      "multiline": true,
+      "lines": 5,
+      "maxLines": 10
+    },
+    {
+      "label": "Breaking Change (!)",
+      "name": "breaking",
+      "type": "boolean",
+      "default": false,
+      "value": "!"
+    },
+    {
+      "label": "Breaking Change Footer",
+      "name": "breaking_change",
+      "type": "boolean",
+      "value": "BREAKING CHANGE: ",
+      "default": false
+    },
+    {
+      "label": "Footer",
+      "name": "footer",
+      "type": "text",
+      "description": "Optional: Closes #123, Fixes #456",
+      "multiline": true
+    }
+  ]
+}

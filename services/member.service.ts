@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-unsafe-optional-chaining */
 import axios from "axios";
 import { API_URI, ROOT_API } from "@utility/constant.utils";
-import { getUserTokenService } from "./auth.service";
 import { uTranformAxiosError } from "@utility/error.utils";
 import {
   uConvertKeysToCamelCase,
@@ -14,6 +15,8 @@ import {
   ITransaction,
   ITransactionPayer,
 } from "@utility/types/transaction";
+import Cookies from "js-cookie";
+import { getUserTokenService } from "./auth.service";
 
 export async function getDashboardService() {
   try {
@@ -35,9 +38,10 @@ export async function getDashboardService() {
         game: historyVoucher.gameName,
         gameImage: ROOT_API + historyVoucher.thumbnail,
         item: `${historyVoucher?.coinQuantity} ${historyVoucher?.coinName}`,
+        // eslint-disable-next-line no-unsafe-optional-chaining
         price: uRupiah(+historyVoucher?.price || 0),
         status: tr.status,
-        platform: platform,
+        platform,
       } as ITransaction;
     });
     return { topupCategories: resData.topupCategories, latestTransactions };
@@ -75,9 +79,10 @@ export async function getListTransactionService(queryOpt: IListTRQueries) {
         game: historyVoucher.gameName,
         gameImage: ROOT_API + historyVoucher.thumbnail,
         item: `${historyVoucher?.coinQuantity} ${historyVoucher?.coinName}`,
+        // eslint-disable-next-line no-unsafe-optional-chaining
         price: uRupiah(+historyVoucher?.price || 0),
         status: tr.status,
-        platform: platform,
+        platform,
       } as ITransaction;
     });
     return { histories, totalItems, totalPages, totalSpent, currentPage };
@@ -99,7 +104,7 @@ export async function getDetailTransactionService(transactionId: string) {
 
     const resData = uConvertNestedObjKeysToCamelCase(data);
     const transaction = resData.history;
-    const history = transaction.history;
+    const { history } = transaction;
     const historyVoucher = history?.historyVoucher;
     const historyPayment = history?.historyPayment;
     const payerData = historyPayment?.payer
@@ -111,6 +116,7 @@ export async function getDetailTransactionService(transactionId: string) {
       game: historyVoucher.gameName,
       gameImage: ROOT_API + historyVoucher.thumbnail,
       item: `${historyVoucher?.coinQuantity} ${historyVoucher?.coinName}`,
+      // eslint-disable-next-line no-unsafe-optional-chaining
       price: uRupiah(+historyVoucher?.price || 0),
       status: transaction.status,
       platform: historyVoucher?.category,
@@ -130,4 +136,33 @@ export async function getDetailTransactionService(transactionId: string) {
   } catch (error: any) {
     throw uTranformAxiosError(error);
   }
+}
+
+// Update member profile with avatar
+export async function putMemberProfileService(values: {
+  formData: FormData;
+  token: string;
+}) {
+  const { formData, token } = values;
+
+  try {
+    const response = await axios.put(`${API_URI}/profile`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log(formData, "formData service");
+    const resData = response.data?.data || response.data;
+    return resData;
+  } catch (error: any) {
+    throw uTranformAxiosError(error);
+  }
+}
+
+// Get user token from cookies
+export function getUserToken(): string | null {
+  const token = Cookies.get("userToken");
+  if (!token) return null;
+  return window.atob(token);
 }

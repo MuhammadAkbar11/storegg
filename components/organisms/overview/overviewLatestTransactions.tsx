@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable no-nested-ternary */
 import Skeleton from "@components/atoms/skeleton";
 import useActiveClass from "@hooks/useActiveClass";
 import useGetOverview from "@hooks/useGetOverview";
@@ -41,6 +43,7 @@ function OverviewLatestTransactions({}: Props) {
                 .fill(null)
                 .map((_, idx) => {
                   return (
+                    // eslint-disable-next-line react/no-array-index-key
                     <tr key={idx} className="align-middle">
                       <th scope="row">
                         <Skeleton

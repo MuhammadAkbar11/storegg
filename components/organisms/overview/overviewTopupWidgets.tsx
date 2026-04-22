@@ -1,9 +1,11 @@
+/* eslint-disable no-unsafe-optional-chaining */
+/* eslint-disable react/no-array-index-key */
 import React from "react";
-import OverviewWidgetCard from "../../molecules/overviewWidgetCard";
 import { ICategory } from "@utility/types";
 import useGetOverview from "@hooks/useGetOverview";
 import Skeleton from "@components/atoms/skeleton";
 import { uRupiah } from "@utility/index.utils";
+import OverviewWidgetCard from "../../molecules/overviewWidgetCard";
 
 type Props = {
   // categories: ICategory & { totalValue: string };
@@ -43,7 +45,7 @@ function OverviewTopupWidgets({}: Props) {
         ) : null}
         {!overview.isLoading ? (
           <div className="row">
-            {categories?.map(c => {
+            {categories?.map((c) => {
               const platform = c.name.toLowerCase() as string;
               return (
                 <div

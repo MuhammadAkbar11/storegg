@@ -1,8 +1,7 @@
 import React from "react";
+import MemberPageTitle from "@components/molecules/memberPageTitle";
 import OverviewLatestTransactions from "./overviewLatestTransactions";
 import OverviewTopupWidgets from "./overviewTopupWidgets";
-
-import MemberPageTitle from "@components/molecules/memberPageTitle";
 
 type Props = {
   className: string;

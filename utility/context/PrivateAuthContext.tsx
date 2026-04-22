@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 import { IUserAuth } from "@utility/types";
 import React, { createContext, useContext, ReactNode, useState } from "react";
 
@@ -5,12 +6,14 @@ type PrivateAuthContextType = {
   user: IUserAuth | null;
   isLoading: boolean;
   onSetUser: (user: IUserAuth) => void;
+  onUpdateUser: (user: IUserAuth) => void;
 };
 
 const pageDetailContextDefaultValues: PrivateAuthContextType = {
   user: null,
   isLoading: true,
   onSetUser: () => {},
+  onUpdateUser: () => {},
 };
 
 export const PrivateAuthContext = createContext<PrivateAuthContextType>(
@@ -37,20 +40,24 @@ export function PrivateAuthProvider({ children }: Props) {
   const onSetUser = (user: IUserAuth) => {
     setLoading(false);
     setUserState(user);
-    console.log("RELOAD USER AUTH");
+  };
+
+  const onUpdateUser = (userUpdate: IUserAuth) => {
+    setLoading(false);
+    console.log(userUpdate, "userUpdated Auth ctx");
+    setUserState(userUpdate);
   };
 
   const value: PrivateAuthContextType = {
     user: userState,
     isLoading: loading,
     onSetUser,
+    onUpdateUser,
   };
 
   return (
-    <>
-      <PrivateAuthContext.Provider value={value}>
-        {children}
-      </PrivateAuthContext.Provider>
-    </>
+    <PrivateAuthContext.Provider value={value}>
+      {children}
+    </PrivateAuthContext.Provider>
   );
 }

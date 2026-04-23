@@ -22,32 +22,33 @@ export function useModalContext() {
   return context;
 }
 
-const ModalProvider = (props: React.PropsWithChildren<{}>) => {
+function ModalProvider({ children }: React.PropsWithChildren<{}>) {
   const [isOpen, setIsOpen] = useState(false);
   const [modal, setModal] = useState<React.ReactNode | null>(null);
 
-  const openModal = (modal: React.ReactNode) => {
+  const openModal = React.useCallback((modalContent: React.ReactNode) => {
     setIsOpen(true);
-    setModal(modal);
-  };
+    setModal(modalContent);
+  }, []);
 
-  const closeModal = () => {
+  const closeModal = React.useCallback(() => {
     setIsOpen(false);
     setModal(null);
-  };
+  }, []);
+
+  const value = React.useMemo(
+    () => ({
+      openModal,
+      closeModal,
+      isOpen,
+      modal,
+    }),
+    [openModal, closeModal, isOpen, modal]
+  );
 
   return (
-    <ModalContext.Provider
-      value={{
-        openModal,
-        closeModal,
-        isOpen,
-        modal,
-      }}
-    >
-      {props.children}
-    </ModalContext.Provider>
+    <ModalContext.Provider value={value}>{children}</ModalContext.Provider>
   );
-};
+}
 
 export default ModalProvider;

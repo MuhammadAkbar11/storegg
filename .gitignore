@@ -39,5 +39,6 @@ storybook-static
 *.tsbuildinfo
 
 *.test.*
+issues/
 
 .nvmrc

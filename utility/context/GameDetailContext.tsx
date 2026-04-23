@@ -51,9 +51,13 @@ export function GameDetailProvider({ children }: Props) {
   const [loading, setLoading] = useState<boolean>(true);
   const [voucher, setVoucher] = useState<IGameDetailItem | null>(null);
 
-  const onFetchDetailData = useCallback(async (id: any) => {
+  const onFetchDetailData = useCallback(async (id: string) => {
     try {
-      const getVoucher = (await getDetailVouherService(id)) as any;
+      const getVoucher = (await getDetailVouherService(id)) as {
+        voucher: IGameDetailItem;
+        banks: Partial<IBank[]>;
+        payments: IPaymentMethods[];
+      };
       setVoucher(getVoucher.voucher);
       setBanks(getVoucher.banks);
 
@@ -66,19 +70,25 @@ export function GameDetailProvider({ children }: Props) {
         }
         return {
           ...py,
-          text: text,
+          text,
         };
       });
       setPayments(resultPayments);
-    } catch (error: any) {
-      if (error.name !== UNKNOWM_ERROR) {
-        setError(error);
+    } catch (fetchError) {
+      if (
+        typeof fetchError === "object" &&
+        fetchError !== null &&
+        "name" in fetchError &&
+        (fetchError as { name: string }).name !== UNKNOWM_ERROR
+      ) {
+        setError(fetchError as IErrorAPI);
       }
     }
 
     setLoading(false);
   }, []);
 
+  // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value: GameDetailContextType = {
     error,
     banks,
@@ -89,10 +99,8 @@ export function GameDetailProvider({ children }: Props) {
   };
 
   return (
-    <>
-      <GameDetailContext.Provider value={value}>
-        {children}
-      </GameDetailContext.Provider>
-    </>
+    <GameDetailContext.Provider value={value}>
+      {children}
+    </GameDetailContext.Provider>
   );
 }

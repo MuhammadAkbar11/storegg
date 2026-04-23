@@ -12,7 +12,7 @@ type PageContextType = {
   page: IGameDetailItem | null;
   error: IErrorAPI | null;
   loading: boolean;
-  onFetchDataHandler: (ID: any) => void;
+  onFetchDataHandler: (ID: string | number) => void;
 };
 
 const pageDetailContextDefaultValues: PageContextType = {
@@ -35,31 +35,32 @@ type Props = {
 };
 
 export function PageProvider({ children }: Props) {
-  const [error, setError] = useState<IErrorAPI | null>(null);
+  const [error] = useState<IErrorAPI | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [page, setVoucher] = useState<IGameDetailItem | null>(null);
 
-  const onFetchDetailData = useCallback(async (id: any) => {
+  const onFetchDetailData = useCallback(async (id: string | number) => {
     try {
-      const getVoucher = (await getDetailVouherService(id)) as any;
+      const getVoucher = (await getDetailVouherService(
+        String(id)
+      )) as unknown as IGameDetailItem;
       setVoucher(getVoucher);
-    } catch (error) {
-      console.log("Context : ", error);
+    } catch (err) {
+      // Optionally handle error here (e.g., set error state)
     }
 
     setLoading(false);
   }, []);
 
-  const value: PageContextType = {
-    error,
-    page,
-    loading,
-    onFetchDataHandler: onFetchDetailData,
-  };
-
-  return (
-    <>
-      <PageContext.Provider value={value}>{children}</PageContext.Provider>
-    </>
+  const value: PageContextType = React.useMemo(
+    () => ({
+      error,
+      page,
+      loading,
+      onFetchDataHandler: onFetchDetailData,
+    }),
+    [error, page, loading, onFetchDetailData]
   );
+
+  return <PageContext.Provider value={value}>{children}</PageContext.Provider>;
 }

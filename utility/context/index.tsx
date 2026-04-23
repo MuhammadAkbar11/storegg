@@ -24,10 +24,10 @@ export function ComposeContext(props: ComponseProps) {
 }
 
 function ComposeProvider({ children }: { children: React.ReactNode }) {
-  let providers = [AppProvider, ToastProvider, ModalProvider];
+  const providers = [AppProvider, ToastProvider, ModalProvider];
 
   const router = useRouter();
-  const pathname = router.pathname;
+  const { pathname } = router;
   if (pathname.includes("/auth")) {
     providers.push(SignupProvider);
   }

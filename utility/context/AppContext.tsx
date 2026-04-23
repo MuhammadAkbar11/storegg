@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/jsx-no-constructed-context-values */
 import React, { createContext, useContext, ReactNode, useState } from "react";
 
@@ -32,9 +33,8 @@ type Props = {
 export function AppProvider({ children }: Props) {
   const [error, setError] = useState(null);
 
-  // eslint-disable-next-line @typescript-eslint/no-shadow
-  const onSetError = (error: any) => {
-    setError(error);
+  const onSetError = (err: any) => {
+    setError(err);
   };
 
   const value: AppContextType = {

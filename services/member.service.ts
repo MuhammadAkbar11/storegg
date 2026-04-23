@@ -152,10 +152,66 @@ export async function putMemberProfileService(values: {
       },
     });
 
-    console.log(formData, "formData service");
     const resData = response.data?.data || response.data;
     return resData;
   } catch (error: any) {
+    throw uTranformAxiosError(error);
+  }
+}
+
+type PutMemberPasswordServiceInput = {
+  token: string;
+  payload: {
+    currentPassword: string;
+    newPassword: string;
+    confirmNewPassword: string;
+  };
+};
+
+export async function putMemberPasswordService(
+  values: PutMemberPasswordServiceInput
+) {
+  const { token, payload } = values;
+
+  // Compatibility payload for potential backend naming differences.
+  const requestBody = {
+    currentPassword: payload.currentPassword,
+    newPassword: payload.newPassword,
+    confirmNewPassword: payload.confirmNewPassword,
+    password: payload.newPassword,
+    password2: payload.confirmNewPassword,
+  };
+
+  try {
+    const response = await axios.put(
+      `${API_URI}/profile/password`,
+      requestBody,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const resData = response.data?.data || response.data;
+    return resData;
+  } catch (error: any) {
+    if (error?.response?.status === 404) {
+      try {
+        const response = await axios.put(
+          `${API_URI}/profile/change-password`,
+          requestBody,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const resData = response.data?.data || response.data;
+        return resData;
+      } catch (fallbackError: any) {
+        throw uTranformAxiosError(fallbackError);
+      }
+    }
     throw uTranformAxiosError(error);
   }
 }

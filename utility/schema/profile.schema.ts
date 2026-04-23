@@ -44,4 +44,32 @@ export const profileUpdateSchema = z.object({
     ),
 });
 
+export const changePasswordSchema = z
+  .object({
+    currentPassword: z
+      .string()
+      .min(1, {
+        message: "Current password is required",
+      })
+      .min(6, "Current password should be at least 6 characters"),
+    newPassword: z
+      .string()
+      .min(1, {
+        message: "New password is required",
+      })
+      .min(6, "New password should be at least 6 characters")
+      .regex(
+        /^(?=.*[A-Za-z])(?=.*\d).+$/,
+        "New password must include letters and numbers"
+      ),
+    confirmNewPassword: z.string().min(1, {
+      message: "Password confirmation is required",
+    }),
+  })
+  .refine((data) => data.newPassword === data.confirmNewPassword, {
+    message: "Passwords do not match",
+    path: ["confirmNewPassword"],
+  });
+
 export type ProfileUpdateFormData = z.infer<typeof profileUpdateSchema>;
+export type ChangePasswordFormData = z.infer<typeof changePasswordSchema>;

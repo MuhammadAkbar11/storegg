@@ -4,38 +4,31 @@ import { BOOTSTRAP_BREAKPOINTS } from "@utility/constant.utils";
 
 function useMediaQuery(variant: BootstrapBreakpoints): boolean {
   const query = BOOTSTRAP_BREAKPOINTS[variant];
-  const getMatches = (query: string): boolean => {
-    // Prevents SSR issues
-    if (typeof window !== "undefined") {
-      return window.matchMedia(query).matches;
-    }
-    return false;
-  };
-
-  const [matches, setMatches] = useState<boolean>(getMatches(query));
-
-  function handleChange() {
-    setMatches(getMatches(query));
-  }
+  // Keep initial render identical between SSR and first client render.
+  const [matches, setMatches] = useState<boolean>(false);
 
   useEffect(() => {
+    if (typeof window === "undefined") return undefined;
+
+    const getMatches = () => window.matchMedia(query).matches;
+    const handleChange = () => setMatches(getMatches());
     const matchMedia = window.matchMedia(query);
 
     // Triggered at the first client-side load and if query changes
-    handleChange();
+    setMatches(getMatches());
 
-    // Listen matchMedia
+    // Listen matchMedia changes (support older browsers too).
     if (matchMedia.addEventListener) {
       matchMedia.addEventListener("change", handleChange);
     } else {
-      matchMedia.addEventListener("change", handleChange);
+      matchMedia.addListener(handleChange);
     }
 
     return () => {
       if (matchMedia.removeEventListener) {
         matchMedia.removeEventListener("change", handleChange);
       } else {
-        matchMedia.removeEventListener("change", handleChange);
+        matchMedia.removeListener(handleChange);
       }
     };
   }, [query]);

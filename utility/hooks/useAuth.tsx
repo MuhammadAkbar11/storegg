@@ -1,4 +1,5 @@
 import { getAuthService, getUserTokenService } from "@services/auth.service";
+import React from "react";
 import { useQuery } from "react-query";
 
 type Props = {
@@ -7,13 +8,20 @@ type Props = {
 };
 
 const useAuth = (props?: Props) => {
-  const token = getUserTokenService();
+  const [token, setToken] = React.useState<string | null>(null);
+  const [isClientReady, setIsClientReady] = React.useState(false);
 
   const isRetry = props?.isRetry as boolean;
   const isStale = props?.isStale as boolean;
 
+  React.useEffect(() => {
+    setToken(getUserTokenService());
+    setIsClientReady(true);
+  }, []);
+
   const queryAuth = useQuery("userAuth", () => getAuthService(token || ""), {
     staleTime: isStale ? 5 * 1000 : 0,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     retry(failureCount: number, error: any) {
       if (!isRetry) {
         return false;
@@ -29,13 +37,22 @@ const useAuth = (props?: Props) => {
         return null;
       }
     },
-    enabled: !!token,
+    enabled: isClientReady && !!token,
     useErrorBoundary() {
       return false;
     },
   });
 
   const refetchAuth = () => queryAuth.refetch();
+
+  if (!isClientReady) {
+    return {
+      isAuth: false,
+      authState: null,
+      isLoading: false,
+      refetchAuth,
+    };
+  }
 
   if (!queryAuth.isLoading && !queryAuth.data) {
     return {

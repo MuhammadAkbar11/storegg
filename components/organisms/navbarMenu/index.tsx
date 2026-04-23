@@ -1,21 +1,27 @@
 import Link from "next/link";
 import React from "react";
-import { Container, Nav, Navbar, Spinner } from "react-bootstrap";
+import { Container, Nav, Navbar } from "react-bootstrap";
+import useAuth from "@hooks/useAuth";
 import Logo from "../../atoms/logo";
 import NavbarProfile from "./navbarProfile";
 import NavbarMenuList from "./navbarMenuListNav";
 import NavbarToggle from "./navbarToggle";
-import useAuth from "@hooks/useAuth";
 
 type Props = {
   activePath?: string;
 };
 
 function NavbarMenu({ activePath }: Props) {
+  const [isHydrated, setIsHydrated] = React.useState(false);
   const userAuth = useAuth({ isStale: true, isRetry: true }) as any;
 
   const isAuth = userAuth?.isAuth;
   const authState = userAuth?.authState;
+  const showAuthLoadingState = !isHydrated || userAuth?.isLoading;
+
+  React.useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   return (
     <section>
@@ -25,7 +31,7 @@ function NavbarMenu({ activePath }: Props) {
         expand="lg"
       >
         <Container fluid>
-          <Link href={"/"} passHref>
+          <Link href="/" passHref>
             <Navbar.Brand aria-label="Logo StoreGG">
               <Logo />
             </Navbar.Brand>
@@ -34,7 +40,7 @@ function NavbarMenu({ activePath }: Props) {
           <Navbar.Collapse id="navbarNav">
             <Nav as="ul" className="ms-auto text-lg gap-lg-0 gap-2">
               <NavbarMenuList activePath={activePath} />
-              {userAuth?.isLoading ? (
+              {showAuthLoadingState ? (
                 <>
                   <div className="vertical-line d-lg-block d-none" />
                   <div
@@ -48,9 +54,7 @@ function NavbarMenu({ activePath }: Props) {
                   </div>
                 </>
               ) : (
-                <>
-                  <NavbarProfile isLogin={isAuth} profile={authState} />
-                </>
+                <NavbarProfile isLogin={isAuth} profile={authState} />
               )}
             </Nav>
           </Navbar.Collapse>
